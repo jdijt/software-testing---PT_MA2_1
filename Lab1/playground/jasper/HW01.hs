@@ -12,7 +12,7 @@ toRevDigits :: Integer -> [Integer]
 toRevDigits 0 = []
 toRevDigits n
 	| n < 0		= []
-	| otherwise	= lastDigit n: toRevDigits (dropLastDigit n)
+	| otherwise	= lastDigit n: (toRevDigits $ dropLastDigit n)
 
 
 doubleEveryOther :: [Integer] -> [Integer]
@@ -24,9 +24,9 @@ doubleEveryOther (x:y:xs) = [x, y*2] ++ doubleEveryOther xs
 sumDigits :: [Integer] -> Integer
 sumDigits [] = 0
 sumDigits (x:xs)
-	| x >= 10	= sum (toRevDigits x) + sumDigits xs
+	| x >= 10	= (sum $ toRevDigits x) + sumDigits xs
 	| otherwise	= x + sumDigits xs
 
 
 luhn :: Integer -> Bool
-luhn x = sumDigits ( doubleEveryOther ( toRevDigits x)) `mod` 10 == 0
+luhn x = (sumDigits $ doubleEveryOther $ toRevDigits x) `mod` 10 == 0
