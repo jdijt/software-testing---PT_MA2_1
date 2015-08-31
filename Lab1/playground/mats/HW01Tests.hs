@@ -1,45 +1,59 @@
-{-# OPTIONS_GHC -Wall #-}
-module HW01 where
+-- CIS 194, Spring 2015
+--
+-- Test cases for HW 01
+
+module HW01Tests where
+
+import HW01
+import Testing
 
 -- Exercise 1 -----------------------------------------
 
--- Get the last digit from a number
-lastDigit :: Integer -> Integer
-lastDigit a = mod a 10
+testLastDigit :: (Integer, Integer) -> Bool
+testLastDigit (n, d) = lastDigit n == d
 
--- Drop the last digit from a number
-dropLastDigit :: Integer -> Integer
-dropLastDigit a = div a 10
+testDropLastDigit :: (Integer, Integer) -> Bool
+testDropLastDigit (n, d) = dropLastDigit n == d
+
+ex1Tests :: [Test]
+ex1Tests = [ Test "lastDigit test" testLastDigit
+             [(123, 3), (1234, 4), (5, 5), (10, 0), (0, 0)]
+           , Test "dropLastDigit test" testDropLastDigit
+             [(123, 12), (1234, 123), (5, 0), (10, 1), (0,0)]
+           ]
 
 -- Exercise 2 -----------------------------------------
 
-toRevDigits :: Integer -> [Integer]
-toRevDigits = undefined
+ex2Tests :: [Test]
+ex2Tests = []
 
 -- Exercise 3 -----------------------------------------
 
--- Double every second number in a list starting on the left.
-doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther = undefined
+ex3Tests :: [Test]
+ex3Tests = []
 
 -- Exercise 4 -----------------------------------------
 
--- Calculate the sum of all the digits in every Integer.
-sumDigits :: [Integer] -> Integer
-sumDigits = undefined
-
+ex4Tests :: [Test]
+ex4Tests = []
 
 -- Exercise 5 -----------------------------------------
 
--- Validate a credit card number using the above functions.
-luhn :: Integer -> Bool
-luhn = undefined
+ex5Tests :: [Test]
+ex5Tests = []
 
 -- Exercise 6 -----------------------------------------
 
--- Towers of Hanoi for three pegs
-type Peg = String
-type Move = (Peg, Peg)
+ex6Tests :: [Test]
+ex6Tests = []
 
-hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
-hanoi = undefined
+-- All Tests ------------------------------------------
+
+allTests :: [Test]
+allTests = concat [ ex1Tests
+                  , ex2Tests
+                  , ex3Tests
+                  , ex4Tests
+                  , ex5Tests
+                  , ex6Tests
+                  ]
