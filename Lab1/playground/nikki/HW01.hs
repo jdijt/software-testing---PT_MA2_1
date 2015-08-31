@@ -37,7 +37,7 @@ sumDigits (x:xs) = if x > 9 then sumDigits (toRevDigits x ++ xs)
 
 -- Validate a credit card number using the above functions.
 luhn :: Integer -> Bool
-luhn = undefined
+luhn x = (lastDigit . sumDigits . doubleEveryOther . toRevDigits) x == 0
 
 -- Exercise 6 -----------------------------------------
 
