@@ -88,5 +88,4 @@ allTests = concat [ ex1Tests
                   , ex3Tests
                   , ex4Tests
                   , ex5Tests
-                  , ex6Tests
                   ]
