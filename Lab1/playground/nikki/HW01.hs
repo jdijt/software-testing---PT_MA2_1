@@ -15,7 +15,7 @@ dropLastDigit x = x `div` 10
 
 toRevDigits :: Integer -> [Integer]
 toRevDigits x | x <= 0 = []
-	          | otherwise = lastDigit x:(toRevDigits (dropLastDigit x)) 
+              | otherwise = lastDigit x:(toRevDigits (dropLastDigit x)) 
 
 -- Exercise 3 -----------------------------------------
 
@@ -29,8 +29,9 @@ doubleEveryOther (x:y:zs) = x:y*2:doubleEveryOther zs
 
 -- Calculate the sum of all the digits in every Integer.
 sumDigits :: [Integer] -> Integer
-sumDigits = undefined
-
+sumDigits [] = 0
+sumDigits (x:xs) = if x > 9 then sumDigits (toRevDigits x ++ xs)
+                   else x + sumDigits xs
 
 -- Exercise 5 -----------------------------------------
 

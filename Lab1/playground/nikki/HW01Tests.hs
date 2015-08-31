@@ -37,13 +37,17 @@ testDoubleEveryOther :: ([Integer], [Integer]) -> Bool
 testDoubleEveryOther (n, d) = doubleEveryOther n == d
 
 ex3Tests :: [Test]
-ex3Tests = [ Test "doubleEveryOther" testDoubleEveryOther [([1,2,3,4],[1,4,3,8]),
+ex3Tests = [ Test "doubleEveryOther test" testDoubleEveryOther [([1,2,3,4],[1,4,3,8]),
            ([0,0],[0,0]),([1,2],[1,4]),([1],[1])]]
 
 -- Exercise 4 -----------------------------------------
 
+testSumDigits :: ([Integer], Integer) -> Bool
+testSumDigits (n, d) = sumDigits n == d
+
 ex4Tests :: [Test]
-ex4Tests = []
+ex4Tests = [ Test "sumDigits test" testSumDigits [([1,2],3), ([0],0),([],0),
+           ([1,23],6),([10, 5, 18, 4],19)]]
 
 -- Exercise 5 -----------------------------------------
 
