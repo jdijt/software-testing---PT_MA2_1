@@ -51,8 +51,12 @@ ex4Tests = [ Test "sumDigits test" testSumDigits [([1,2],3), ([0],0),([],0),
 
 -- Exercise 5 -----------------------------------------
 
+testLuhn :: (Integer, Bool) -> Bool
+testLuhn (n, d) = luhn n == d
+
 ex5Tests :: [Test]
-ex5Tests = []
+ex5Tests = [ Test "luhn test" testLuhn [(5594589764218858, True), 
+           (1234567898765432, False), (378282246310005, True), (378734493671000, True)]]
 
 -- Exercise 6 -----------------------------------------
 

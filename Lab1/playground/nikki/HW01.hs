@@ -15,7 +15,7 @@ dropLastDigit x = x `div` 10
 
 toRevDigits :: Integer -> [Integer]
 toRevDigits x | x <= 0 = []
-              | otherwise = lastDigit x:(toRevDigits (dropLastDigit x)) 
+              | otherwise = lastDigit x:(toRevDigits . dropLastDigit) x 
 
 -- Exercise 3 -----------------------------------------
 
@@ -37,7 +37,7 @@ sumDigits (x:xs) = if x > 9 then sumDigits (toRevDigits x ++ xs)
 
 -- Validate a credit card number using the above functions.
 luhn :: Integer -> Bool
-luhn = undefined
+luhn x = (lastDigit . sumDigits . doubleEveryOther . toRevDigits) x == 0
 
 -- Exercise 6 -----------------------------------------
 
