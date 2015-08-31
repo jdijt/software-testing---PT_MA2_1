@@ -42,19 +42,22 @@ ex3Tests = [ Test "doubleEveryOther test" testDoubleEveryOther
            ]
 
 -- Exercise 4 -----------------------------------------
+testSumDigits :: ([Integer], Integer) -> Bool
+testSumDigits (i,o) = sumDigits i == o
 
 ex4Tests :: [Test]
-ex4Tests = []
+ex4Tests = [ Test "sumDigits test" testSumDigits
+             [([1, 2, 3], 6), ( [10, 5, 18, 4], 19), ([], 0), ([0], 0)]
+           ]
 
 -- Exercise 5 -----------------------------------------
+testLuhn :: (Integer, Bool) -> Bool
+testLuhn (i, o) = luhn i == o
 
 ex5Tests :: [Test]
-ex5Tests = []
-
--- Exercise 6 -----------------------------------------
-
-ex6Tests :: [Test]
-ex6Tests = []
+ex5Tests = [ Test "luhn test" testLuhn
+             [(5594589764218858, True), (1234567898765432, False), (0, True), (810, True), (910, False)]
+           ]
 
 -- All Tests ------------------------------------------
 
@@ -64,5 +67,4 @@ allTests = concat [ ex1Tests
                   , ex3Tests
                   , ex4Tests
                   , ex5Tests
-                  , ex6Tests
                   ]
