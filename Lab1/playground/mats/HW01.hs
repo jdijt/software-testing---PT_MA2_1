@@ -14,7 +14,8 @@ dropLastDigit a = div a 10
 -- Exercise 2 -----------------------------------------
 
 toRevDigits :: Integer -> [Integer]
-toRevDigits = undefined
+toRevDigits n | n <= 0 = []
+              | otherwise = lastDigit n : toRevDigits (dropLastDigit n)
 
 -- Exercise 3 -----------------------------------------
 
