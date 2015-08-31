@@ -64,8 +64,16 @@ ex4Tests = [Test "toSumDigitsTest" testSumDigits
 
 -- Exercise 5 -----------------------------------------
 
+testLuhn :: (Integer,Bool) -> Bool
+testLuhn (x,r) = luhn x == r
+
 ex5Tests :: [Test]
-ex5Tests = []
+ex5Tests = [Test "luhnTest" testLuhn
+			[(0,True),
+			(42,True),
+			(24,False),
+			(43,False)]
+			]
 
 -- Exercise 6 -----------------------------------------
 
