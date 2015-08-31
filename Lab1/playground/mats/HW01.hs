@@ -23,26 +23,19 @@ toRevDigits n | n <= 0 = []
 doubleEveryOther :: [Integer] -> [Integer]
 doubleEveryOther [] = []
 doubleEveryOther [x] = [x]
-doubleEveryOther (x:y:zs) = x : (y*2 : doubleEveryOther zs)
+doubleEveryOther (x:y:zs) = x : (y * 2 : doubleEveryOther zs)
 
 -- Exercise 4 -----------------------------------------
 
 -- Calculate the sum of all the digits in every Integer.
 sumDigits :: [Integer] -> Integer
-sumDigits = undefined
+sumDigits [] = 0
+sumDigits (x:xs) | x < 10 = x + sumDigits xs
+                 | otherwise = 1 + mod x 10 + sumDigits xs
 
 
 -- Exercise 5 -----------------------------------------
 
 -- Validate a credit card number using the above functions.
 luhn :: Integer -> Bool
-luhn = undefined
-
--- Exercise 6 -----------------------------------------
-
--- Towers of Hanoi for three pegs
-type Peg = String
-type Move = (Peg, Peg)
-
-hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
-hanoi = undefined
+luhn n = (lastDigit $ sumDigits $ doubleEveryOther $ toRevDigits n) == 0
