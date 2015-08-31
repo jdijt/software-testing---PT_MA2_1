@@ -26,37 +26,58 @@ ex1Tests = [ Test "lastDigit test" testLastDigit
 testToRevDigits :: (Integer, [Integer]) -> Bool
 testToRevDigits (n, d) = toRevDigits n == d
 
-
 ex2Tests :: [Test]
-ex2Tests = [ Test "toRevDigits test" testToRevDigits
-             [(123, [3, 2, 1]) , (1234, [4, 3, 2, 1]) , (0, [])]
+ex2Tests = [ Test "toRevDigits" testToRevDigits
+            [(230, [0,3,2]), (1234, [4,3,2,1]), (-1, []), (0, [])]
            ]
 
 -- Exercise 3 -----------------------------------------
 testDoubleEveryOther :: ([Integer], [Integer]) -> Bool
-testDoubleEveryOther (x,y) = doubleEveryOther x == y
+testDoubleEveryOther (n, d) = doubleEveryOther n == d
 
 ex3Tests :: [Test]
-ex3Tests = [ Test "doubleEveryOther test" testDoubleEveryOther
-             [([1, 2, 3], [1, 4, 3]), ([1, 2, 3, 4], [1, 4, 3, 8]), ([0, 0], [0, 0])]
+ex3Tests = [ Test "doubleEveryOther" testDoubleEveryOther
+                [
+                     ([1,2,3], [1,4,3]),
+                     ([], []),
+                     ([-1], [-1]),
+                     ([0], [0]),
+                     ([1,2], [1,4]),
+                     ([9,8,7,8,9], [9, 16, 7, 16, 9])
+                ]
            ]
 
 -- Exercise 4 -----------------------------------------
 testSumDigits :: ([Integer], Integer) -> Bool
-testSumDigits (i,o) = sumDigits i == o
+testSumDigits (n, d) = sumDigits n == d
 
 ex4Tests :: [Test]
-ex4Tests = [ Test "sumDigits test" testSumDigits
-             [([1, 2, 3], 6), ( [10, 5, 18, 4], 19), ([], 0), ([0], 0)]
-           ]
+ex4Tests = [ Test "sumDigits" testSumDigits
+                           [
+                                ([1,2,3], 6),
+                                ([], 0),
+                                ([-1], -1),
+                                ([0], 0),
+                                ([1,2], 3),
+                                ([9,8,7,8,9], 41),
+                                ([19,118], 20)
+                           ]
+                      ]
 
 -- Exercise 5 -----------------------------------------
+
 testLuhn :: (Integer, Bool) -> Bool
-testLuhn (i, o) = luhn i == o
+testLuhn (n, d) = luhn n == d
 
 ex5Tests :: [Test]
-ex5Tests = [ Test "luhn test" testLuhn
-             [(5594589764218858, True), (1234567898765432, False), (0, True), (810, True), (910, False)]
+ex5Tests =  [ Test "luhn" testLuhn
+                [
+                   (5594589764218858, True),
+                   (1234567898765432, False),
+                   (5262703537271091, True),
+                   (1255125512551255, True),
+                   (5262703537271093, False)
+                ]
            ]
 
 -- All Tests ------------------------------------------
@@ -67,4 +88,5 @@ allTests = concat [ ex1Tests
                   , ex3Tests
                   , ex4Tests
                   , ex5Tests
+                  , ex6Tests
                   ]
