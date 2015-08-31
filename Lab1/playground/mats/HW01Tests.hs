@@ -15,9 +15,6 @@ testLastDigit (n, d) = lastDigit n == d
 testDropLastDigit :: (Integer, Integer) -> Bool
 testDropLastDigit (n, d) = dropLastDigit n == d
 
-testToRevDigits :: (Integer, [Integer]) -> Bool
-testToRevDigits (n, d) = toRevDigits n == d
-
 ex1Tests :: [Test]
 ex1Tests = [ Test "lastDigit test" testLastDigit
              [(123, 3), (1234, 4), (5, 5), (10, 0), (0, 0)]
@@ -26,6 +23,9 @@ ex1Tests = [ Test "lastDigit test" testLastDigit
            ]
 
 -- Exercise 2 -----------------------------------------
+testToRevDigits :: (Integer, [Integer]) -> Bool
+testToRevDigits (n, d) = toRevDigits n == d
+
 
 ex2Tests :: [Test]
 ex2Tests = [ Test "toRevDigits test" testToRevDigits
@@ -33,9 +33,13 @@ ex2Tests = [ Test "toRevDigits test" testToRevDigits
            ]
 
 -- Exercise 3 -----------------------------------------
+testDoubleEveryOther :: ([Integer], [Integer]) -> Bool
+testDoubleEveryOther (x,y) = doubleEveryOther x == y
 
 ex3Tests :: [Test]
-ex3Tests = []
+ex3Tests = [ Test "doubleEveryOther test" testDoubleEveryOther
+             [([1, 2, 3], [1, 4, 3]), ([1, 2, 3, 4], [1, 4, 3, 8]), ([0, 0], [0, 0])]
+           ]
 
 -- Exercise 4 -----------------------------------------
 
