@@ -1,8 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 module CSI where
 
-
-
 data Boy = Matthew | Peter | Jack | Arnold | Carl 
             deriving (Eq,Show)
  
@@ -10,11 +8,6 @@ boys::[Boy]
 boys = [Matthew, Peter, Jack, Arnold, Carl]
 
 
-{-|
- - All boys are given the benefit of the doubt, so:
- - In the case where Jack claims Peter and Matthew both lie we only return True (guilty) if both the inverse of matthew and peters statements mark the boy as guilty.
- - 
- -}
 says :: Boy -> Boy -> Bool
 says Matthew Matthew = False									--Matthew: I didnt do it 
 says Matthew Carl = False										--Matthew: Neither did carl
@@ -28,7 +21,8 @@ says Carl b = not (says Arnold b)								--Carl says arnold lies.
 
 
 accusers :: Boy -> [Boy]
-accusers b = [boy | boy <- boys, says boy b]
+accusers boy = [b | b <- boys, says b boy]
+
 
 --Assumes the guilty one as accused by the three (honest) boys.
 guilty :: [Boy]
@@ -40,6 +34,6 @@ honest = [b | b <- boys, any (b==) (head guilty)]
 
 -- Helper functions / definitions:
 xor :: Bool -> Bool -> Bool
-False `xor` False = False
-True `xor` True = False
-_ `xor` _ = True
+xor False False = False
+xor True True = False
+xor _ _ = True
