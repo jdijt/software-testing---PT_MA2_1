@@ -1,18 +1,25 @@
 module Euler10 where
 
 
--- Sieve implementation taken from The Haskell Road to Logic, Maths and Programming (Chapter 3.7, page 104):
-sieve :: [Integer] -> [Integer]
-sieve (0:xs) = sieve xs
-sieve (x:xs) = x : sieve (mark xs 1 x)
-	where
-	mark :: [Integer] -> Integer -> Integer -> [Integer]
-	mark (y:ys) k m 
-		| k == m	= 0 : (mark ys 1 m)
-		| otherwise	= y : (mark ys (k+1) m)
+-- Code for generating primes taken from The Haskell Road to Logic, Maths and Programming (Chapter 1.83, page 23):
+ldp :: Integer -> Integer
+ldp n = ldpf primes n
 
+ldpf :: [Integer] -> Integer -> Integer
+ldpf (p:ps) n 
+	| rem n p == 0	= p
+	| p^2 > n		= n
+	| otherwise		= ldpf ps n
+
+prime :: Integer -> Bool
+prime n
+	| n < 1		= error "not a positive integer"
+	| n == 1	= False
+	| otherwise	= ldp n == n
+	
 primes :: [Integer]
-primes = sieve [2..]
+primes = 2 : filter prime [3..]
+
 
 primeSum :: Integer
 primeSum = sum $ takeWhile (2000000>) primes
