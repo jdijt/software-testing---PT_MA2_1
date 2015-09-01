@@ -19,6 +19,7 @@ prime n
 	
 primes :: [Integer]
 primes = 2 : filter prime [3..]
+-- End of code taken from The Haskell Road to Logic, Maths and Programming.
 
 
 primeSum :: Integer
