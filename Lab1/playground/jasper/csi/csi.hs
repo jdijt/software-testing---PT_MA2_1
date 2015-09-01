@@ -30,7 +30,13 @@ says Carl b = not (says Arnold b)								--Carl says arnold lies.
 accusers :: Boy -> [Boy]
 accusers b = [boy | boy <- boys, says boy b]
 
+--Assumes the guilty one as accused by the three (honest) boys.
+guilty :: [Boy]
+guilty = [b | b <- boys, (length $ accusers b) == 3]
 
+--Assumes there is only one guilty party (only the first is considered).
+honest :: [Boy]
+honest = [b | b <- boys, any (b==) (head guilty)]
 
 -- Helper functions / definitions:
 xor :: Bool -> Bool -> Bool
