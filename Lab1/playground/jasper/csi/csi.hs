@@ -1,25 +1,39 @@
 {-# OPTIONS_GHC -Wall #-}
-module csi where
+module CSI where
+
+
 
 data Boy = Matthew | Peter | Jack | Arnold | Carl 
             deriving (Eq,Show)
  
+boys::[Boy]
 boys = [Matthew, Peter, Jack, Arnold, Carl]
 
 
 {-|
- - && is used in a 'Boy AND boy are lieing' accusation. This gives the ones accused by the liears the benefit of the doubt (in case of a conflict the accused is exonerated).
- - || is used in a
- -
- -
+ - All boys are given the benefit of the doubt, so:
+ - In the case where Jack claims Peter and Matthew both lie we only return True (guilty) if both the inverse of matthew and peters statements mark the boy as guilty.
+ - 
  -}
 says :: Boy -> Boy -> Bool
-says Matthew Matthew = False		--Matthew: I didnt do it 
-says Matthew Carl = False			--Matthew: Neither did carl
-says Matthew _ = True				--It was one of the others (implied)
-says Peter Matthew = True			--Peter blames Matthew
-says Peter Jack = True				--Or Jack..
-says Peter _ = False				--And not the rest.
-says Jack b = (not says Peter b)	--Jack says both matthew and peter are lying
-				&& (not says Mattew b)
+says Matthew Matthew = False									--Matthew: I didnt do it 
+says Matthew Carl = False										--Matthew: Neither did carl
+says Matthew _ = True											--It was one of the others (implied)
+says Peter Matthew = True										--Peter blames Matthew
+says Peter Jack = True											--Or Jack..
+says Peter _ = False											--And not the rest.
+says Jack b = not ((says Peter b) || (says Matthew b))			--Jack says both matthew and peter are lieing 
+says Arnold b = (says Peter b) `xor` (says Matthew b)	 		--Arnold claims either peter or matthew lies, but not both.
+says Carl b = not (says Arnold b)								--Carl says arnold lies.
 
+
+accusers :: Boy -> [Boy]
+accusers b = [boy | boy <- boys, says boy b]
+
+
+
+-- Helper functions / definitions:
+xor :: Bool -> Bool -> Bool
+False `xor` False = False
+True `xor` True = False
+_ `xor` _ = True
