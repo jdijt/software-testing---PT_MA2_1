@@ -1,7 +1,8 @@
 module CSI
 
-
 where
+
+import Data.List;
 
 data Boy = Matthew | Peter | Jack | Arnold | Carl
            deriving (Eq,Show)
@@ -9,15 +10,21 @@ data Boy = Matthew | Peter | Jack | Arnold | Carl
 boys :: [Boy]
 boys = [Matthew, Peter, Jack, Arnold, Carl]
 
-
 says :: Boy -> Boy -> Bool
-says = undefined
 
+says Matthew Carl = False
+says Matthew Matthew = False
+says Matthew _ = True
+says Peter Matthew = True
+says Peter Jack = True
+says Peter _ = False
+says Jack x = not (says Matthew x) && not (says Peter x)
+says Arnold x = says Matthew x /= says Peter x
+says Carl x = not $ says Arnold x
 
 accusers :: Boy -> [Boy]
-accusers = undefined
-
+accusers x = filter (\y -> says y x) boys
 
 guilty, honest :: [Boy]
-guilty = undefined
-honest = undefined
+guilty = filter (\x -> (length $ accusers x) == 3) boys
+honest = accusers $ head guilty
