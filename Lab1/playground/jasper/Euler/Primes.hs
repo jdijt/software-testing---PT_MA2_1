@@ -1,5 +1,4 @@
-module Euler10 where
-
+module Primes(primes, prime) where
 
 -- Code for generating primes taken from The Haskell Road to Logic, Maths and Programming (Chapter 1.83, page 23):
 ldp :: Integer -> Integer
@@ -20,7 +19,3 @@ prime n
 primes :: [Integer]
 primes = 2 : filter prime [3..]
 -- End of code taken from The Haskell Road to Logic, Maths and Programming.
-
-
-primeSum :: Integer
-primeSum = sum $ takeWhile (2000000>) primes
