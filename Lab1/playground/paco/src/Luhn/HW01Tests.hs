@@ -2,10 +2,10 @@
 --
 -- Test cases for HW 01
 
-module HW01Tests where
+module Luhn.HW01Tests where
 
-import HW01
-import Testing
+import Luhn.HW01
+import Luhn.Testing
 
 -- Exercise 1 -----------------------------------------
 
