@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 {-# LANGUAGE ExistentialQuantification #-}
-module Testing where
+module Luhn.Testing where
 
 import Data.Maybe
 import Control.Arrow
