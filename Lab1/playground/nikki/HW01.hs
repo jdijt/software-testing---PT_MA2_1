@@ -15,7 +15,7 @@ dropLastDigit x = x `div` 10
 
 toRevDigits :: Integer -> [Integer]
 toRevDigits x | x <= 0 = []
-              | otherwise = lastDigit x:(toRevDigits (dropLastDigit x)) 
+              | otherwise = lastDigit x:(toRevDigits . dropLastDigit) x  
 
 -- Exercise 3 -----------------------------------------
 
@@ -38,12 +38,3 @@ sumDigits (x:xs) = if x > 9 then sumDigits (toRevDigits x ++ xs)
 -- Validate a credit card number using the above functions.
 luhn :: Integer -> Bool
 luhn x = (lastDigit . sumDigits . doubleEveryOther . toRevDigits) x == 0
-
--- Exercise 6 -----------------------------------------
-
--- Towers of Hanoi for three pegs
-type Peg = String
-type Move = (Peg, Peg)
-
-hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
-hanoi = undefined
