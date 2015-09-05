@@ -30,7 +30,7 @@ guilty = [b | b <- boys, (length $ accusers b) == 3]
 
 --Assumes there is only one guilty party (only the first is considered).
 honest :: [Boy]
-honest = [b | b <- boys, any (b==) (head guilty)]
+honest = [b | b <- boys, any (b==) (accusers $ head guilty)]
 
 -- Helper functions / definitions:
 xor :: Bool -> Bool -> Bool
