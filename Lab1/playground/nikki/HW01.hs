@@ -15,7 +15,11 @@ dropLastDigit x = x `div` 10
 
 toRevDigits :: Integer -> [Integer]
 toRevDigits x | x <= 0 = []
+<<<<<<< HEAD
+              | otherwise = lastDigit x:(toRevDigits . dropLastDigit) x  
+=======
               | otherwise = lastDigit x:(toRevDigits . dropLastDigit) x 
+>>>>>>> 7113cd8f8c72ae5ebb3acfaeb07c8f2a94cdaa5e
 
 -- Exercise 3 -----------------------------------------
 
@@ -38,6 +42,8 @@ sumDigits (x:xs) = if x > 9 then sumDigits (toRevDigits x ++ xs)
 -- Validate a credit card number using the above functions.
 luhn :: Integer -> Bool
 luhn x = (lastDigit . sumDigits . doubleEveryOther . toRevDigits) x == 0
+<<<<<<< HEAD
+=======
 
 -- Exercise 6 -----------------------------------------
 
@@ -47,3 +53,4 @@ type Move = (Peg, Peg)
 
 hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
 hanoi = undefined
+>>>>>>> 7113cd8f8c72ae5ebb3acfaeb07c8f2a94cdaa5e
