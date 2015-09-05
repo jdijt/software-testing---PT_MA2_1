@@ -27,3 +27,6 @@ isPermutedTriple (a,b,c) = (isPermutation a b) && (isPermutation a c)
 
 permutedPrimeTriples :: [(Integer, Integer, Integer)]
 permutedPrimeTriples = filter isPermutedTriple primeTriples
+
+solution49 :: [(Integer, Integer, Integer)]
+solution49 = permutedPrimeTriples
