@@ -16,6 +16,7 @@ Carl: What Arnold says is not true.
 
 module HW02 where
 
+import Data.Bits
 import Data.List
 
 data Boy = Matthew | Peter | Jack | Arnold | Carl 
@@ -33,7 +34,7 @@ says Peter Jack = True
 says Peter _ = False
 says Jack Carl = True
 says Jack _ = False
-says Arnold x = (says Matthew x) || (says Peter x)
+says Arnold x = (says Matthew x) `xor` (says Peter x)
 says Carl x = not (says Arnold x)
 
 -- |Evaluates how many boys are lying when Boy y would be the thief
