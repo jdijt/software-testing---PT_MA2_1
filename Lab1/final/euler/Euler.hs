@@ -20,6 +20,7 @@ solution49 :: Integer
 solution49 = concatTriples solution' (solution' + 3330) (solution' + 6660) where
     solution' = head $ filter (\x -> prime x && isPrimeAndPermutation x (x + 3330) && isPrimeAndPermutation x (x + 6660)) $ ([1000..3339] \\ [1487])
 
+concatTriples :: Integer -> Integer -> Integer -> Integer
 concatTriples a b c = 100000000 * a + 10000 * b + c
 
 isPrimeAndPermutation :: Integer -> Integer -> Bool
