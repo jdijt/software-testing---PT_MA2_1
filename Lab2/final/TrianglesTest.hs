@@ -9,7 +9,9 @@ testBaseCases = and [(triangle 3 4 5) == Rectangular,
                      (triangle 2 2 2) == Equilateral,
                      (triangle 20 20 5) == Isosceles,
                      (triangle 1 2 8) == NoTriangle,
-                     (triangle 2 3 4) == Other]
+                     (triangle 2 3 4) == Other,
+                     (triangle 0 2 2) == NoTriangle,
+                     (triangle (-3) (-4) (-5)) == NoTriangle]
 
 -- | Statistic based test
 testOccurences :: Bool
