@@ -1,7 +1,20 @@
 
 # Test report for Permutations.hs
 
-# Tests with well chosen Lists:
+## Testable properties
+These two properties can be used to test the output.
+Both are weaker than the postcondition (a is a permutation of b). Combined they can be used to check if isPermutation gave the right result.
+
+```
+isEqualLength :: [a] -> [a] -> Bool
+isEqualLength a b = length a == length b
+
+-- Based on: For each element a of the first list there must be an element b in the second list sucht that a == b
+containsAll :: Eq a => [a] -> [a] -> Bool
+containsAll a b = all (\x -> any (==x) b) a
+```
+
+## Tests with well chosen Lists:
 The intention of these testcases is to test the edgecase of the function and after that if it functions right for larger cases.
 We test four seperate cases:
 
