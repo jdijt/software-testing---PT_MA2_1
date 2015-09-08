@@ -6,16 +6,16 @@ import Data.List
 valIban :: String -> Bool
 valIban xs = mod (iban xs) 97 == 1
 
-iban :: String -> Int
+iban :: String -> Integer
 iban xs = (toDigits . adaptLetters . moveHeader . removeSpaces) xs
 
-toDigits :: [Int] -> Int
-toDigits xs = read (concat $ map show xs) :: Int
+toDigits :: [Integer] -> Integer
+toDigits xs = read (concat $ map show xs) :: Integer
 
-adaptLetters :: String -> [Int]
+adaptLetters :: String -> [Integer]
 adaptLetters [] = []
-adaptLetters (x:xs) = if isAlpha x then (ord x - 55):adaptLetters xs
-	                  else digitToInt x:adaptLetters xs
+adaptLetters (x:xs) = if isAlpha x then toInteger(ord x - 55):adaptLetters xs
+	                  else (toInteger . digitToInt) x:adaptLetters xs
 
 moveHeader :: String -> String
 moveHeader xs = drop 4 xs ++ take 4 xs
