@@ -1,6 +1,7 @@
 module TrianglesTest where
 
 import Triangles
+import Data.List
 import System.Random
 
 -- | Base Cases
@@ -13,7 +14,7 @@ testBaseCases = and [(triangle 3 4 5) == Rectangular,
                      (triangle 0 2 2) == NoTriangle,
                      (triangle (-3) (-4) (-5)) == NoTriangle]
 
--- | Statistic based test
+-- | Statistics over a certain domain
 testOccurences :: Bool
 testOccurences = and [(countShapeOccurence Equilateral) == 3,
                       (countShapeOccurence Isosceles) == 18,
@@ -22,16 +23,17 @@ testOccurences = and [(countShapeOccurence Equilateral) == 3,
 countShapeOccurence :: Shape -> Int
 countShapeOccurence s = length $ filter (==s) $ map (\(x,y,z) -> triangle x y z) [ (x,y,z) | x <- [3..5], y <- [3..5], z <- [3..5]]
 
--- | Generated triangular test cases
-testEquilateral = testTriangle genEquilateral (==Equilateral)
-testRectangular = testTriangle genRectangular (==Rectangular)
-testChangeRectangular = testTriangle (changeRandomLeg genRectangular) (/=Rectangular)
-testChangingOneLeg = testTriangle (changeRandomLeg genEquilateral) (\s -> s == Isosceles || s == NoTriangle)
+-- | Property based tests
+testEquilateral = testTriangle genEquilateral (\x y z s -> s==Equilateral)
+testRectangular = testTriangle genRectangular (\x y z s -> s==Rectangular)
+testChangeRectangular = testTriangle (changeRandomLeg genRectangular) (\x y z s -> s /=Rectangular)
+testChangeEquilateral = testTriangle (changeRandomLeg genEquilateral) (\x y z s -> s == Isosceles || s == NoTriangle)
+testPermutations = testTriangle (changeRandomLeg genEquilateral) (\x y z s -> all (==s) $ map (\(x, y, z) -> triangle x y z) $ permutateTriple (x, y, z))
 
 
 -- | Test Method
 testTriangle :: IO (Integer, Integer, Integer)
-         -> (Shape -> Bool)
+         -> (Integer -> Integer -> Integer -> Shape -> Bool)
          -> IO()
 testTriangle = testR 1 100 triangle
 
@@ -39,18 +41,17 @@ testR :: Integer
          -> Integer
          -> (Integer -> Integer -> Integer -> Shape)
          -> IO (Integer, Integer, Integer)
-         -> (Shape -> Bool)
+         -> (Integer -> Integer -> Integer -> Shape -> Bool)
          -> IO()
 testR k n f g r = if k == n then print (show n ++ " tests passed")
                 else do
                     (x, y, z) <- g
-                    if r (f x y z) then
+                    if r x y z (f x y z) then
                         do print ("pass on: " ++ show (x, y, z))
                            testR (k+1) n f g r
                     else error ("failed test on: " ++ show (x, y, z))
 
 -- | Generate triangles
-
 changeRandomLeg :: IO (Integer, Integer, Integer) -> IO (Integer, Integer, Integer)
 changeRandomLeg g = do
     (x, y, z) <- g
@@ -64,6 +65,9 @@ changeRandomLeg g = do
     else
         return (x, y, z+d)
 
+permutateTriple :: (Integer, Integer, Integer) -> [(Integer, Integer, Integer)]
+permutateTriple (x, y, z) = [(a, b, c) | [a, b, c] <- (permutations [x, y, z])]
+
 genRectangular :: IO (Integer, Integer, Integer)
 genRectangular = do
     n <- getRandomInt 0 125
@@ -71,6 +75,13 @@ genRectangular = do
 
 getPythagoras :: [(Integer, Integer, Integer)]
 getPythagoras = [(x, y, z) | x <- [1..100], y <- [1..100], z <- [1..141], x^2 + y^2 == z^2]
+
+genRandomTriangle :: IO (Integer, Integer, Integer)
+genRandomTriangle = do
+    x <- getRandomInt 1 20
+    y <- getRandomInt 1 20
+    z <- getRandomInt 1 20
+    return (x, y, z)
 
 genEquilateral :: IO (Integer, Integer, Integer)
 genEquilateral = do
