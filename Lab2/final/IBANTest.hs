@@ -42,9 +42,6 @@ genRandomTransposition s = do
 		transPoseAtIndex (x:xs) n = x:transPoseAtIndex xs (n-1);
 		
 
-
-
-
 addRandomChar :: String -> [Char] -> IO String
 addRandomChar s cs = do		
 		x <- getRandomInt (length cs - 1)
