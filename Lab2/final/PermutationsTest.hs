@@ -43,7 +43,7 @@ testPermutations = do
 					let perms = permutations sourceList
 					if (all (isPermutation sourceList) perms) then do
 						print ("pass on all permutations of : " ++ show sourceList)
-					else error ("failed test on one of the perm-utations of: " ++ show sourceList)
+					else error ("failed test on one of the permutations of: " ++ show sourceList)
 
 ----------------------
 -- Helpers
