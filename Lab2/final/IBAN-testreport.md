@@ -25,13 +25,22 @@ We applied one test for valid IBAN numbers and one for invalid IBAN numbers.
 
 ### Valid IBAN test
 
-We took 6 IBAN numbers from different countries from a list with known valid IBAN numbers. The function `iban` should always return `True`.
+- We took 6 IBAN numbers from different countries from a list with known valid IBAN numbers. The function `iban` should always return `True`.
 
-The valid IBAN test can be executed with the following command:
+The basic IBAN test can be executed with the following command:
 
 ```
 basicTest
 ```
+
+- Further we added a random non-alphanumerical character to a random place in the IBAN number. The function `iban` should still return `True` as the character has to be deleted in the preliminary step.
+
+This can be tested by executing the following command:
+
+```
+
+```
+
 
 ### Invalid IBAN test
 
