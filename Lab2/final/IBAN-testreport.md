@@ -21,7 +21,7 @@ The source can be found in the files `IBAN.hs` and `IBANTest.hs`. Please load `I
 
 ## Tests
 
-We applied one test for valid IBAN numbers in which case `iban` should always return `True` and one for invalid IBAN numbers which should always return `False`. 
+We applied one test for valid IBAN numbers and one for invalid IBAN numbers.
 
 ### Valid IBAN test
 
