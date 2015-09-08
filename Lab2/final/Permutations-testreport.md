@@ -23,21 +23,21 @@ We test four seperate cases:
 3. Non permutations of equal size
 4. Non permutations of differing size.
 
+### Base case test Source
 ```
-*Permutations> isPermutation [] []
+testBasic :: Bool
+testBasic = and [(isPermutation [] []) == True,
+				(isPermutation [] [1]) == False,
+				(isPermutation [1] []) == False,
+				(isPermutation [1,2,3] [1,2,3]) == True,
+				(isPermutation [1,2,3] [3,2,1]) == True,
+				(isPermutation [1,2,3] [2,3,4]) == False,
+				(isPermutation [1,2,3] [1,2,3,4]) == False,
+				(isPermutation [1,2,3,4] [1,2,3]) == False]
+```
+
+### Base case test run:
+```
+*Permutations> testBasic
 True
-*Permutations> isPermutation [] [1]
-False
-*Permutations> isPermutation [1] []
-False
-*Permutations> isPermutation [1,2,3] [1,2,3]
-True
-*Permutations> isPermutation [1,2,3] [3,2,1]
-True
-*Permutations> isPermutation [1,2,3] [2,3,4]
-False
-*Permutations> isPermutation [1,2,3] [1,2,3,4]
-False
-*Permutations> isPermutation [1,2,3,4] [1,2,3]
-False
 ```

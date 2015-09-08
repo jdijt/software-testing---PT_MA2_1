@@ -30,6 +30,22 @@ infix 1 ==>
 (==>) :: Bool -> Bool -> Bool
 p ==> q = (not p) || q
 
+
+----------------------
+-- 'Well chosen lists' / basic tests
+----------------------
+
+testBasic :: Bool
+testBasic = and [(isPermutation ([]::[Int]) []) == True,
+				(isPermutation [] [1]) == False,
+				(isPermutation [1] []) == False,
+				(isPermutation [1,2,3] [1,2,3]) == True,
+				(isPermutation [1,2,3] [3,2,1]) == True,
+				(isPermutation [1,2,3] [2,3,4]) == False,
+				(isPermutation [1,2,3] [1,2,3,4]) == False,
+				(isPermutation [1,2,3,4] [1,2,3]) == False]
+
+
 ----------------------
 -- Random tests
 ----------------------
