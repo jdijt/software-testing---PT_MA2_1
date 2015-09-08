@@ -7,7 +7,7 @@ iban :: String -> Bool
 iban xs = mod (iban' xs) 97 == 1
 
 iban' :: String -> Integer
-iban' xs = (toDigits . adaptLetters . moveHeader . removeSpaces) xs
+iban' xs = (toDigits . adaptLetters . moveHeader . removeNonAlphaNum) xs
 
 toDigits :: [Integer] -> Integer
 toDigits xs = read (concat $ map show xs) :: Integer
@@ -21,9 +21,6 @@ adaptLetters (x:xs)
 moveHeader :: String -> String
 moveHeader xs = drop 4 xs ++ take 4 xs
 
-removeSpaces :: String -> String
-removeSpaces [] = []
-removeSpaces (x:xs)
-	| isSpace x	= removeSpaces xs
-	| otherwise	= x:removeSpaces xs
+removeNonAlphaNum :: String -> String
+removeNonAlphaNum = filter isAlphaNum 
 
