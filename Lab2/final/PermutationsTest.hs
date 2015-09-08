@@ -1,12 +1,8 @@
-module Permutations where
+module PermutationsTest where
 
+import Permutations
 import Data.List
 import System.Random
-
-isPermutation :: Eq a => [a] -> [a] -> Bool
-isPermutation [] [] = True
-isPermutation [] _ = False
-isPermutation (x:xs) ys = x `elem` ys && (isPermutation xs (delete x ys))
 
 ----------------------
 -- Testable properties
