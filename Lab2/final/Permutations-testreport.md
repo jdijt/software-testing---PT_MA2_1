@@ -42,6 +42,8 @@ Within the 100 possible inputs there are 16 (1+3+6+6: \[\] \[\], \[x\] \[x\], \[
 So if we generate 100 testcases the chance of there not beeing any permutations in the generated input is (84/100)^100 = 2.67872793e-8 i.e.: extremely unlikely.
 So the random tests will, almost certainly, provide input for which isPermutation will be True.
 
+The performed check is a weak one. We know for sure that if two lists are each others permutations it implies that they are equal length and they contain all of each others items: "isPermutation a b ==> containsAll a b" and "isPermutation a b ==> isEqualLength a b". This can be seen in the implementation of testProperty.
+
 #### random tests call:
 ```
 *Permutations> testRandom
