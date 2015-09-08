@@ -28,17 +28,13 @@ testBasic = and [(isDerangement ([]::[Int]) []) == True,
 				(isDerangement [1,2,3] [2,1,3]) == False]
 
 -- 'Random based tests'
-testRandom :: IO ()
-testRandom = testProperty isDerangement (isPermutation .&&. noMatchingIndices)
+testHasPermutationProperty = testProperty isDerangement isPermutation
+testHasNoMatchingIndicesProperty = testProperty isDerangement (\x y -> length x == length y && noMatchingIndices x y)
+testHasAllProperties = testProperty isDerangement (isPermutation .&&. noMatchingIndices)
 
--- 'Happy tests'
-testDerangements :: IO()
-testDerangements = do
-					sourceList <- genIntList 6 10
-					let derangements = deran sourceList
-					if (all (isDerangement sourceList) derangements) then do
-						print ("pass on all derangements of : " ++ show sourceList)
-					else error ("failed test on one of the derangements of: " ++ show sourceList)
+-- 'Statistic based test'
+testStatistic :: Bool
+testStatistic = (length $ filter (isDerangement [1..4]) $ permutations [1..4]) == 9
 
 ----------------------
 -- Helpers
