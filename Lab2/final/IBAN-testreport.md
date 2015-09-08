@@ -25,20 +25,32 @@ We applied one test for valid IBAN numbers and one for invalid IBAN numbers.
 
 ### Valid IBAN test
 
-We took 6 IBAN numbers from different countries from a list with known valid IBAN numbers. The function `iban` should always return `True`.
+- We took 6 IBAN numbers from different countries from a list with known valid IBAN numbers. The function `iban` should always return `True`.
 
-The valid IBAN test can be executed with the following command:
+The basic IBAN test can be executed with the following command:
 
 ```
 basicTest
 ```
 
+- Further we added a random non-alphanumerical character to a random place in the IBAN number. The function `iban` should still return `True` as the character has to be deleted in the preliminary step.
+
+This can be tested by executing the following command:
+
+```
+testTrue iban addRandomNonAlphaNumChar
+```
+
+
 ### Invalid IBAN test
 
 We took the same 6 valid IBAN numbers and swapped two characters, which ensures the adapted IBAN number is invalid and replicates the effect of human made typo's. The characters which are swapped should not be the same or include non-alphabetical characters as in this case the adapted IBAN number equals the original number.
 
-The invalid IBAN test can be executed with the following command:
+In addition to random transpositions we also test random edits where a random alphanumerical character is added. Adding a single character (a 'typo') should also always result in an invalid IBAN number.
+
+The invalid IBAN test can be executed with the following commands:
 
 ```
 testFalse iban genRandomTransposition
+testFalse iban addRandomAlphaNumChar
 ```
