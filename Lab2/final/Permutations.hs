@@ -8,8 +8,9 @@ isPermutation [] [] = True
 isPermutation [] _ = False
 isPermutation (x:xs) ys = x `elem` ys && (isPermutation xs (delete x ys))
 
-
+----------------------
 -- Testable properties
+----------------------
 isEqualLength :: [a] -> [a] -> Bool
 isEqualLength a b = length a == length b
 
@@ -17,33 +18,56 @@ isEqualLength a b = length a == length b
 containsAll :: Eq a => [a] -> [a] -> Bool
 containsAll a b = all (\x -> any (==x) b) a
 
+----------------------
+-- Helpers
+----------------------
 -- Function composition for properties of type a -> a -> Bool
 (.&&.) :: (a -> a -> Bool) -> (a -> a -> Bool) -> a -> a -> Bool
-p .&&. q = (\x y -> p x y || q x y)
+p .&&. q = (\x y -> p x y && q x y)
 
 -- Additional logic notation
 infix 1 ==> 
-
 (==>) :: Bool -> Bool -> Bool
 p ==> q = (not p) || q
-forall = flip all
 
--- Testcase generation:
+
+----------------------
+-- 'Well chosen lists' / basic tests
+----------------------
+
+testBasic :: Bool
+testBasic = and [(isPermutation ([]::[Int]) []) == True,
+				(isPermutation [] [1]) == False,
+				(isPermutation [1] []) == False,
+				(isPermutation [1,2,3] [1,2,3]) == True,
+				(isPermutation [1,2,3] [3,2,1]) == True,
+				(isPermutation [1,2,3] [2,3,4]) == False,
+				(isPermutation [1,2,3] [1,2,3,4]) == False,
+				(isPermutation [1,2,3,4] [1,2,3]) == False]
+
+
+----------------------
+-- Random tests
+----------------------
 getRandomInt :: Int -> IO Int
 getRandomInt n = getStdRandom (randomR (0,n))
 
 genIntList :: IO [Int]
 genIntList = do 
-  k <- getRandomInt 5
-  n <- getRandomInt 3
-  getIntL k n
+	n <- getRandomInt 2
+	getIntL [0..2] n
 
-getIntL :: Int -> Int -> IO [Int]
+pickInt :: [Int] -> IO Int
+pickInt is = do
+	x <- getRandomInt (length is - 1)
+	return (is !! x)
+
+getIntL :: [Int] -> Int -> IO [Int]
 getIntL _ 0 = return []
-getIntL k n = do 
-   x <-  getRandomInt k
-   xs <- getIntL k (n-1)
-   return (x:xs)
+getIntL is n = do 
+	x <- pickInt is
+	xs <- getIntL (delete x is) (n-1)
+	return (x:xs)
 
 
 testR :: Int -> Int -> ([Int] -> [Int] -> Bool) -> ([Int] -> [Int] -> Bool -> Bool) -> IO ()
@@ -57,5 +81,7 @@ testR k n f r =
 					testR (k+1) n f r
 				else error ("failed test on: " ++ show xs ++ " " ++ show ys)
 
-testPost :: ([Int] -> [Int] -> Bool) -> ([Int] -> [Int] -> Bool) -> IO ()
-testPost f p = testR 1 100 f (\x y r -> r ==> p x y)
+testProperty :: ([Int] -> [Int] -> Bool) -> ([Int] -> [Int] -> Bool) -> IO ()
+testProperty f p = testR 1 100 f (\x y r -> r ==> p x y)
+
+
