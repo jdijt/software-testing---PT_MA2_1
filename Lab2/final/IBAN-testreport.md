@@ -21,39 +21,24 @@ The source can be found in the files `IBAN.hs` and `IBANTest.hs`. Please load `I
 
 ## Tests
 
-We applied different approaches to test the implementation. In the following paragraphs when we mention `a`, `b` and `c`, we assume that `a <= b <= c`.
+We applied one test for valid IBAN numbers in which case `iban` should always return `True` and one for invalid IBAN numbers which should always return `False`. 
 
-### Base Cases
+### Valid IBAN test
 
-We tested some of the base cases which exploit the base properties of each shape. In addition we checked the `NoTriangle` property that holds when the triangle sides have the form `a + b <= c`. It is not possible to draw these triangles. This directly implies that triangles with at least one side of `0` or less will be of the class `NoTriangle`.
+We took 6 IBAN numbers from different countries from a list with known valid IBAN numbers. The function `iban` should always return `True`.
 
-The base cases can be executed with the following command:
-
-```
-testBaseCases
-```
-
-### Statistics over a certain domain
-
-We have generated all possible triples over a domain of natural numbers with `3 <= n <= 5` and we determined the number of instances with logic for each class of triangle that should occur in this set. We came to the conclusion that the set should contain (`n` is the size of the domain):
-
-- 3 `Equilateral` triangles (n);
-- 18 `Isosceles` triangles (`3 * n (n - 1 )`. *This will only hold for a domain where it is not possible to have triangles of the class `NoTriangle`*);
-- and 6 `Rectangular` triangles (`3`, `4`, `5` is the only Pythagoras triangle, which will result in 6 permutations).
-
-The statistics tests can be executed with the following command:
+The valid IBAN test can be executed with the following command:
 
 ```
-testOccurences
+basicTest
 ```
 
-### Property based tests
+### Invalid IBAN test
 
-We tested properties that we did not use in the definition of the function `triangle`.
+We took the same 6 valid IBAN numbers and swapped two characters, which ensures the adapted IBAN number is invalid and replicates the effect of human made typo's. The characters which are swapped should not be the same or include non-alphabetical characters as in this case the adapted IBAN number equals the original number.
 
-- When we change one of the sides of a triangle that would produce an `Equilateral` the result can never result in an `Equilateral`, but has to be an `Isosceles` or a `NoTriangle`. This is tested with `testChangeEquilateral`.
-- When we change one of the sides of a triangle that would produce a `Rectangular` the result can never result in a `Rectangular`. This is tested with `testChangeRectangular`.
-- When we order of the input, the resulting shape should be the same. This is tested with `testPermutations`.
+The invalid IBAN test can be executed with the following command:
 
-
-
+```
+testFalse iban genRandomTransposition
+```
