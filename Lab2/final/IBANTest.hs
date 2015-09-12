@@ -26,9 +26,9 @@ getRandomInt n = getStdRandom (randomR (0,n))
 genRandomTransposition :: String -> IO String
 genRandomTransposition s = do
 		x <- getRandomInt (length s - 2) -- Minus two because we swap x and x+1
-		if validTransposition (s !! x) (s !! (x+1))	then 
+		if validTransposition (s !! x) (s !! (x+1))	then
 			return $ transPoseAtIndex s x
-		else 
+		else
 			genRandomTransposition s
 		where
 		--Transposition is valid if chars are not equal and no space (if this is the case it does not corrupt the iban to cause a failure)
@@ -38,26 +38,26 @@ genRandomTransposition s = do
 		transPoseAtIndex :: String -> Int -> String
 		transPoseAtIndex [] _ = []
 		transPoseAtIndex [x] _ = [x]
-		transPoseAtIndex (x:y:xs) 0 = (y:x:xs)
+		transPoseAtIndex (x:y:xs) 0 = y:x:xs
 		transPoseAtIndex (x:xs) n = x:transPoseAtIndex xs (n-1);
-		
 
-addRandomChar :: String -> [Char] -> IO String
-addRandomChar s cs = do		
+
+addRandomChar :: String -> String -> IO String
+addRandomChar s cs = do
 		x <- getRandomInt (length cs - 1)
 		idx <- getRandomInt (length s - 1)
 		return $ insertCharAtIndex s (cs !! x) idx
 		where
 		insertCharAtIndex :: String -> Char -> Int -> String
 		insertCharAtIndex [] c _ = [c]
-		insertCharAtIndex (x:xs) c 0 = (x:c:xs)
+		insertCharAtIndex (x:xs) c 0 = x:c:xs
 		insertCharAtIndex (x:xs) c n = x:insertCharAtIndex xs c (n-1)
 
 addRandomAlphaNumChar :: String -> IO String
 addRandomAlphaNumChar s = addRandomChar s "ABCDEFGHIJKLMNOPQRTUVWXYZ1234567890"
 
 addRandomNonAlphaNumChar :: String -> IO String
-addRandomNonAlphaNumChar s = addRandomChar s "!@#$%&^ " 
+addRandomNonAlphaNumChar s = addRandomChar s "!@#$%&^ "
 
 
 
@@ -66,11 +66,11 @@ testF k n f e p
 	| k == n    =  print (show n ++ " tests passed")
 	| otherwise = do
 		ib <- e $ validIbans !! (k `mod` 6)  --Get corrupted IBAN.
-		if iban ib == p then 
+		if iban ib == p then
 			do	print ("pass on: " ++ show ib ++ " Original: " ++ (validIbans !! (k `mod` 6)))
 				testF (k+1) n f e p
 		else error ("failed test on: " ++ show ib ++ " Original: " ++ (validIbans !! (k `mod` 6)))
-		 
+
 testFalse :: (String -> Bool) -> (String -> IO String) -> IO ()
 testFalse f e = testF 1 100 f e False
 

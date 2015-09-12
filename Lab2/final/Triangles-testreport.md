@@ -7,7 +7,7 @@ The source can be found in the files `Triangles.hs` and `TrianglesTest.hs`. Plea
 ## Requirements
 
 > Write a program (in Haskell) that takes a triple of integer values as arguments and gives as output one of the following statements:
-> 
+>
 > - `Not a triangle` if the three numbers cannot occur as the lengths of the sides of triangle,
 > - `Equilateral` if the three numbers are the lengths of the sides of an equilateral triangle,
 > - `Rectangular` if the three numbers are the lengths of the sides of a rectangular triangle,
@@ -29,7 +29,7 @@ We applied different approaches to test the implementation. In the following par
 
 ### Base Cases
 
-We tested some of the base cases which exploit the base properties of each shape. In addition we checked the `NoTriangle` property that holds when the triangle sides have the form `a + b <= c`. It is not possible to draw these triangles. This directly implies that triangles with at least one side of `0` or less will be of the class `NoTriangle`.
+We tested some of the base cases which exploit the base properties of each shape. In addition we checked the `NoTriangle` property that holds when the triangle sides have the form `a + b <= c`. It is impossible to draw these triangles. This directly implies that triangles with at least one side of `0` or less will be of the class `NoTriangle`, since `a <= b <= c`.
 
 The base cases can be executed with the following command:
 
@@ -48,7 +48,7 @@ We have generated all possible triples over a domain of natural numbers with `3 
 The statistics tests can be executed with the following command:
 
 ```
-testOccurences
+testOccurrences
 ```
 
 ### Property based tests
@@ -58,7 +58,3 @@ We tested properties that we did not use in the definition of the function `tria
 - When we change one of the sides of a triangle that would produce an `Equilateral` the result can never result in an `Equilateral`, but has to be an `Isosceles` or a `NoTriangle`. This is tested with `testChangeEquilateral`.
 - When we change one of the sides of a triangle that would produce a `Rectangular` the result can never result in a `Rectangular`. This is tested with `testChangeRectangular`.
 - When we order of the input, the resulting shape should be the same. This is tested with `testPermutations`.
-
-
-
-

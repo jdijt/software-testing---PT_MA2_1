@@ -6,28 +6,28 @@ import System.Random
 
 -- | Base Cases
 testBaseCases :: Bool
-testBaseCases = and [(triangle 3 4 5) == Rectangular,
-                     (triangle 2 2 2) == Equilateral,
-                     (triangle 20 20 5) == Isosceles,
-                     (triangle 1 2 8) == NoTriangle,
-                     (triangle 2 3 4) == Other,
-                     (triangle 0 2 2) == NoTriangle,
-                     (triangle (-3) (-4) (-5)) == NoTriangle]
+testBaseCases = and [triangle 3 4 5 == Rectangular,
+                     triangle 2 2 2 == Equilateral,
+                     triangle 20 20 5 == Isosceles,
+                     triangle 1 2 8 == NoTriangle,
+                     triangle 2 3 4 == Other,
+                     triangle 0 2 2 == NoTriangle,
+                     triangle (-3) (-4) (-5) == NoTriangle]
 
 -- | Statistics over a certain domain
-testOccurences :: Bool
-testOccurences = and [(countShapeOccurence Equilateral) == 3,
-                      (countShapeOccurence Isosceles) == 18,
-                      (countShapeOccurence Rectangular) == 6]
+testOccurrences :: Bool
+testOccurrences = and [countShapeOccurrence Equilateral == 3,
+                      countShapeOccurrence Isosceles == 18,
+                      countShapeOccurrence Rectangular == 6]
 
-countShapeOccurence :: Shape -> Int
-countShapeOccurence s = length $ filter (==s) $ map (\(x,y,z) -> triangle x y z) [ (x,y,z) | x <- [3..5], y <- [3..5], z <- [3..5]]
+countShapeOccurrence :: Shape -> Int
+countShapeOccurrence s = length $ filter (==s) $ map (\(x,y,z) -> triangle x y z) [ (x,y,z) | x <- [3..5], y <- [3..5], z <- [3..5]]
 
 -- | Property based tests
-testEquilateral = testTriangle genEquilateral (\x y z s -> s==Equilateral)
-testRectangular = testTriangle genRectangular (\x y z s -> s==Rectangular)
-testChangeRectangular = testTriangle (changeRandomLeg genRectangular) (\x y z s -> s /=Rectangular)
-testChangeEquilateral = testTriangle (changeRandomLeg genEquilateral) (\x y z s -> s == Isosceles || s == NoTriangle)
+testEquilateral = testTriangle genEquilateral (\_ _ _ s -> s==Equilateral)
+testRectangular = testTriangle genRectangular (\_ _ _ s -> s==Rectangular)
+testChangeRectangular = testTriangle (changeRandomLeg genRectangular) (\_ _ _ s -> s /=Rectangular)
+testChangeEquilateral = testTriangle (changeRandomLeg genEquilateral) (\_ _ _ s -> s == Isosceles || s == NoTriangle)
 testPermutations = testTriangle (changeRandomLeg genEquilateral) (\x y z s -> all (==s) $ map (\(x, y, z) -> triangle x y z) $ permutateTriple (x, y, z))
 
 
@@ -58,20 +58,20 @@ changeRandomLeg g = do
     r <- getRandomInt 1 20
     d <- randomFlip r
     p <- getRandomInt 1 3
-    if (p == 1) then
+    if p == 1 then
         return (x+d, y, z)
-    else if (p == 2) then
+    else if p == 2 then
         return (x, y+d, z)
     else
         return (x, y, z+d)
 
 permutateTriple :: (Integer, Integer, Integer) -> [(Integer, Integer, Integer)]
-permutateTriple (x, y, z) = [(a, b, c) | [a, b, c] <- (permutations [x, y, z])]
+permutateTriple (x, y, z) = [(a, b, c) | [a, b, c] <- permutations [x, y, z]]
 
 genRectangular :: IO (Integer, Integer, Integer)
 genRectangular = do
     n <- getRandomInt 0 125
-    return (getPythagoras !! (fromInteger n))
+    return (getPythagoras !! fromInteger n)
 
 getPythagoras :: [(Integer, Integer, Integer)]
 getPythagoras = [(x, y, z) | x <- [1..100], y <- [1..100], z <- [1..141], x^2 + y^2 == z^2]

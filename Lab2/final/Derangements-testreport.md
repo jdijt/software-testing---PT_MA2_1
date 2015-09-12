@@ -6,10 +6,10 @@ The source can be found in the files `Derangements.hs` and `DerangementsTest.hs`
 
 ## Properties
 
-The properties we identified for a list (`a`) to be a derangement of another list (`b`):
+The properties we identified for a list `a` to be a derangement of another list `b` are:
 
-- `a` should be a permutation of `b`. From the `permutations` assignment we know that this automatically has the property that `a` and `b` are of the same length.
-- Let `n` be a arbitrary `|a|`, then it holds that `a[n] /= b[n]`.
+- `a` should be a permutation of `b`. From the `permutations` assignment we know that this implies that has the property holds that `a` and `b` have the same length.
+- Let `n` be an arbitrary value from the set `{1,2,..,|a|}`, then it holds that `a[n] /= b[n]`.
 
 **Implementation**
 
@@ -39,7 +39,7 @@ We concluded that test automation is possible for testing the derangement proper
 isDerangement ==> isPermutation .&&.  noMatchingIndices
 ```
 
-This is the strongest postcondition we could find. Therefor we have added a random test that generates random lists and tests if the above implication holds. The following functions do this:
+This is the strongest postcondition we could find. Therefor we have added a random test that generates random lists and tests if the above implication holds. The following functions does this:
 
 ```
 testHasPermutationProperty
@@ -49,7 +49,7 @@ testHasAllProperties
 
 ## Statistics Test
 
-We have added a test to check the statistics over a small domain. We took a list of length $n$ and counted all possible permutations that have the property of `noMatchingIndices`. The result was `9` and we tested this with the following command:
+We have added a test to check the statistics over a small domain. We took a list of length 4 and counted all possible permutations that have the property of `noMatchingIndices`. The result was `9` and we tested this with the following command:
 
 ```
 testStatistics

@@ -9,7 +9,7 @@ import System.Random
 -- Testable properties
 ----------------------
 noMatchingIndices :: Eq a => [a] -> [a] -> Bool
-noMatchingIndices xs ys = all (\(x,y) -> x /= y) (zip xs ys)
+noMatchingIndices xs ys = all (uncurry (/=)) (zip xs ys)
 
 --isPermutation, imported from Permutations.hs
 
@@ -19,13 +19,13 @@ noMatchingIndices xs ys = all (\(x,y) -> x /= y) (zip xs ys)
 
 --TestBasic
 testBasic :: Bool
-testBasic = and [(isDerangement ([]::[Int]) []) == True,
-				(isDerangement [1] []) == False,
-				(isDerangement [] [1]) == False,
-				(isDerangement [1] [1]) == False,
-				(isDerangement [1,2] [2,1]) == True,
-				(isDerangement [1] [2]) == False,
-				(isDerangement [1,2,3] [2,1,3]) == False]
+testBasic = and [isDerangement ([]::[Int]) [],
+				not (isDerangement [1] []),
+				not (isDerangement [] [1]),
+				not (isDerangement [1] [1]),
+				isDerangement [1,2] [2,1],
+				not (isDerangement [1] [2]),
+				not (isDerangement [1,2,3] [2,1,3])]
 
 -- 'Random based tests'
 testHasPermutationProperty = testProperty isDerangement isPermutation
@@ -34,19 +34,19 @@ testHasAllProperties = testProperty isDerangement (isPermutation .&&. noMatching
 
 -- 'Statistic based test'
 testStatistic :: Bool
-testStatistic = (length $ filter (isDerangement [1..4]) $ permutations [1..4]) == 9
+testStatistic = length (filter (isDerangement [1..4]) (permutations [1..4])) == 9
 
 ----------------------
 -- Helpers
 ----------------------
 -- Function composition for properties of type a -> a -> Bool
 (.&&.) :: (a -> a -> Bool) -> (a -> a -> Bool) -> a -> a -> Bool
-p .&&. q = (\x y -> p x y && q x y)
+p .&&. q = \x y -> p x y && q x y
 
 -- Additional logic notation
 infix 1 ==>
 (==>) :: Bool -> Bool -> Bool
-p ==> q = (not p) || q
+p ==> q = not p || q
 
 ----------------------
 -- Test methods
