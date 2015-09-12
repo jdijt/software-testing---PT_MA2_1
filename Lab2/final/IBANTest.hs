@@ -42,8 +42,8 @@ genRandomTransposition s = do
 		transPoseAtIndex (x:xs) n = x:transPoseAtIndex xs (n-1);
 
 
-addRandomChar :: String -> String -> IO String
-addRandomChar s cs = do
+addRandomChar :: [Char] -> String -> IO String
+addRandomChar cs s = do
 		x <- getRandomInt (length cs - 1)
 		idx <- getRandomInt (length s - 1)
 		return $ insertCharAtIndex s (cs !! x) idx
@@ -54,10 +54,10 @@ addRandomChar s cs = do
 		insertCharAtIndex (x:xs) c n = x:insertCharAtIndex xs c (n-1)
 
 addRandomAlphaNumChar :: String -> IO String
-addRandomAlphaNumChar s = addRandomChar s "ABCDEFGHIJKLMNOPQRTUVWXYZ1234567890"
+addRandomAlphaNumChar = addRandomChar "ABCDEFGHIJKLMNOPQRTUVWXYZ1234567890" 
 
 addRandomNonAlphaNumChar :: String -> IO String
-addRandomNonAlphaNumChar s = addRandomChar s "!@#$%&^ "
+addRandomNonAlphaNumChar = addRandomChar "!@#$%&^ " 
 
 
 
