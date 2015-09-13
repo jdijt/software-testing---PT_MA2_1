@@ -1,4 +1,5 @@
 # Test report for generating derangements
+Total time spent by two persons on this Lab exercise: 8 hours
 
 ## Source
 
