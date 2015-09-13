@@ -46,11 +46,8 @@ testTrue iban addRandomNonAlphaNumChar
 
 We took the same 6 valid IBAN numbers and swapped two characters, which ensures the adapted IBAN number is invalid and replicates the effect of human made typo's. The characters which are swapped should not be the same or include non-alphabetical characters as in this case the adapted IBAN number equals the original number.
 
-In addition to random transpositions we also test random edits where a random alphanumerical character is added. Adding a single character (a 'typo') should also always result in an invalid IBAN number.
-
 The invalid IBAN test can be executed with the following commands:
 
 ```
 testFalse iban genRandomTransposition
-testFalse iban addRandomAlphaNumChar
 ```
