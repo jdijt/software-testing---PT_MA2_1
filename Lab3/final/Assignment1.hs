@@ -36,6 +36,9 @@ otherForms = [Prop 1,
               Impl (Prop 1) (Prop 2),
               Equiv (Prop 1) (Prop 2)]
 
+runAllTests :: Bool
+runAllTests = and [testContradiction, testOthers, testTautology, testEntails, testNotEntails, testEquiv, testNotEquiv]
+
 testContradiction :: Bool
 testContradiction = all contradiction (baseContradictions ++ map Neg baseTautologies)
 
