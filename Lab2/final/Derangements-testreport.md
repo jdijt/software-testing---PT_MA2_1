@@ -1,4 +1,5 @@
 # Test report for generating derangements
+Total time spent by two persons on this Lab exercise: 8 hours
 
 ## Source
 
@@ -39,7 +40,7 @@ We concluded that test automation is possible for testing the derangement proper
 isDerangement ==> isPermutation .&&.  noMatchingIndices
 ```
 
-This is the strongest postcondition we could find. Therefor we have added a random test that generates random lists and tests if the above implication holds. The following functions does this:
+This is the strongest postcondition we could find. Therefore we have added a random test that generates random lists and tests if the above implication holds. The following functions does this:
 
 ```
 testHasPermutationProperty

@@ -53,9 +53,6 @@ addRandomChar cs s = do
 		insertCharAtIndex (x:xs) c 0 = x:c:xs
 		insertCharAtIndex (x:xs) c n = x:insertCharAtIndex xs c (n-1)
 
-addRandomAlphaNumChar :: String -> IO String
-addRandomAlphaNumChar = addRandomChar "ABCDEFGHIJKLMNOPQRTUVWXYZ1234567890" 
-
 addRandomNonAlphaNumChar :: String -> IO String
 addRandomNonAlphaNumChar = addRandomChar "!@#$%&^ " 
 
