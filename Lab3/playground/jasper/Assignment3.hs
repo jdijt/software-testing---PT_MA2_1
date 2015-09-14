@@ -22,3 +22,14 @@ nnf (Cnj fs) = Cnj (map nnf fs)
 nnf (Dsj fs) = Dsj (map nnf fs)
 nnf (Neg (Cnj fs)) = Dsj (map (nnf.Neg) fs)
 nnf (Neg (Dsj fs)) = Cnj (map (nnf.Neg) fs)
+
+
+mergeCnj :: Form -> Form
+mergeCnj (Cnj ((Cnj f):fs)) = undefined 
+mergeCnj _ = error "Invalid input: Conjunction expected."
+
+
+liftCnj :: Form -> Form
+liftCnj (Prop p) = Prop p
+liftCnj (Neg p) = Neg p
+
