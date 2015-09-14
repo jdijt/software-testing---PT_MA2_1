@@ -1,4 +1,4 @@
-module TestParse where 
+module ParseTest where
 
 import Parse
 import System.Random

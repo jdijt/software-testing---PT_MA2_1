@@ -79,3 +79,8 @@ evl xs (Equiv f1 f2) = evl xs f1 == evl xs f2
 
 satisfiable :: Form -> Bool
 satisfiable f = any (`evl` f) (allVals f)
+
+
+generateNegation n = do
+                    x <- n
+                    return (Neg x)
