@@ -17,3 +17,5 @@ cabal.sandbox.config
 *.cabal
 .idea/
 *.iml
+
+.DS_Store
