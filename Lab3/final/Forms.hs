@@ -36,10 +36,10 @@ propNames = sort.nub.pnames where
   pnames :: Form -> [Name]
   pnames (Prop name) = [name]
   pnames (Neg f)  = pnames f
-  pnames (Cnj fs) = concat (map pnames fs)
-  pnames (Dsj fs) = concat (map pnames fs)
-  pnames (Impl f1 f2)  = concat (map pnames [f1,f2])
-  pnames (Equiv f1 f2) = concat (map pnames [f1,f2])
+  pnames (Cnj fs) = concatMap pnames fs
+  pnames (Dsj fs) = concatMap pnames fs
+  pnames (Impl f1 f2)  = concatMap pnames [f1,f2]
+  pnames (Equiv f1 f2) = concatMap pnames [f1,f2]
 
 
 -- | all possible valuations for lists of prop letters
@@ -50,7 +50,7 @@ genVals (name:names) =
 	++ map ((name,False):) (genVals names)
 
 update :: Eq a => (a -> b) -> (a,b) -> a -> b
-update f (x,y) = \ z -> if x == z then y else f z
+update f (x,y) z = if x == z then y else f z
 
 updates :: Eq a => (a -> b) -> [(a,b)] -> a -> b
 updates = foldl update
@@ -61,7 +61,7 @@ allVals :: Form -> [Valuation]
 allVals = genVals . propNames
 
 val2fct :: Valuation -> ValFct
-val2fct = updates (\ _ -> undefined)
+val2fct = updates (const undefined)
 
 fct2val :: [Name] -> ValFct -> Valuation
 fct2val domain f = map (\x -> (x,f x)) domain
@@ -78,4 +78,4 @@ evl xs (Impl f1 f2) =
 evl xs (Equiv f1 f2) = evl xs f1 == evl xs f2
 
 satisfiable :: Form -> Bool
-satisfiable f = any (\ v -> evl v f) (allVals f)
+satisfiable f = any (`evl` f) (allVals f)
