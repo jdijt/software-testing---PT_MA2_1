@@ -27,18 +27,22 @@ nnf _ = error "Invalid input."
 
 toCNF :: Form -> Form
 toCNF (Prop x) = Prop x
-toCNF (Neg p) = toCNF p
+toCNF (Neg p) = Neg(toCNF p)
 toCNF (Cnj fs) = Cnj (map toCNF fs)
-toCNF (Dsj fs) = distributeDsjOverCnj $ map toCNF fs
+toCNF (Dsj fs) = foldDsj (map toCNF fs)
+	| 
+
 	where
-	distributeDsjOverCnj :: [Form] -> Form
-	distributeDsjOverCnj [] = undefined
-	distributeDsjOverCnj [x] = x
-	distributeDsjOverCnj (Cnj x:y:ys) = distributeDsjOverCnj $ distribute x y : ys
-	distributeDsjOverCnj (x:Cnj y:ys) = distributeDsjOverCnj $ distribute x y : ys 
+	cnfTree :: [Form]
+	cnfTree = map toCNF fs
+
+	foldDsj :: [Form] -> Form
+	foldDsj (Cnj x:y:ys) = foldDsj (distribute (Cnj x) y):ys
+	foldDsj (x:y:ys) = foldDsj (Cnj [x] : y : ys)
+	foldDsj [x] = x
+	foldDsj _ = undefined
 
 	distribute :: Form -> Form -> Form
-	distribute (Cnj xs) (Cnj ys) = Cnj [Dsj [x,y] | x <- xs, y <- ys]
-	distribute (Cnj xs) y = Cnj [Dsj [x,y] | x <- xs]
-	distribute x (Cnj ys) = Cnj [Dsj [x,y] | y <- ys]
-
+	distribute (Cnj xs) (Cnj ys) = Cnj [ Dsj [x,y] | x <- xs, y <- ys]
+	distribute (Cnj xs) y = Cnj [ Dsj [x,y] | x <- xs]
+	distribute _ _ = undefined

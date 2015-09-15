@@ -3,11 +3,11 @@ module Assignment3 where
 import Forms
 
 liftCnj :: Form -> Form
-liftCnj (Dsj ps) = foldDsj qs where
-    qs = map liftCnj ps
-liftCnj (Cnj ps) = Cnj (mergeCnj (map liftCnj ps))
+liftCnj (Dsj ps) = foldDsj $ map liftCnj ps 
+liftCnj (Cnj ps) = Cnj (mergeCnj $ map liftCnj ps)
 liftCnj x = x
 
+-- Assumes Any found conjunction has no further conjunctions under it.
 mergeCnj :: [Form] -> [Form]
 mergeCnj [] = []
 mergeCnj (Cnj x:xs ) = x ++ mergeCnj xs
@@ -19,9 +19,10 @@ mergeDsj (Dsj xs) y = Dsj (y : xs)
 mergeDsj x (Dsj ys) = Dsj (x : ys)
 mergeDsj x y = Dsj [x, y]
 
+
 foldDsj :: [Form] -> Form
 foldDsj [] = Cnj []
-foldDsj (x:xs) = foldl distributeDsj x xs where
+foldDsj (z:zs) = foldl distributeDsj z zs where
   distributeDsj :: Form -> Form -> Form
   distributeDsj (Cnj xs) (Cnj ys) = Cnj [ mergeDsj x y | x <- xs, y <- ys]
   distributeDsj (Cnj xs) y = Cnj (map (`mergeDsj` y) xs)
@@ -50,15 +51,14 @@ nnf (Cnj fs) = Cnj (map nnf fs)
 nnf (Dsj fs) = Dsj (map nnf fs)
 nnf (Neg (Cnj fs)) = Dsj (map (nnf.Neg) fs)
 nnf (Neg (Dsj fs)) = Cnj (map (nnf.Neg) fs)
+nnf _ = error "Unexpected input"
 
 arrowfree :: Form -> Form
 arrowfree (Prop x) = Prop x
 arrowfree (Neg f) = Neg (arrowfree f)
 arrowfree (Cnj fs) = Cnj (map arrowfree fs)
 arrowfree (Dsj fs) = Dsj (map arrowfree fs)
-arrowfree (Impl f1 f2) =
-  Dsj [Neg (arrowfree f1), arrowfree f2]
-arrowfree (Equiv f1 f2) =
-  Dsj [Cnj [f1', f2'], Cnj [Neg f1', Neg f2']]
+arrowfree (Impl f1 f2) = Dsj [Neg (arrowfree f1), arrowfree f2]
+arrowfree (Equiv f1 f2) = Dsj [Cnj [f1', f2'], Cnj [Neg f1', Neg f2']]
   where f1' = arrowfree f1
         f2' = arrowfree f2
