@@ -11,17 +11,18 @@ The source can be found in the file `Assignment2.hs`. Please load with `:load As
 
 ## Preconditions
 
-- A string containing only (,),*,+,-,==>,<=>, spaces or digits, when the input includes other symbols an exception is thrown. We call strings that do not match this criteria invalid strings.
+- A string containing only (,),*,+,-,==>,<=>, spaces or digits. Strings that do not match this criteria are invalid strings and the parse function throws an exception. 
+ 
+Note that all symbols after the final closing brackets are ignored
 
 ## Postconditions
 
 Strings that are not parsable should return an empty parse result. 
-Strings are parsable if:
- 
+
+Strings are parsable when the following conditions apply:
 - All + or * should be followed by an opening parentheses, any number of valid propositions and a closing parentheses
 - All - should be followed by a valid proposition 
-- All ==> and <=> should be within parentheses and have one valid proposition before and after the token 
-- All symbols after the final closing brackets should be ignored
+- All ==> and <=> should be within parentheses and have one valid proposition on the left and right side of the token 
 
 ## Tests
 We apply two tests, one based on a set of base cases and one based on randomly generated valid propositions.
