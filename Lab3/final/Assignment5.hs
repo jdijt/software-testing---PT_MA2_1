@@ -6,9 +6,12 @@ type Clause = [Int]
 type Clauses = [Clause]
 
 cnf2cls :: Form -> Clauses
-cnf2cls (Cnj xs) = map (\(Dsj ys) -> map lit2int ys ) xs
-cnf2cls (Dsj xs) = [map lit2int xs]
-cnf2cls x = [[lit2int x]]
+cnf2cls (Cnj xs) = map dsj2cl xs
+cnf2cls x = [dsj2cl x]
+
+dsj2cl :: Form -> Clause
+dsj2cl (Dsj x) = map lit2int x
+dsj2cl x = [lit2int x]
 
 lit2int :: Form -> Int
 lit2int (Prop x) = x
