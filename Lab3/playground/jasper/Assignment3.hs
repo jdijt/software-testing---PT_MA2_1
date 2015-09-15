@@ -22,14 +22,23 @@ nnf (Cnj fs) = Cnj (map nnf fs)
 nnf (Dsj fs) = Dsj (map nnf fs)
 nnf (Neg (Cnj fs)) = Dsj (map (nnf.Neg) fs)
 nnf (Neg (Dsj fs)) = Cnj (map (nnf.Neg) fs)
+nnf _ = error "Invalid input."
 
 
-mergeCnj :: Form -> Form
-mergeCnj (Cnj ((Cnj f):fs)) = undefined 
-mergeCnj _ = error "Invalid input: Conjunction expected."
+toCNF :: Form -> Form
+toCNF (Prop x) = Prop x
+toCNF (Neg p) = toCNF p
+toCNF (Cnj fs) = Cnj (map toCNF fs)
+toCNF (Dsj fs) = distributeDsjOverCnj $ map toCNF fs
+	where
+	distributeDsjOverCnj :: [Form] -> Form
+	distributeDsjOverCnj [] = undefined
+	distributeDsjOverCnj [x] = x
+	distributeDsjOverCnj (Cnj x:y:ys) = distributeDsjOverCnj $ distribute x y : ys
+	distributeDsjOverCnj (x:Cnj y:ys) = distributeDsjOverCnj $ distribute x y : ys 
 
-
-liftCnj :: Form -> Form
-liftCnj (Prop p) = Prop p
-liftCnj (Neg p) = Neg p
+	distribute :: Form -> Form -> Form
+	distribute (Cnj xs) (Cnj ys) = Cnj [Dsj [x,y] | x <- xs, y <- ys]
+	distribute (Cnj xs) y = Cnj [Dsj [x,y] | x <- xs]
+	distribute x (Cnj ys) = Cnj [Dsj [x,y] | y <- ys]
 
