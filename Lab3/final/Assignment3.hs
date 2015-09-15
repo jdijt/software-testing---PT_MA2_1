@@ -3,11 +3,11 @@ module Assignment3 where
 import Forms
 
 toCNF :: Form -> Form
-toCNF = liftCnj.nnf.arrowfree 
+toCNF = liftCnj.nnf.arrowfree
 
 -- Precondition: Form is in NNF.
 liftCnj :: Form -> Form
-liftCnj (Dsj ps) = foldDsj $ map liftCnj ps 
+liftCnj (Dsj ps) = foldDsj $ map liftCnj ps
 liftCnj (Cnj ps) = Cnj (mergeCnj $ map liftCnj ps)
 liftCnj x = x
 
@@ -26,7 +26,7 @@ mergeDsj x y = Dsj [x, y]
 
 foldDsj :: [Form] -> Form
 foldDsj [] = Cnj []
-foldDsj (z:zs) = foldl distributeDsj z zs 
+foldDsj (z:zs) = foldl distributeDsj z zs
     where
     distributeDsj :: Form -> Form -> Form
     distributeDsj (Cnj xs) (Cnj ys) = Cnj [ mergeDsj x y | x <- xs, y <- ys]
