@@ -3,20 +3,22 @@ module Assignment3 where
 import Forms
 
 liftCnj :: Form -> Form
-liftCnj (Dsj ps) = foldDsj qs where
-    qs = map liftCnj ps
-liftCnj (Cnj ps) = Cnj (mergeCnj (map liftCnj ps))
+liftCnj (Dsj ps) = foldDsj $ map liftCnj ps 
+liftCnj (Cnj ps) = Cnj (mergeCnj $ map liftCnj ps))
 liftCnj x = x
 
+-- Assumes Any found conjunction has no further conjunctions under it.
 mergeCnj :: [Form] -> [Form]
 mergeCnj [] = []
 mergeCnj (Cnj x:xs ) = x ++ mergeCnj xs
 mergeCnj (x:xs) = x : mergeCnj xs
 
+-- Assumes Any found disjunction has no further disjuntions under it.
 mergeDsj :: [Form] -> [Form]
 mergeDsj [] = []
 mergeDsj (Dsj x:xs ) = x ++ mergeDsj xs
 mergeDsj (x:xs) = x : mergeDsj xs
+
 
 foldDsj :: [Form] -> Form
 foldDsj (x:xs) = foldl distribute x xs
@@ -56,9 +58,7 @@ arrowfree (Prop x) = Prop x
 arrowfree (Neg f) = Neg (arrowfree f)
 arrowfree (Cnj fs) = Cnj (map arrowfree fs)
 arrowfree (Dsj fs) = Dsj (map arrowfree fs)
-arrowfree (Impl f1 f2) =
-  Dsj [Neg (arrowfree f1), arrowfree f2]
-arrowfree (Equiv f1 f2) =
-  Dsj [Cnj [f1', f2'], Cnj [Neg f1', Neg f2']]
+arrowfree (Impl f1 f2) = Dsj [Neg (arrowfree f1), arrowfree f2]
+arrowfree (Equiv f1 f2) = Dsj [Cnj [f1', f2'], Cnj [Neg f1', Neg f2']]
   where f1' = arrowfree f1
         f2' = arrowfree f2
