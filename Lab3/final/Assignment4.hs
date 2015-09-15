@@ -7,7 +7,8 @@ import Data.List
 import Control.Monad
 
 validCnf :: Form -> Bool
-validCnf form = propositionsAreEquivalent form (toCNF form) (allVals form)
+validCnf form = propositionsAreEquivalent form cnfForm (allVals form) && isInCNF cnfForm
+            where cnfForm = toCNF form
 
 propositionsAreEquivalent :: Form -> Form -> [Valuation] -> Bool
 propositionsAreEquivalent x y valutations = evalAll x valutations == evalAll y valutations
@@ -15,12 +16,30 @@ propositionsAreEquivalent x y valutations = evalAll x valutations == evalAll y v
 evalAll :: Form -> [Valuation] -> [Bool]
 evalAll form valuations =  map (\x -> evl x form) valuations
 
+isInCNF :: Form -> Bool
+isInCNF x = isProp x || isNegProp x || isDsjInCNF x || isCnjInCNF x
+
+isCnjInCNF :: Form -> Bool
+isCnjInCNF (Cnj xs) = all (\x -> isProp x || isNegProp x || isDsjInCNF x) xs
+isCnjInCNF _ = False
+
+isDsjInCNF :: Form -> Bool
+isDsjInCNF (Dsj xs) = all (\x -> isProp x || isNegProp x) xs
+isDsjInCNF _ = False
+
+isNegProp :: Form -> Bool
+isNegProp (Neg n) = isProp n
+isNegProp _ = False
+
+isProp :: Form -> Bool
+isProp (Prop n) = True
+isProp _ = False
+
 randomPropTest :: Property
 randomPropTest = forAll randomForm $ validCnf
 
 randomForm :: Gen Form
-randomForm = sized randomForm'
-
+randomForm = randomForm' 4
 
 randomForm' :: Int -> Gen Form
 randomForm' 0 = liftM Prop (choose(0,9))
