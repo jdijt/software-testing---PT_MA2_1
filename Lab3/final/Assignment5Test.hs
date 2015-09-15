@@ -8,7 +8,7 @@ import Test.QuickCheck
 --    arbitrary = elements [1,2,3,4,5,6,7,8]
 
 instance Arbitrary Form where
-    arbitrary = frequency [(1,literal), (1,dsj), (8,cnj)] 
+    arbitrary = frequency [(1,literal), (1,dsj), (8,cnj)]
         where
         cnj :: Gen Form
         cnj = do
@@ -17,17 +17,14 @@ instance Arbitrary Form where
             return (Cnj dsjs)
 
         dsj :: Gen Form
-        dsj = do 
+        dsj = do
             size <- elements [1..5]
             lits <- vectorOf size literal
             return (Dsj lits)
 
         literal :: Gen Form
-        literal = do 
+        literal = do
                 x <- elements [1..20]
-                oneof [ 
+                oneof [
                     return (Prop x),
                     return (Neg (Prop x))]
-
-    
-

@@ -1,5 +1,7 @@
 # Test report for Assignment 1
 
+The total amount of time spent by two persons on this Lab exercise is 5 hours.
+
 ## Source
 The source is located in the following files: `Assignment1.hs` for the defitions of and testCases, `Forms.hs` for the implementation from the lecture.
 
@@ -22,8 +24,8 @@ To run all testCases execute `runAllTests` with `Assignment1.hs` loaded.
 1. `testContradiction `: In this case we test if `contradiction` recognises contraditions from the list of base contradictions. In addition to that we know that the negation of a tautology is a contradiction as well, so we use the negated forms from baseTautologies to increase the number of testcases.
 2. `testOthers`: This testcase is to check if `contradiction` and `tautology` both work for formalas that are not tautologies and not contradictions.
 3. `testTautology`: This case is to check if `tautology` works for the tautologies from `baseTautologies` and the negated contradictions from `baseContradictions`, following the same logic as used for `testContradiction`.
-4. `testEntails`: For the entails method we know the following properties hold, so these are the properties we use for testing: 
-   - A contraction can imply anything; 
+4. `testEntails`: For the entails method we know the following properties hold, so these are the properties we use for testing:
+   - A contraction can imply anything;
    - Anything can imply a tautology;
    - Anything can imply itself.
 5. `testNotEntails`: Here we use 3 properties again, somewhat similar to `testEntails`.
