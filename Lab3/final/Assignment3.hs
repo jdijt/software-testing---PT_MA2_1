@@ -13,21 +13,20 @@ mergeCnj [] = []
 mergeCnj (Cnj x:xs ) = x ++ mergeCnj xs
 mergeCnj (x:xs) = x : mergeCnj xs
 
--- Assumes Any found disjunction has no further disjuntions under it.
-mergeDsj :: [Form] -> [Form]
-mergeDsj [] = []
-mergeDsj (Dsj x:xs ) = x ++ mergeDsj xs
-mergeDsj (x:xs) = x : mergeDsj xs
+mergeDsj :: Form -> Form -> Form
+mergeDsj (Dsj xs) (Dsj ys) = Dsj (xs ++ ys)
+mergeDsj (Dsj xs) y = Dsj (y : xs)
+mergeDsj x (Dsj ys) = Dsj (x : ys)
+mergeDsj x y = Dsj [x, y]
 
 
 foldDsj :: [Form] -> Form
-foldDsj (x:xs) = foldl distribute x xs
 foldDsj [] = Cnj []
-
-distribute :: Form -> Form -> Form
-distribute (Cnj xs) (Cnj ys) = Cnj [ Dsj (mergeDsj [x,y]) | x <- xs, y <- ys]
-distribute (Cnj xs) y = Cnj (map (\q -> Dsj (mergeDsj [q,y])) xs)
-distribute x y = distribute (Cnj [x]) y
+foldDsj (x:xs) = foldl distributeDsj x xs where
+  distributeDsj :: Form -> Form -> Form
+  distributeDsj (Cnj xs) (Cnj ys) = Cnj [ mergeDsj x y | x <- xs, y <- ys]
+  distributeDsj (Cnj xs) y = Cnj (map (`mergeDsj` y) xs)
+  distributeDsj x y = distributeDsj (Cnj [x]) y
 
 testLiftCnj :: Bool
 testLiftCnj = and [liftCnj (Prop 1) == Prop 1,
