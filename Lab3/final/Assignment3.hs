@@ -9,6 +9,7 @@ toCNF = liftCnj.nnf.arrowfree
 liftCnj :: Form -> Form
 
 -- Turn children to cnf and fold disjunction into conjunction of disjunctions:
+liftCnj (Dsj []) = Dsj []
 liftCnj (Dsj ps) = foldDsj $ map liftCnj ps
 
 -- Turn children to cnf and merge child conjuctions with current conjunction.
