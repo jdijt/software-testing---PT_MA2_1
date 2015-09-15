@@ -1,42 +1,37 @@
 module Assignment4 where
 
-import PropositionGenerator
 import Assignment3
 import Lecture3
 import Test.QuickCheck
 import Data.List
 import Control.Monad
 
-compareTest :: IO Bool
-compareTest = do
-        randomForm <- (generateValidForm $ generateProp)
-        let valuations = allVals randomForm
-        let result = map (\x -> evl x randomForm) valuations
-        let cnfResult = map (\x -> evl x (toCNF randomForm)) valuations
-        return (result == cnfResult)
+validCnf :: Form -> Bool
+validCnf form = propositionsAreEquivalent form (toCNF form) (allVals form)
+
+propositionsAreEquivalent :: Form -> Form -> [Valuation] -> Bool
+propositionsAreEquivalent x y valutations = evalAll x valutations == evalAll y valutations
+
+evalAll :: Form -> [Valuation] -> [Bool]
+evalAll form valuations =  map (\x -> evl x form) valuations
+
+randomPropTest :: Property
+randomPropTest = forAll randomForm $ validCnf
+
+randomForm :: Gen Form
+randomForm = sized randomForm'
 
 
---data Form = Prop Name
---          | Neg  Form
---          | Cnj [Form]
---          | Dsj [Form]
---          | Impl Form Form
---          | Equiv Form Form
---          deriving Eq
-
-
-someForm = sized someForm'
-someForm' 0 = liftM Prop (choose(0,9))
-someForm' n | n > 0 =
+randomForm' :: Int -> Gen Form
+randomForm' 0 = liftM Prop (choose(0,9))
+randomForm' n | n > 0 =
 	oneof [liftM Prop (choose(0,9)),
 	       liftM Neg subForm,
---	       liftM Cnj subFormArray,
+	       liftM Cnj subFormList,
 	       liftM2 Impl subForm subForm,
 	       liftM2 Equiv subForm subForm]
-  where subForm = someForm' (n `div` 2)
---        subFormArray = [someForm' (n `div` 2)]
-
---subForms n = do
---            repeat <- getRandomInt 0 2
---            if repeat == 0 then return [(someForm' (n `div` 2))]
---            else (someForm' (n `div` 2)) : [subForms n]
+      where subForm = randomForm' (n `div` 2)
+            subFormList = do
+                size <- elements [0..3]
+                forms <- vectorOf size (subForm)
+                return forms
