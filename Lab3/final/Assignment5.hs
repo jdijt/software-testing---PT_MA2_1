@@ -1,9 +1,13 @@
 module Assignment5 where
 
 import Lecture3
+import Assignment3
 
 type Clause = [Int]
 type Clauses = [Clause]
+
+form2cls :: Form -> Clauses
+form2cls = cnf2cls.toCNF
 
 cnf2cls :: Form -> Clauses
 cnf2cls (Cnj xs) = map dsj2cl xs
