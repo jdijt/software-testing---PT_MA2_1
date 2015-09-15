@@ -4,7 +4,7 @@ import Forms
 
 liftCnj :: Form -> Form
 liftCnj (Dsj ps) = foldDsj $ map liftCnj ps 
-liftCnj (Cnj ps) = Cnj (mergeCnj $ map liftCnj ps))
+liftCnj (Cnj ps) = Cnj (mergeCnj $ map liftCnj ps)
 liftCnj x = x
 
 -- Assumes Any found conjunction has no further conjunctions under it.
@@ -22,7 +22,7 @@ mergeDsj x y = Dsj [x, y]
 
 foldDsj :: [Form] -> Form
 foldDsj [] = Cnj []
-foldDsj (x:xs) = foldl distributeDsj x xs where
+foldDsj (z:zs) = foldl distributeDsj z zs where
   distributeDsj :: Form -> Form -> Form
   distributeDsj (Cnj xs) (Cnj ys) = Cnj [ mergeDsj x y | x <- xs, y <- ys]
   distributeDsj (Cnj xs) y = Cnj (map (`mergeDsj` y) xs)
@@ -51,6 +51,7 @@ nnf (Cnj fs) = Cnj (map nnf fs)
 nnf (Dsj fs) = Dsj (map nnf fs)
 nnf (Neg (Cnj fs)) = Dsj (map (nnf.Neg) fs)
 nnf (Neg (Dsj fs)) = Cnj (map (nnf.Neg) fs)
+nnf _ = error "Unexpected input"
 
 arrowfree :: Form -> Form
 arrowfree (Prop x) = Prop x
