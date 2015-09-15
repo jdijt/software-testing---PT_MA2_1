@@ -1,6 +1,6 @@
 module Assignment1 where
 
-import Forms
+import Lecture3
 
 contradiction :: Form -> Bool
 contradiction f = all (not.(`evl` f)) (allVals f)
@@ -43,7 +43,7 @@ testContradiction :: Bool
 testContradiction = all contradiction (baseContradictions ++ map Neg baseTautologies)
 
 testOthers :: Bool
-testOthers = all (\q -> not (contradiction q) && not (tautology q)) otherForms
+testOthers = all (\f -> not (contradiction f) && not (tautology f)) otherForms
 
 testTautology :: Bool
 testTautology = all tautology (baseTautologies ++ map Neg baseContradictions)
