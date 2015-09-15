@@ -1,6 +1,6 @@
 module Assignment5 where
 
-import Forms
+import Lecture3
 
 type Clause = [Int]
 type Clauses = [Clause]
