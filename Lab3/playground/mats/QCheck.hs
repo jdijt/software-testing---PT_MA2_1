@@ -1,5 +1,6 @@
 module QCheck where
 
+
 import Test.QuickCheck
 
 data Subject  = Mathematics | Philosophy | Anthropology deriving (Eq,Show,Enum)
