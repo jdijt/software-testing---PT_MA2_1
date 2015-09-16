@@ -6,19 +6,19 @@ Group: PT\_MA2\_1
 ### Week 1
 Exercises: [http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab1.html](http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab1.html)
  
-Sources for the solution are located at: [Lab1/final](Lab1/final)
+The sources for the solution are located at: [Lab1/final](Lab1/final)
 
 ### Week 2
 
 Exercises: [http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab2.html](http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab2.html)  
 
-Sources for the solution are located at: [Lab2/final](https://github.com/jdijt/software-testing---PT_MA2_1/tree/master/Lab2/final)
+The sources for the solution are located at: [Lab2/final](Lab2/final)
 
 ### Week 3
 
 Exercises: [http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab3.html](http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab3.html)  
 
-Sources for the solution are located at: [Lab3/final](https://github.com/jdijt/software-testing---PT_MA2_1/tree/master/Lab3/final)
+The sources for the solution are located at: [Lab3/final](Lab3/final)
 
 
 ## Links to Lectures
