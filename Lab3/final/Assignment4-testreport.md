@@ -1,5 +1,5 @@
-# Test report for testing the `toCNF` function of assignment 3 
-The total amount of time spent by two persons on this Lab exercise is 9 hours
+# Test report for the `toCNF` function
+The total amount of time spent by two persons on this Lab exercise is 10 hours
 
 ## Source
 
