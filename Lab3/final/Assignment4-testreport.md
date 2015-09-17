@@ -16,24 +16,22 @@ The preconditions for `toCNF` are:
 
 ## Postconditions
 
-- A valid proposition in the conjunctive normal form which is logically equivalent to the input of the `toCNF` function
+- A valid proposition in the conjunctive normal form, which is logically equivalent to the input of the `toCNF` function
 
 ## Tests
-We apply two test, one to check whether the output of the `toCNF` function is in the Conjunctive Normal Form and one to test whether 
-it is logically equivalent to the input of the input 
-
-### Conjunctive Normal Form test
-
-The conjunctive normal form test can be executed with the following command:
-```
-randomPropTest
-```
+We perform a test to check two different characteristics of the `toCNF` function. First we check whether the output of the `toCNF` function is logically equivalent to its input and furthermore we check whether the output is in the Conjunctive Normal Form.
 
 ### Random proposition test
 
-...
+The random valid propositions are generated as a tree of a random size. The tree has a maximum of three layers of nodes including the top-node. All leaves of the tree exist of properties and all conjunction and disjunctions contain between zero and three propositions, which is defined in the functions `randomForm` and `randomForm'`.
 
-The random proposition test can be executed with the following command:
+These random propositions are converted to the Conjunctive Normal Form with the `toCNF` function, to check whether the output and input are logically equivalent we evaluate the truth tables from the input proposition with both the input and the output and check whether they give the same result.
+
+### Conjunctive Normal Form test
+
+A proposition in the Conjunctive Normal Form can exist of a property, a negation wrapped around a property, a disjunction consisting of properties and negations and a conjunction existing of properties, negations and disjunctions. We use these characteristics in the function `isInCNF` which is also tested in the `randomPropTest`. 
+
+Both properties can be tested with the following comment:
 ```
-randomPropTest
+quickCheck randomPropTest
 ```
