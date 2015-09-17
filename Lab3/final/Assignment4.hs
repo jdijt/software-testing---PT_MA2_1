@@ -47,6 +47,7 @@ randomForm' n | n > 0 =
 	oneof [liftM Prop (choose(0,9)),
 	       liftM Neg subForm,
 	       liftM Cnj subFormList,
+	       liftM Dsj subFormList,
 	       liftM2 Impl subForm subForm,
 	       liftM2 Equiv subForm subForm]
       where subForm = randomForm' (n `div` 2)
