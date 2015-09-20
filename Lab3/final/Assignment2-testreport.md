@@ -11,7 +11,7 @@ The source can be found in the file `Assignment2.hs`. Please load with `:load As
 
 ## Preconditions
 
-- The input string should only contain `,`,`*`,`+`,`-`,`==>`,`<=>`, spaces or digits. Strings that do not match this criteria are invalid strings and the parse function throws an exception.
+- The input string should only contain `,`,`*`,`+`,`-`,`==>`,`<=>`,`(`,`)` spaces or digits. Strings that do not match this criteria are invalid strings and the parse function throws an exception.
 
 Note that all symbols after the final closing brackets are ignored
 
