@@ -3,7 +3,8 @@
 The total amount of time spent by two persons on this Lab exercise is 5 hours.
 
 ## Source
-The source is located in the following files: `Assignment1.hs` for the definitions and test cases, `Lecture3.hs` for the functions provided in lecture 3.
+
+The source can be found in the files `Assignment1.hs` and `Assignment1Test.hs`. Please load `Assignment1Test`. This will also load all necessary libraries.
 
 ## Tests
 All tests are based on the following three lists, the full implementation of these can be seen in `Assignment1.hs`:
