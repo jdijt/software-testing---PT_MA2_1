@@ -6,11 +6,11 @@ import Test.QuickCheck
 import Control.Monad
 
 validCnf :: Form -> Bool
-validCnf form = propositionsAreEquivalent form cnfForm (allVals form) && isInCNF cnfForm
+validCnf form = formsAreEquiv form cnfForm (allVals form) && isInCNF cnfForm
             where cnfForm = toCNF form
 
-propositionsAreEquivalent :: Form -> Form -> [Valuation] -> Bool
-propositionsAreEquivalent x y valutations = evalAll x valutations == evalAll y valutations
+formsAreEquiv :: Form -> Form -> [Valuation] -> Bool
+formsAreEquiv x y valutations = evalAll x valutations == evalAll y valutations
 
 evalAll :: Form -> [Valuation] -> [Bool]
 evalAll form =  map (`evl` form)
