@@ -1,13 +1,14 @@
 module Lecture3
 
-where 
+where
 
 import Data.List
 import Data.Char
+import Data.Function
 
 infixl 2 #
 
-(#) :: (a -> b) -> (b -> c) -> (a -> c)
+(#) :: (a -> b) -> (b -> c) -> a -> c
 (#) = flip (.)
 
 infixl 1 $$
@@ -16,7 +17,7 @@ infixl 1 $$
 ($$) = flip ($)
 
 update :: Eq a => (a -> b) -> (a,b) -> a -> b
-update f (x,y) = \ z -> if x == z then y else f z
+update f (x,y) z = if x == z then y else f z
 
 updates :: Eq a => (a -> b) -> [(a,b)] -> a -> b
 updates = foldl update
@@ -33,9 +34,9 @@ data Expr = I Integer | V Var
 eval :: Env -> Expr -> Integer
 eval _ (I i) = i
 eval c (V name) = c name
-eval c (Add e1 e2)   = (eval c e1) + (eval c e2)
-eval c (Subtr e1 e2) = (eval c e1) - (eval c e2)
-eval c (Mult e1 e2)  = (eval c e1) * (eval c e2)
+eval c (Add e1 e2)   = eval c e1 + eval c e2
+eval c (Subtr e1 e2) = eval c e1 - eval c e2
+eval c (Mult e1 e2)  = eval c e1 * eval c e2
 
 assign :: Var -> Expr -> Env -> Env
 assign var expr c = let
@@ -44,8 +45,9 @@ assign var expr c = let
    update c (var,value)
 
 initEnv :: Env
-initEnv = \ _ -> undefined
+initEnv = const undefined
 
+example :: Integer
 example = initEnv $$
           assign "x" (I 3) #
           assign "y" (I 5) #
@@ -55,8 +57,9 @@ example = initEnv $$
 while :: (a -> Bool) -> (a -> a) -> a -> a
 while = until . (not.)
 
+euclid :: Int -> Int -> Int
 euclid m n = (m,n) $$
-   while (\ (x,y) -> x /= y)
+   while (uncurry (/=))
          (\ (x,y) -> if x > y then (x-y,y)
                               else (x,y-x)) #
          fst
@@ -64,8 +67,9 @@ euclid m n = (m,n) $$
 whiler :: (a -> Bool) -> (a -> a) -> (a -> b) -> a -> b
 whiler p f r = while p f # r
 
+euclid2 :: Int -> Int -> Int
 euclid2 m n = (m,n) $$
-          whiler (\ (x,y) -> x /= y)
+          whiler (uncurry (/=))
                  (\ (x,y) -> if x > y then (x-y,y)
                                       else (x,y-x))
                  fst
@@ -73,15 +77,16 @@ euclid2 m n = (m,n) $$
 fibonacci :: Integer -> Integer
 fibonacci n = fibon (0,1,n) where
   fibon = whiler
-           (\ (_,_,n) -> n > 0)
-           (\ (x,y,n) -> (y,x+y,n-1))
+           (\ (_,_,m) -> m > 0)
+           (\ (x,y,m) -> (y,x+y,m-1))
            (\ (x,_,_) -> x)
 
 fb :: Integer -> Integer
-fb n = fb' 0 1 n where
-   fb' x y 0 = x
+fb = fb' 0 1 where
+   fb' x _ 0 = x
    fb' x y n = fb' y (x+y) (n-1)
 
+fibs :: [Integer]
 fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
 
 hoareTest :: (a -> Bool) -> (a -> a) -> (a -> Bool) -> [a] -> Bool
@@ -103,13 +108,14 @@ invarTestR ::  Fractional t =>
                (a -> Bool) -> (a -> a) -> [a] -> (Bool,t)
 invarTestR invar f = hoareTestR invar f invar
 
+parity :: Int -> Int
 parity n = mod n 2
 
 testRel :: (a -> a -> Bool) -> (a -> a) -> [a] -> Bool
 testRel spec f = all (\x -> spec x (f x))
 
 testInvar :: Eq b => (a -> b) -> (a -> a) -> [a] -> Bool
-testInvar specf = testRel (\ x y -> specf x == specf y)
+testInvar specf = testRel ((==) `on` specf)
 
 type Name = Int
 
@@ -137,22 +143,14 @@ showLst (f:fs) = show f ++ showRest fs
 showRest [] = ""
 showRest (f:fs) = ' ': show f ++ showRest fs
 
-p = Prop 1
-q = Prop 2
-r = Prop 3
-
-form1 = Equiv (Impl p q) (Impl (Neg q) (Neg p))
-form2 = Equiv (Impl p q) (Impl (Neg p) (Neg q))
-form3 = Impl (Cnj [Impl p q, Impl q r]) (Impl p r)
-
 propNames :: Form -> [Name]
 propNames = sort.nub.pnames where
   pnames (Prop name) = [name]
   pnames (Neg f)  = pnames f
-  pnames (Cnj fs) = concat (map pnames fs)
-  pnames (Dsj fs) = concat (map pnames fs)
-  pnames (Impl f1 f2)  = concat (map pnames [f1,f2])
-  pnames (Equiv f1 f2) = concat (map pnames [f1,f2])
+  pnames (Cnj fs) = concatMap pnames fs
+  pnames (Dsj fs) = concatMap pnames fs
+  pnames (Impl f1 f2)  = concatMap pnames [f1,f2]
+  pnames (Equiv f1 f2) = concatMap pnames [f1,f2]
 
 type Valuation = [(Name,Bool)]
 
@@ -170,7 +168,7 @@ allVals = genVals . propNames
 type ValFct = Name -> Bool
 
 val2fct :: Valuation -> ValFct
-val2fct = updates (\ _ -> undefined)
+val2fct = updates (const undefined)
 
 fct2val :: [Name] -> ValFct -> Valuation
 fct2val domain f = map (\x -> (x,f x)) domain
@@ -188,7 +186,7 @@ evl xs (Impl f1 f2) =
 evl xs (Equiv f1 f2) = evl xs f1 == evl xs f2
 
 satisfiable :: Form -> Bool
-satisfiable f = any (\ v -> evl v f) (allVals f)
+satisfiable f = any (`evl` f) (allVals f)
 
 data Token
       = TokenNeg
@@ -214,6 +212,7 @@ lexer ('=':'=':'>':cs) = TokenImpl : lexer cs
 lexer ('<':'=':'>':cs) = TokenEquiv : lexer cs
 lexer (x:_) = error ("unknown token: " ++ [x])
 
+lexNum :: String -> [Token]
 lexNum cs = TokenInt (read num) : lexer rest
      where (num,rest) = span isDigit cs
 
@@ -236,7 +235,7 @@ parseForm (TokenOP : tokens) =
    ++
   [ (Equiv f1 f2, rest) | (f1,ys) <- parseForm tokens,
                           (f2,rest) <- parseEquiv ys ]
-parseForm tokens = []
+parseForm _ = []
 
 parseForms :: Parser Token [Form]
 parseForms (TokenCP : tokens) = succeed [] tokens
@@ -247,12 +246,12 @@ parseForms tokens =
 parseImpl :: Parser Token Form
 parseImpl (TokenImpl : tokens) =
   [ (f,ys) | (f,y:ys) <- parseForm tokens, y == TokenCP ]
-parseImpl tokens = []
+parseImpl _ = []
 
 parseEquiv :: Parser Token Form
 parseEquiv (TokenEquiv : tokens) =
   [ (f,ys) | (f,y:ys) <- parseForm tokens, y == TokenCP ]
-parseEquiv tokens = []
+parseEquiv _ = []
 
 parse :: String -> [Form]
 parse s = [ f | (f,_) <- parseForm (lexer s) ]
