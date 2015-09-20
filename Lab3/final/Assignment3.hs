@@ -32,7 +32,7 @@ mergeDsj x (Dsj ys) = Dsj (x : ys)
 mergeDsj x y = Dsj [x, y]
 
 
--- Precondition: [Form] comes from a Dsj (so: [a,b,c] means: a V b V c
+-- Precondition: [Form] comes from a Dsj (so: [a,b,c] means: a V b V c)
 foldDsj :: [Form] -> Form
 foldDsj [] = Cnj []
 foldDsj (z:zs) = foldl distributeDsj z zs

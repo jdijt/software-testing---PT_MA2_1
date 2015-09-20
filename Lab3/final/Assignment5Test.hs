@@ -43,7 +43,7 @@ prop_clauseLength (Dsj xs) (c:_) = length c == length xs
 prop_clauseLength (Cnj []) [] = True
 prop_clauseLength _ [] = False
 prop_clauseLength (Cnj []) _ = False
--- Here we implicitly verify the that the order of clauses is equal to the order of the conjuncts in the input Form
+-- Here we implicitly verify that the order of the clauses is equal to the order of the conjuncts in the input Form
 prop_clauseLength (Cnj (x:xs)) (c:cs) = prop_clauseLength x [c] && prop_clauseLength (Cnj xs) cs
 
 

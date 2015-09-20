@@ -6,7 +6,7 @@ The total amount of time spent by two persons on this Lab exercise is 8 hours.
 
 The source can be found in the files `Assignment5.hs` and `Assignment5Test.hs`. Please load `Assignment5Test`. This will also load the `Parse` source.
 
-The subject of matter in the function `cnf2cls`.
+The subject of matter is the function `cnf2cls`.
 
 ## Test Generator
 
@@ -28,7 +28,7 @@ The test properties that we have identified on the `cnf2cls` function:
 ## Test Process
 
 Each property mentioned in the previous exercise is tested one hundred times.
-The generator made sure that all generated `Form` instances are in CNF, which gives us 100% test relevance. Therefor we assume that 100 tests is enough to validate the properties.
+The generator made sure that all generated `Form` instances are in CNF, which gives us 100% test relevance. Therefore we assume that 100 tests are enough to validate the properties.
 
 All properties can be tested with a single command:
 
