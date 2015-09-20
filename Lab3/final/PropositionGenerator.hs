@@ -3,13 +3,13 @@ module PropositionGenerator where
 import Lecture3
 import System.Random
 
-generateValidForm :: IO Form -> IO Form 
+generateValidForm :: IO Form -> IO Form
 generateValidForm x = do
            y <- getRandomInt 0 4
            let f = [generateNeg, generateCnj, generateDsj, generateImpl, generateEquiv] !! y
            z <- f x
-           repeat <- getRandomInt 0 1
-           if repeat == 0 then return z 
+           c <- getRandomInt 0 1
+           if c == 0 then return z
             else generateValidForm (f x)
 
 generateNeg :: IO Form -> IO Form
@@ -46,6 +46,6 @@ generateProp =  do
            x <- getRandomInt 0 9
            return (Prop x)
 
-          
+
 getRandomInt :: Int -> Int -> IO Int
 getRandomInt n m = getStdRandom (randomR (n, m))

@@ -3,12 +3,12 @@
 The total amount of time spent by two persons on this Lab exercise is 5 hours.
 
 ## Source
-The source is located in the following files: `Assignment1.hs` for the defitions of and testCases, `Forms.hs` for the implementation from the lecture.
+The source is located in the following files: `Assignment1.hs` for the definitions of and testCases, `Forms.hs` for the implementation from the lecture.
 
 ## Tests
 All tests are based on the following three lists, the full implementation of these can be seen in `Assignment1.hs`:
 ```
--- Contraditions
+-- Contradictions
 baseContradictions :: [Form]
 
 -- Tautologies
@@ -21,8 +21,8 @@ otherForms :: [Form]
 ### Tescases
 To run all testCases execute `runAllTests` with `Assignment1.hs` loaded.
 
-1. `testContradiction `: In this case we test if `contradiction` recognises contraditions from the list of base contradictions. In addition to that we know that the negation of a tautology is a contradiction as well, so we use the negated forms from baseTautologies to increase the number of testcases.
-2. `testOthers`: This testcase is to check if `contradiction` and `tautology` both work for formalas that are not tautologies and not contradictions.
+1. `testContradiction `: In this case we test if `contradiction` recognizes contradictions from the list of base contradictions. In addition to that we know that the negation of a tautology is a contradiction as well, so we use the negated forms from baseTautologies to increase the number of test cases.
+2. `testOthers`: This test case is to check if `contradiction` and `tautology` both work for formulas that are not tautologies and not contradictions.
 3. `testTautology`: This case is to check if `tautology` works for the tautologies from `baseTautologies` and the negated contradictions from `baseContradictions`, following the same logic as used for `testContradiction`.
 4. `testEntails`: For the entails method we know the following properties hold, so these are the properties we use for testing:
    - A contraction can imply anything;

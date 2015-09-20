@@ -7,12 +7,12 @@ The source can be found in the file `Assignment4.hs`. Please load with `:load As
 
 ## Requirements
 
-> Write a formula generator for random testing of properties to test the correctness `toCNF` function of Assignment 3. 
+> Write a formula generator for random testing of properties to test the correctness `toCNF` function of Assignment 3.
 
-## Preconditions 
+## Preconditions
 
-The preconditions for `toCNF` are: 
-- A valid proposition containing possibly properties, negations, conjunctions, disjunctions, implications and equivalences 
+The preconditions for `toCNF` are:
+- A valid proposition containing possibly properties, negations, conjunctions, disjunctions, implications and equivalences
 
 ## Postconditions
 
@@ -29,7 +29,7 @@ These random propositions are converted to the Conjunctive Normal Form with the 
 
 ### Conjunctive Normal Form test
 
-A proposition in the Conjunctive Normal Form can exist of a property, a negation wrapped around a property, a disjunction consisting of properties and negations and a conjunction existing of properties, negations and disjunctions. We use these characteristics in the function `isInCNF` which is also tested in the `randomPropTest`. 
+A proposition in the Conjunctive Normal Form can exist of a property, a negation wrapped around a property, a disjunction consisting of properties and negations and a conjunction existing of properties, negations and disjunctions. We use these characteristics in the function `isInCNF` which is also tested in the `randomPropTest`.
 
 Both properties can be tested with the following comment:
 ```
