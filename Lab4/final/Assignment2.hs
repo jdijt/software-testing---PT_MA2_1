@@ -28,7 +28,6 @@ getIntL n = do
 genSetNaive :: IO (Set Int)
 genSetNaive = do
 	n <- getRandomInt 100
-
 	xs <- getIntL n
 	return (Set (sort $ nub xs))
 
