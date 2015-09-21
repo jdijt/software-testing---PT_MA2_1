@@ -3,7 +3,6 @@ module Assignment2 where
 import SetOrd
 import System.Random
 import Data.List
-import Control.Monad
 import Test.QuickCheck
 
 -- |Naive generator
