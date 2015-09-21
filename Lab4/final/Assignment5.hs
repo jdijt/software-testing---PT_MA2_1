@@ -1,8 +1,7 @@
 module Assignment5 where
 
+import Lecture4
 import Data.List
-
-type Rel a = [(a,a)]
 
 -- For now assuming the following:
 -- Pre: Some list of pairs
