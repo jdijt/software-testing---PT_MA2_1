@@ -1,5 +1,7 @@
 # Test Report for Assignment 2
 
+The total amount of time spent by two persons on this Lab exercise is 8 hours.
+
 The source is located in the file `Assignment3.hs`. We implemented `differenceSet` and `intersectionSet`. `unionSet` was already provided in the `SetOrd` implementation.
 
 ## Identified Properties
