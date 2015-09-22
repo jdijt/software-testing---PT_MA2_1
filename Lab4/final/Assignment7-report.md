@@ -1,4 +1,5 @@
 # Test report for Assignment 7
+The total amount of time spent by two persons on this Lab exercise is 7 hours.
 
 ## Source
 The source is located in the file `Assignment7.hs`, which includes the source from Assignment 5 and 6 (`Assignment5.hs` and `Assignment6.hs`).
