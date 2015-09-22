@@ -15,15 +15,18 @@ Pre and postconditions per function.
 
 - Output is an ordered list of pairs. (In natural ordering):
 ```haskell
-    sort xs == xs
+    prop_isOrdered :: Ord a => Rel a -> Bool
+    prop_isOrdered xs = sort xs == xs
 ```
 - There are no duplicates in the output:
 ```haskell
-    (length.nub) xs == length xs
+    prop_noDup :: Ord a => Rel a -> Bool
+    prop_noDup xs = (length.nub) xs == length xs
 ```
 - The result is a symmetric relation: 
 ```haskell
-    all (\(x,y) -> (y,x) `elem` rel) rel
+    prop_isSym :: Ord a => Rel a -> Bool
+    prop_isSym xs = all (\(x,y) -> (y,x) `elem` xs) xs
 ```
 
 ### Transitive closure
