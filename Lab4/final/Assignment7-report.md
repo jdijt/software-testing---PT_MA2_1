@@ -13,14 +13,17 @@ Pre and postconditions per function.
 
 *Postconditions*
 
-- Output is an ordered list of pairs. (In natural ordering):```haskell
+- Output is an ordered list of pairs. (In natural ordering):
+```haskell
     sort xs == xs
 ```
-- There are no duplicates in the output:```haskell
+- There are no duplicates in the output:
+```haskell
     (length.nub) xs == length xs
 ```
-- The result is a symmetric relation: ```haskell
-    all (\(x,y) -> (y,x) `elem` rel) rel`
+- The result is a symmetric relation: 
+```haskell
+    all (\(x,y) -> (y,x) `elem` rel) rel
 ```
 
 ### Transitive closure
