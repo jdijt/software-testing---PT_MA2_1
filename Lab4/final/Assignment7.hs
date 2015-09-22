@@ -34,16 +34,28 @@ prop_isTrans rs = and [ trans r rs | r <- rs]
     trans :: Ord a => (a,a) -> Rel a -> Bool
     trans (x,y) xs = and [(x,v) `elem` xs | (u,v) <- xs, u == y]
 
+
+-- Combine all properties for trClos and symClos.
+prop_transTest :: Ord a => Rel a -> Rel a -> Bool
+prop_transTest input result = prop_isOrdered result 
+                            && prop_noDup result 
+                            && prop_containsOriginal input result 
+                            && prop_isTrans result
+
+prop_symTest :: Ord a => Rel a -> Rel a -> Bool
+prop_symTest input result = prop_isOrdered result 
+                            && prop_noDup result 
+                            && prop_containsOriginal input result 
+                            && prop_isSym result
+
+
 genArbitraryRel :: Gen (Rel Int)
 genArbitraryRel = do
                     size <- choose (0,4)
                     sublistOf [(x,y) | x <- [0..size], y <- [0..size]]
 
-prop_transTest :: Ord a => Rel a -> Rel a -> Bool
-prop_transTest input result = prop_isOrdered result && prop_noDup result && prop_containsOriginal input result && prop_isTrans result
+trClosTest :: Property
+trClosTest = forAll genArbitraryRel (\ x -> prop_transTest x (trClos x))
 
-prop_symTest :: Ord a => Rel a -> Rel a -> Bool
-prop_symTest input result = prop_isOrdered result && prop_noDup result && prop_containsOriginal input result && prop_isSym result
-
-trClosTest = forAll genArbitraryRel $ (\ x -> prop_transTest x (trClos x))
-symClosTest = forAll genArbitraryRel $ (\ x -> prop_symTest x (symClos x))
+symClosTest :: Property
+symClosTest = forAll genArbitraryRel (\ x -> prop_symTest x (symClos x))
