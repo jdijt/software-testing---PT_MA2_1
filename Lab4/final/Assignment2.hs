@@ -31,7 +31,7 @@ genSetOwn = do
 	xs <- getIntL n
 	return (Set (sort $ nub xs))
 
--- |Generator for QuickCheck
+-- Generator for QuickCheck
 instance (Ord a, Arbitrary a) => Arbitrary (Set a) where
     arbitrary = do
         values <- orderedList
