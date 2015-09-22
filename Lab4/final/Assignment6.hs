@@ -4,8 +4,6 @@ import Lecture4
 import Data.List
 import Data.Function
 
--- The total amount of time spent by two persons on this lab exercise was 4 hours
-
 -- Pre: Some ordered list of pairs
 -- Post: 
 --  - Ordered set of pairs

@@ -3,8 +3,6 @@ module Assignment5 where
 import Lecture4
 import Data.List
 
--- The total amount of time spent by two persons on this lab exercise was 2 hours
-
 -- Pre: Some list of pairs
 -- Post:
 --  - Ordered (natural ordering) set of pairs
