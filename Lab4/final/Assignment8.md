@@ -9,7 +9,7 @@
 - R<sup>T</sup> = {(0,1)}
 - (R<sup>T</sup>)<sup>S</sup> =  {(0,1),(1,0)}
 
-<strong> (R<sup>S</sup>)<sup>T</sup> </strong?
+<strong> (R<sup>S</sup>)<sup>T</sup> </strong>
 
 - Take R = {(0,1)}
 - R<sup>S</sup> = {(0,1),(1,0)}
