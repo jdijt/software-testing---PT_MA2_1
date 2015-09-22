@@ -27,7 +27,8 @@ instance Show Condition where
     show (Dj xs)       = "+("++ showLst xs ++")"
 
 showVar :: Var -> String
-showVar = init.tail.show
+showVar [] = []
+showVar s = (init.tail.show) s
 
 --Taken from lecture 3
 showLst,showRest :: [Condition] -> String
