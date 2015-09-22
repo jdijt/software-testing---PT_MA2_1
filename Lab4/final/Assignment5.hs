@@ -11,4 +11,4 @@ import Data.List
 --  - No duplicates
 --  - result is a symmetric Relation
 symClos :: Ord a => Rel a -> Rel a
-symClos = nub.sort.foldr (\(x,y) r -> (x,y):(y,x):r) [] 
+symClos = sort.nub.foldr (\(x,y) r -> (x,y):(y,x):r) []
