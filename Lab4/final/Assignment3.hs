@@ -39,11 +39,11 @@ testR k n f r = if k == n then print (show n ++ " tests passed")
 -- Own Tests
 testIntersection :: IO ()
 testIntersection = testR 1 100 intersectionSet (\p q r -> and
-                    [subSet r p                   -- | Test if the result is a subset of the original first argument
-                    , subSet r q                  -- | Test if the result is a subset of the original second argument
-                    , intersectionSet p r == r    -- | Test if the intersect of the result with the first argument is the result
-                    , intersectionSet q r == r    -- | Test if the intersect of the result with the second argument is the result
-                    , intersectionSet q p == r])  -- | Test if the intersect with the arguments swapped has the same outcome
+                    [subSet r p                   -- | Test if the result is a subset of arg 1
+                    , subSet r q                  -- | Test if the result is a subset of arg 2
+                    , intersectionSet p r == r    -- | Test if the intersect of the result with arg 1 is equal to the result
+                    , intersectionSet q r == r    -- | Test if the intersect of the result with arg 2 is equal to the result
+                    , intersectionSet q p == r])  -- | Test if the intersect with the arguments flipped has the same result
 
 -- QuickCheck
 prop_intersect_subSetArg1 :: Set Int -> Set Int -> Bool
@@ -120,8 +120,8 @@ quickCheckUnion = quickCheck prop_union_all
 -- Own Tests
 testDifference :: IO ()
 testDifference = testR 1 100 differenceSet (\p q r -> and
-                    [r `subSet` p                                           -- | Test if result is a sub set of arg 1
-                    ,q `differenceSet`r == q                                -- | Test if result does not overlap with arg 2
+                    [r `subSet` p                                           -- | Test if the result is a sub set of arg 1
+                    ,q `differenceSet`r == q                                -- | Test if the result does not overlap with arg 2
                     ,r `unionSet` q == p `unionSet` q                       -- | Test if the union of the result and arg 2 covers the whole space
                     ,isEmpty (r `intersectionSet` (q `differenceSet` p))])  -- | Test if the result has no overlap when flipping the arguments
 
