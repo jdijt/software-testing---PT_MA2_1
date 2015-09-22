@@ -32,8 +32,7 @@ genSetOwn = do
 	return (Set (sort $ nub xs))
 
 -- |Generator for QuickCheck
-
-genSet :: Gen (Set Int)
-genSet = do
-	list <- orderedList
-	return (Set (nub list))
+instance (Ord a, Arbitrary a) => Arbitrary (Set a) where
+    arbitrary = do
+        values <- orderedList
+        return $ Set (nub values)
