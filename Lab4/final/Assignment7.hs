@@ -2,8 +2,10 @@ module Assignment7 where
 
 import Data.List
 import Lecture4
---import Assignment5
---import Assignment6
+import Test.QuickCheck
+
+import Assignment5
+import Assignment6
 
 
 -- Postconditions, shared by symClos and trClos:
@@ -31,3 +33,17 @@ prop_isTrans rs = and [ trans r rs | r <- rs]
     where
     trans :: Ord a => (a,a) -> Rel a -> Bool
     trans (x,y) xs = and [(x,v) `elem` xs | (u,v) <- xs, u == y]
+
+genArbitraryRel :: Gen (Rel Int)
+genArbitraryRel = do
+                    size <- choose (0,4)
+                    sublistOf [(x,y) | x <- [0..size], y <- [0..size]]
+
+prop_transTest :: Ord a => Rel a -> Rel a -> Bool
+prop_transTest input result = prop_isOrdered result && prop_noDup result && prop_containsOriginal input result && prop_isTrans result
+
+prop_symTest :: Ord a => Rel a -> Rel a -> Bool
+prop_symTest input result = prop_isOrdered result && prop_noDup result && prop_containsOriginal input result && prop_isSym result
+
+trClosTest = forAll genArbitraryRel $ (\ x -> prop_transTest x (trClos x))
+symClosTest = forAll genArbitraryRel $ (\ x -> prop_symTest x (symClos x))
