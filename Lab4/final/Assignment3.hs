@@ -36,3 +36,33 @@ runTests = testR 1 100 intersectionSet (\p q r -> and
                 , intersectionSet p r == r    -- | Test if the intersect of the result with the first argument is the result
                 , intersectionSet q r == r    -- | Test if the intersect of the result with the second argument is the result
                 , intersectionSet q p == r])  -- | Test if the intersect with the arguments swapped has the same outcome
+
+prop_associativity :: Set Int -> Set Int -> Bool
+prop_associativity xs ys = intersectionSet ys xs == intersectionSet xs ys
+
+prop_subSetFirstArg :: Set Int -> Set Int -> Bool
+prop_subSetFirstArg xs ys = subSet (intersectionSet xs ys) xs
+
+prop_subSetSecondArg :: Set Int -> Set Int -> Bool
+prop_subSetSecondArg = flip prop_subSetFirstArg
+
+prop_intersectionWithResultSame :: Set Int -> Set Int -> Bool
+prop_intersectionWithResultSame xs ys = result == intersectionSet xs result where
+  result = intersectionSet xs ys
+
+prop_intersectionWithResultSameSecondArg :: Set Int -> Set Int -> Bool
+prop_intersectionWithResultSameSecondArg = flip prop_intersectionWithResultSame
+
+
+genSetTuple :: Gen (Set Int, Set Int)
+genSetTuple = do
+  xs <- genSet
+  ys <- genSet
+  return (xs, ys)
+
+checkIntersection :: Property
+checkIntersection = forAll genSetTuple (\(x,y) -> all (\f -> f x y) [prop_associativity
+                                                                    ,prop_subSetFirstArg
+                                                                    ,prop_subSetSecondArg
+                                                                    ,prop_intersectionWithResultSame
+                                                                    ,prop_intersectionWithResultSameSecondArg])
