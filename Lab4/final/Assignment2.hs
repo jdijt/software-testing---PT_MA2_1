@@ -32,6 +32,7 @@ genSetOwn = do
 	return (Set (sort $ nub xs))
 
 -- Generator for QuickCheck
+-- Example usage: sample (arbitrary :: Gen (Set Int))
 instance (Ord a, Arbitrary a) => Arbitrary (Set a) where
     arbitrary = do
         values <- orderedList
