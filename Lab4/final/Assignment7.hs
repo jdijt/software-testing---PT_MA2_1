@@ -37,15 +37,15 @@ prop_isTrans rs = and [ trans r rs | r <- rs]
 
 -- Combine all properties for trClos and symClos.
 prop_transTest :: Ord a => Rel a -> Rel a -> Bool
-prop_transTest input result = prop_isOrdered result 
-                            && prop_noDup result 
-                            && prop_containsOriginal input result 
+prop_transTest input result = prop_isOrdered result
+                            && prop_noDup result
+                            && prop_containsOriginal input result
                             && prop_isTrans result
 
 prop_symTest :: Ord a => Rel a -> Rel a -> Bool
-prop_symTest input result = prop_isOrdered result 
-                            && prop_noDup result 
-                            && prop_containsOriginal input result 
+prop_symTest input result = prop_isOrdered result
+                            && prop_noDup result
+                            && prop_containsOriginal input result
                             && prop_isSym result
 
 

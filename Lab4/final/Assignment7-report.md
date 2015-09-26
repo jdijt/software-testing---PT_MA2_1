@@ -34,7 +34,7 @@ The shared conditions plus the following postcondition:
 ### Symmetric closure test
 This test checks whether the postconditions described above hold. The test can be executed with:
  `quickCheck symClosTest`
- 
+
 ### Transitive closure test
 This test checks whether the postconditions described above hold. The test can be executed with:
  `quickCheck trClosTest`
