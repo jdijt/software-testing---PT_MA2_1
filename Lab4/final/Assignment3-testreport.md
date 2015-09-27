@@ -7,8 +7,8 @@ The source is located in the file `Assignment3.hs`. We implemented `differenceSe
 ## Identified Properties
 
 - Union
-  - Arg 1 is subset of the result
-  - Arg 2 is subset of the result
+  - Arg 1 is a subset of the result
+  - Arg 2 is a subset of the result
   - The difference between the result and arg 1 is a sub set of arg 2
   - The difference between the result and arg 2 is a sub set of arg 1
   - The length of the result is less then or equal to the sum of the lengths of the arguments
@@ -20,7 +20,7 @@ The source is located in the file `Assignment3.hs`. We implemented `differenceSe
   - The intersect with the arguments flipped has the same result
 - Difference
   - The result is a sub set of arg 1
-  - The result does not overlap with arg 2
+  - The union of the result and arg 2 is an empty set.
   - The union of the result and arg 2 covers the whole space
   - The result has no overlap when flipping the arguments
 
