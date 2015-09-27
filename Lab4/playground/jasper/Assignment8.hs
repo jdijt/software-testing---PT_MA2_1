@@ -10,21 +10,22 @@ fib = Seq [Ass "x" (I 0), Ass "y" (I 1),
                    Ass "n" (Subtr (V "n") (I 1))])]
 
 
+-- Use Polish notation in print to ease parsing later on.
 instance Show Expr where
     show (I i)         = show i
     show (V v)         = showVar v
-    show (Add e1 e2)   = "(" ++ show e1 ++" + "++ show e2 ++")"
-    show (Subtr e1 e2) = "(" ++ show e1 ++" - "++ show e2 ++")"
-    show (Mult e1 e2)  = "(" ++ show e1 ++" * "++ show e2 ++")"
+    show (Add e1 e2)   = "+ " ++ show e1 ++ " " ++ show e2
+    show (Subtr e1 e2) = "- " ++ show e1 ++ " " ++ show e2
+    show (Mult e1 e2)  = "* " ++ show e1 ++ " " ++ show e2
 
 instance Show Condition where
     show (Prp v)       = showVar v
-    show (Eq e1 e2)    = "(" ++ show e1 ++"=="++ show e2 ++")"
-    show (Lt e1 e2)    = "(" ++ show e1 ++"<"++ show e2 ++")"
-    show (Gt e1 e2)    = "(" ++ show e1 ++">"++ show e2 ++")"
-    show (Ng c)        = "!("++ show c ++")"
-    show (Cj xs)       = "*("++ showLst xs ++")"
-    show (Dj xs)       = "+("++ showLst xs ++")"
+    show (Eq e1 e2)    = "== " ++ show e1 ++ " " ++ show e2
+    show (Lt e1 e2)    = "< " ++ show e1 ++ " " ++ show e2
+    show (Gt e1 e2)    = "> " ++ show e1 ++ " " ++ show e2
+    show (Ng c)        = "! " ++ show c
+    show (Cj xs)       = "*(" ++ showLst xs ++")"
+    show (Dj xs)       = "+(" ++ showLst xs ++")"
 
 showVar :: Var -> String
 showVar [] = []
@@ -41,12 +42,12 @@ instance Show Statement where
     show = showSt 0 
         where
         showSt :: Int -> Statement -> String
-        showSt i (Ass v e)      = indent i ++ showVar v ++ " := " ++ show e ++";" ++ newLine 
+        showSt i (Ass v e)      = indent i ++ ":= " ++ showVar v ++ " " ++ show e ++";" ++ newLine 
         showSt i (Cond c s1 s2) = indent i ++ "IF "++ show c ++ " THEN" ++ newLine
-                                ++ showSt(i+2) s1
+                                ++ showSt (i + 2) s1
                                 ++ indent i ++ "ELSE" ++ newLine
-                                ++ showSt(i+2) s2
-                                ++ indent i ++ "ENDIF" ++ newLine
+                                ++ showSt (i + 2) s2
+                                ++ indent i ++ "FI" ++ newLine
         showSt i (While c s)    = indent i ++ "WHILE " ++ show c ++ " DO" ++ newLine
                                 ++ showSt(i+2) s
                                 ++"DONE" ++ newLine
