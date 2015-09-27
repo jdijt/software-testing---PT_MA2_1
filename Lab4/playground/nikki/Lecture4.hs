@@ -15,7 +15,7 @@ data Expr = I Integer | V Var
           | Add Expr Expr 
           | Subtr Expr Expr 
           | Mult Expr Expr 
-          deriving (Eq,Show)
+          deriving (Eq)
 
 data Condition = Prp Var 
                | Eq Expr Expr 
@@ -24,7 +24,7 @@ data Condition = Prp Var
                | Ng Condition 
                | Cj [Condition] 
                | Dj [Condition]
-               deriving (Eq,Show)
+               deriving (Eq)
 
 data Statement = Ass Var Expr
                | Cond Condition Statement Statement

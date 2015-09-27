@@ -2,37 +2,36 @@ module Exercise9 where
 
 import Lecture4
 
+import Data.Char 
+
 instance Show Statement where 
-  show (Ass v e)       =  v ++ " := " ++ showExpr e
-  show (Cond c s t)    = "\n" ++ "if " ++ showCond c ++ " then " ++ show s ++ "\n" 
-  	                     ++ " else " ++ show t
-  show (Seq [])        = [] 
-  show (Seq [x])       = show x 
-  show (Seq (x:xs))    = show x ++ "; " ++ show (Seq xs)
-  show (While c s)     = "\n" ++ "while " ++ showCond c ++ " do { " ++ show s ++ " }" 
+  show (Ass v e)     =  v ++ " := " ++ show e 
+  show (Cond c s t)  = "if " ++ show c ++ " then " ++ show s ++ "\n" ++ " else " ++ show t ++ "\n"
+  show (Seq [])      = [] 
+  show (Seq [x])     = show x 
+  show (Seq (x:xs))  = show x ++ "; " ++ show (Seq xs)
+  show (While c s)   = "while " ++ show c ++ " do { " ++ show s ++ " }" ++ "\n" 
 
-showExpr :: Expr -> String
-showExpr (I i) = show i
-showExpr (V v) = v
-showExpr (Add e f) = "(" ++ (showExpr e) ++ " + " ++ (showExpr f) ++ ")"
-showExpr (Subtr e f) = "(" ++ (showExpr e) ++ " - " ++ (showExpr f) ++ ")"
-showExpr (Mult e f) = "(" ++ (showExpr e) ++ " * " ++ (showExpr f) ++ ")"
+instance Show Expr where
+  show (I i)       = show i
+  show (V v)       = v
+  show (Add e f)   = "(" ++ show e ++ " + " ++ show f ++ ")"
+  show (Subtr e f) = "(" ++ show e ++ " - " ++ show f ++ ")"
+  show (Mult e f)  = "(" ++ show e ++ " * " ++ show f ++ ")"
 
-showCond :: Condition -> String 
-showCond (Prp v)  = v
-showCond (Eq e f) = showExpr e ++ " == " ++ showExpr f
-showCond (Lt e f) = showExpr e ++ " <= " ++ showExpr f
-showCond (Gt e f) = showExpr e ++ " => " ++ showExpr f
-showCond (Ng n)   = "¬" ++ showCond n
-showCond (Cj c)   = "(" ++ showLst 1 c ++ ")"
-showCond (Dj d)   = "(" ++ showLst 2 d ++ ")"
+instance Show Condition where 
+  show (Prp v)  = v
+  show (Eq e f) = "(" ++ show e ++ " == " ++ show f ++ ")"
+  show (Lt e f) = "(" ++ show e ++ " <= " ++ show f ++ ")"
+  show (Gt e f) = "(" ++ show e ++ " => " ++ show f ++ ")"
+  show (Ng n)   = "-" ++ show n
+  show (Cj c)   = "*(" ++ showLst c ++ ")"
+  show (Dj d)   = "+(" ++ showLst d ++ ")"
 
-showLst :: Int -> [Condition] -> String
-showLst _ [] = []
-showLst _ [x] = showCond x 
-showLst n (x:xs) = showCond x ++ 
-                   if n == 1 then " ^ " ++ showLst 1 xs
-                   else " v " ++ showLst 2 xs
+showLst :: [Condition] -> String
+showLst [] = []
+showLst [x] = show x 
+showLst (x:xs) = show x ++ " " ++ showLst xs
 
 fib :: Statement
 fib = Seq [Ass "x" (I 0), Ass "y" (I 1), 
