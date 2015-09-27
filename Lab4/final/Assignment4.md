@@ -6,3 +6,6 @@
 
 *No questions*
 
+### Jasper
+
+- The notation used in section 5.6 is confusing to me. Because I am used to read `|a|` as 'the size of a'. Am I correct when I say the collection of equivalence classes R: `A/R = {|a| | a in A}` has the type set of sets? Implying that `|a|` stands for the set of elements that are equivalent to `a` in this case.
