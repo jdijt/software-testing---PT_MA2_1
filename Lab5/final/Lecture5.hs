@@ -9,6 +9,8 @@ type Row    = Int
 type Column = Int 
 type Value  = Int
 type Grid   = [[Value]]
+type Position = (Row,Column)
+type Constrnt = [[Position]]
 
 positions, values :: [Int]
 positions = [1..9]
