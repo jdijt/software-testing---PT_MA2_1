@@ -1,60 +1,30 @@
-module Assignment1 where
+module Lecture5
+
+where 
 
 import Data.List
 import System.Random
-
-----------------------------------------------------------------------
--- | Adapted for NRC constraint
-----------------------------------------------------------------------
-
--- |Solving with constraint
-
-prune :: (Row,Column,Value) 
-      -> [Constraint] -> [Constraint]
-prune _ [] = []
-prune (r,c,v) ((x,y,zs):rest)
-  | r == x = (x,y,zs\\[v]) : prune (r,c,v) rest
-  | c == y = (x,y,zs\\[v]) : prune (r,c,v) rest
-  | sameblock (r,c) (x,y) = 
-        (x,y,zs\\[v]) : prune (r,c,v) rest
-  | sameblockNRC (r,c) (x,y) = 
-        (x,y,zs\\[v]) : prune (r,c,v) rest
-  | otherwise = (x,y,zs) : prune (r,c,v) rest
-
-blocksNRC :: [[Int]]
-blocksNRC = [[2..4],[6..8]]
-
-blNRC :: Int -> [Int]
-blNRC x = concat $ filter (elem x) blocksNRC
-
-sameblockNRC :: (Row,Column) -> (Row,Column) -> Bool
-sameblockNRC (r,c) (x,y) = blNRC r == blNRC x && blNRC c == blNRC y
-
--- |Valuation of grid
-
-exampleNRC :: Grid
-exampleNRC = [[0,0,0,3,0,0,0,0,0],
-              [0,0,0,7,0,0,3,0,0],
-              [2,0,0,0,0,0,0,0,8],
-              [0,0,6,0,0,5,0,0,0],
-              [0,9,1,6,0,0,0,0,0],
-              [3,0,0,0,7,1,2,0,0],
-              [0,0,0,0,0,0,0,3,1],
-              [0,8,0,0,4,0,0,0,0],
-              [0,0,2,0,0,0,0,0,0]]
-
-----------------------------------------------------------------------
--- | Source: Lecture 5
-----------------------------------------------------------------------
 
 type Row    = Int 
 type Column = Int 
 type Value  = Int
 type Grid   = [[Value]]
+type Position = (Row,Column)
+type Constrnt = [[Position]]
+
+rowConstrnt = [[(r,c)| c <- values ] | r <- values ]
+columnConstrnt = [[(r,c)| r <- values ] | c <- values ]
+blockConstrnt = [[(r,c)| r <- b1, c <- b2 ] | b1 <- blocks, b2 <- blocks ]
 
 positions, values :: [Int]
 positions = [1..9]
 values    = [1..9] 
+
+freeAtPos' :: Sudoku -> Position -> Constrnt -> [Value]
+freeAtPos' s (r,c) xs = let 
+   ys = filter (elem (r,c)) xs 
+   in 
+   foldl1 intersect (map ((values \\) . map s) ys)
 
 blocks :: [[Int]]
 blocks = [[1..3],[4..6],[7..9]]
@@ -111,25 +81,25 @@ subGrid :: Sudoku -> (Row,Column) -> [Value]
 subGrid s (r,c) = 
   [ s (r',c') | r' <- bl r, c' <- bl c ]
 
-freeInSeq :: [Value] -> [Value]
-freeInSeq seq = values \\ seq 
+--freeInSeq :: [Value] -> [Value]
+--freeInSeq seq = values \\ seq 
 
-freeInRow :: Sudoku -> Row -> [Value]
-freeInRow s r = 
-  freeInSeq [ s (r,i) | i <- positions  ]
+--freeInRow :: Sudoku -> Row -> [Value]
+--freeInRow s r = 
+--  freeInSeq [ s (r,i) | i <- positions  ]
 
-freeInColumn :: Sudoku -> Column -> [Value]
-freeInColumn s c = 
-  freeInSeq [ s (i,c) | i <- positions ]
+--freeInColumn :: Sudoku -> Column -> [Value]
+--freeInColumn s c = 
+--  freeInSeq [ s (i,c) | i <- positions ]
 
-freeInSubgrid :: Sudoku -> (Row,Column) -> [Value]
-freeInSubgrid s (r,c) = freeInSeq (subGrid s (r,c))
+--freeInSubgrid :: Sudoku -> (Row,Column) -> [Value]
+--freeInSubgrid s (r,c) = freeInSeq (subGrid s (r,c))
 
-freeAtPos :: Sudoku -> (Row,Column) -> [Value]
-freeAtPos s (r,c) = 
-  (freeInRow s r) 
-   `intersect` (freeInColumn s c) 
-   `intersect` (freeInSubgrid s (r,c)) 
+--freeAtPos :: Sudoku -> (Row,Column) -> [Value]
+--freeAtPos s (r,c) = 
+--  (freeInRow s r) 
+--   `intersect` (freeInColumn s c) 
+--   `intersect` (freeInSubgrid s (r,c)) 
 
 injective :: Eq a => [a] -> Bool
 injective xs = nub xs == xs
@@ -180,6 +150,16 @@ extendNode (s,constraints) (r,c,vs) =
 length3rd :: (a,b,[c]) -> (a,b,[c]) -> Ordering
 length3rd (_,_,zs) (_,_,zs') = compare (length zs) (length zs')
 
+prune :: (Row,Column,Value) 
+      -> [Constraint] -> [Constraint]
+prune _ [] = []
+prune (r,c,v) ((x,y,zs):rest)
+  | r == x = (x,y,zs\\[v]) : prune (r,c,v) rest
+  | c == y = (x,y,zs\\[v]) : prune (r,c,v) rest
+  | sameblock (r,c) (x,y) = 
+        (x,y,zs\\[v]) : prune (r,c,v) rest
+  | otherwise = (x,y,zs) : prune (r,c,v) rest
+
 sameblock :: (Row,Column) -> (Row,Column) -> Bool
 sameblock (r,c) (x,y) = bl r == bl x && bl c == bl y 
 
@@ -195,7 +175,7 @@ openPositions s = [ (r,c) | r <- positions,
 
 constraints :: Sudoku -> [Constraint] 
 constraints s = sortBy length3rd 
-    [(r,c, freeAtPos s (r,c)) | 
+    [(r,c, freeAtPos' s (r,c)) | 
                        (r,c) <- openPositions s ]
 
 data Tree a = T a [Tree a] deriving (Eq,Ord,Show)
@@ -283,7 +263,6 @@ example5 = [[1,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,7,0,0],
             [0,0,0,0,0,0,0,8,0],
             [0,0,0,0,0,0,0,0,9]]
-
 
 emptyN :: Node
 emptyN = (\ _ -> 0,constraints (\ _ -> 0))
