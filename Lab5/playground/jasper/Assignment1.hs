@@ -28,21 +28,21 @@ freeAtPos s (r,c) =
     freeInRow s r 
     `intersect` freeInColumn s c 
     `intersect` freeInSubgrid s (r,c) 
-    `intersect` freeInNRCGrid s (r,c)
+    `intersect` freeInNrcGrid s (r,c)
 
 nrcBl :: Int -> [Int]
 nrcBl x = concat $ filter (elem x) blocks 
 
-isInNRCBl :: Int -> Bool
-isInNRCBl x = not $ null $ nrcBl x
+isInNrcBl :: Int -> Bool
+isInNrcBl x = not $ null $ nrcBl x
 
-subNRCGrid :: Sudoku -> (Row,Column) -> [Value]
-subNRCGrid s (r,c)
-    | isInNRCBl r && isInNRCBl c = [ s (r',c') | r' <- nrcBl r, c' <- nrcBl c ]
+subGridNrc :: Sudoku -> (Row,Column) -> [Value]
+subGridNrc s (r,c)
+    | isInNrcBl r && isInNrcBl c = [ s (r',c') | r' <- nrcBl r, c' <- nrcBl c ]
     | otherwise                  = replicate 9 0
 
-freeInNRCGrid :: Sudoku -> (Row,Column) -> [Value]
-freeInNRCGrid s (r,c) = freeInSeq (subNRCGrid s (r,c))
+freeInNrcGrid :: Sudoku -> (Row,Column) -> [Value]
+freeInNrcGrid s (r,c) = freeInSeq (subGridNrc s (r,c))
 
 sameblockNRC :: (Row,Column) -> (Row,Column) -> Bool
 sameblockNRC (r,c) (x,y) = nrcBl r == nrcBl x && nrcBl c == nrcBl y 
