@@ -30,4 +30,4 @@ In addition to these constraints, an additional constraint should be added to su
 
 * Every subgrid- The values in every subgrid [i,j] with i,j ranging over 2..4 and 6..8 should be in {1,...,9}, and should all be different.
 
-> We assume the empty positions do not represent any value.
+> We assume the empty positions do not represent any value instead of 0 which is used in the provided sudoku implementation.
