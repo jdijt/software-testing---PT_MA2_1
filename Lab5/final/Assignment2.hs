@@ -36,6 +36,25 @@ prune (r,c,v) ((x,y,zs):rest)
   | or $ map (elem (x,y)) $ constrntByPos (r,c) = (x,y,zs\\[v]) : prune (r,c,v) rest
   | otherwise                                   = (x,y,zs) : prune (r,c,v) rest
 
+
+testrt :: IO ()
+testrt = genAndSolveSudokus 10 
+
+genAndSolveSudokus :: Int -> IO ()
+genAndSolveSudokus k = 
+        if k == 0 then print "done!"
+        else do 
+            [r] <- rsolveNs [emptyN]
+            s <- genProblem r
+            if True then
+                do putStrLn ("Pass!\n") ;
+                    showNode s ; genAndSolveSudokus (k-1)
+            else 
+                do
+                putStrLn "Failed on\n"
+                showNode r
+            
+
 ----------------------
 -- Unrefactored code
 ---------------------
