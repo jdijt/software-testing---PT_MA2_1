@@ -14,7 +14,8 @@ getAvgHintsL5Sudokus n = do
     is <- genRandomInstances (L5.genRandomSudoku >>= L5.genProblem) n
     print ((fromIntegral $ sumHints L5.filledPositions is) / (fromIntegral n))
 
-
+-- Could be: (Sudoku -> [(row,column)]) -> [Node] -> Int
+-- But we are using A1. and L5. types mixed trough each other, so set up generically
 sumHints :: (a -> [b]) -> [(a,c)] -> Int
 sumHints f = foldl (\x y -> x + ((length.f.fst) y)) 0 
 
