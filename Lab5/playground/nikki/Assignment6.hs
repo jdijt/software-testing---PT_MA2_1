@@ -30,5 +30,6 @@ main level = do
               showNode r
               (i,s)  <- genProblem level r
               showNode s;
+              print (maximum [x | (x,y,z,t) <- i]);
               print (sum $ map (\(x, _, _, _) -> x) i)
               -- TODO print "Level is: " ++ 
