@@ -12,9 +12,9 @@ tbd.
 ### Extending the Sudoku problem with additional contraints.
 Extending the new version is significantly easier compared to the original implementation.
 
-In the original implementation both `prune` and `freeAtPos` have hardcoded cases to seperate the subgrid, row and column constraints. Adding another constraint involves editing multiple blocks of haskell code.
+In the original implementation both `prune`, `consistent` and `freeAtPos` had hardcoded cases to seperate the subgrid, row and column constraints. Adding another constraint involved editing multiple blocks of haskell code.
 
-In our new implementation both `prune` and `freeAtPos` use the proposed definition for constraints. These functions now work in a generic manner on any list of constraints.
+In our new implementation `prune`, `consistent`  and `freeAtPos` use the proposed definition for constraints. These functions now work in a generic manner on any list of constraints.
 Adding constraints can now be done by extending the 'allConstrnt' list.
 
 ### Efficiency of the new constraint system.

@@ -1,4 +1,4 @@
-module Lecture5
+module Assignment2
 
 where 
 
@@ -27,8 +27,7 @@ constrntByPos :: Position -> Constrnt
 constrntByPos p = filter (elem p) allConstrnt
 
 constraints :: Sudoku -> [Constraint] 
-constraints s = sortBy length3rd 
-    [(r,c, freeAtPos' s (r,c)) | (r,c) <- openPositions s ]
+constraints s = sortBy length3rd [(r,c, freeAtPos' s (r,c)) | (r,c) <- openPositions s ]
 
 prune :: (Row,Column,Value) -> [Constraint] -> [Constraint]
 prune _ [] = []
@@ -37,23 +36,20 @@ prune (r,c,v) ((x,y,zs):rest)
   | otherwise                                   = (x,y,zs) : prune (r,c,v) rest
 
 
-testrt :: IO ()
-testrt = genAndSolveSudokus 10 
+-- Testing for sudoku consistency with new constraint notation:
+injective :: Eq a => [a] -> Bool
+injective xs = nub xs == xs
 
-genAndSolveSudokus :: Int -> IO ()
-genAndSolveSudokus k = 
-        if k == 0 then print "done!"
-        else do 
-            [r] <- rsolveNs [emptyN]
-            s <- genProblem r
-            if True then
-                do putStrLn ("Pass!\n") ;
-                    showNode s ; genAndSolveSudokus (k-1)
-            else 
-                do
-                putStrLn "Failed on\n"
-                showNode r
-            
+constrntInjective :: Sudoku -> [Position] -> Bool
+constrntInjective s xs = injective ys
+    where
+    ys :: [Value]
+    ys = filter (/=0) $ map s xs
+
+consistent :: Sudoku -> Bool
+consistent s = and $ map (constrntInjective s) allConstrnt 
+
+
 
 ----------------------
 -- Unrefactored code
@@ -116,37 +112,6 @@ grid2sud gr = \ (r,c) -> pos gr (r,c)
 showSudoku :: Sudoku -> IO()
 showSudoku = showGrid . sud2grid
 
-bl :: Int -> [Int]
-bl x = concat $ filter (elem x) blocks 
-
-subGrid :: Sudoku -> (Row,Column) -> [Value]
-subGrid s (r,c) = 
-  [ s (r',c') | r' <- bl r, c' <- bl c ]
-
-injective :: Eq a => [a] -> Bool
-injective xs = nub xs == xs
-
-rowInjective :: Sudoku -> Row -> Bool
-rowInjective s r = injective vs where 
-   vs = filter (/= 0) [ s (r,i) | i <- positions ]
-
-colInjective :: Sudoku -> Column -> Bool
-colInjective s c = injective vs where 
-   vs = filter (/= 0) [ s (i,c) | i <- positions ]
-
-subgridInjective :: Sudoku -> (Row,Column) -> Bool
-subgridInjective s (r,c) = injective vs where 
-   vs = filter (/= 0) (subGrid s (r,c))
-
-consistent :: Sudoku -> Bool
-consistent s = and $
-               [ rowInjective s r |  r <- positions ]
-                ++
-               [ colInjective s c |  c <- positions ]
-                ++
-               [ subgridInjective s (r,c) | 
-                    r <- [1,4,7], c <- [1,4,7]]
-
 extend :: Sudoku -> ((Row,Column),Value) -> Sudoku
 extend = update
 
@@ -154,7 +119,6 @@ update :: Eq a => (a -> b) -> (a,b) -> a -> b
 update f (y,z) x = if x == y then z else f x 
 
 type Constraint = (Row,Column,[Value])
-
 type Node = (Sudoku,[Constraint])
 
 showNode :: Node -> IO()
@@ -172,9 +136,6 @@ extendNode (s,constraints) (r,c,vs) =
 length3rd :: (a,b,[c]) -> (a,b,[c]) -> Ordering
 length3rd (_,_,zs) (_,_,zs') = compare (length zs) (length zs')
 
-
-sameblock :: (Row,Column) -> (Row,Column) -> Bool
-sameblock (r,c) (x,y) = bl r == bl x && bl c == bl y 
 
 initNode :: Grid -> [Node]
 initNode gr = let s = grid2sud gr in 
