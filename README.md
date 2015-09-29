@@ -26,6 +26,11 @@ Exercises: [http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab4.html](http:
 
 The sources for the solutions are located at: [Lab4/final](Lab4/final)
 
+### Week 5
+
+Exercises: [http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab5.html](http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab5.html)  
+
+The sources for the solutions are located at: [Lab5/final](Lab5/final)
 
 ## Links to Lectures
 [Lecture 1](http://homepages.cwi.nl/~jve/courses/15/testing/lectures/Lecture1.html)
@@ -35,3 +40,5 @@ The sources for the solutions are located at: [Lab4/final](Lab4/final)
 [Lecture 3](http://homepages.cwi.nl/~jve/courses/15/testing/lectures/Lecture3.html)
       
 [Lecture 4](http://homepages.cwi.nl/~jve/courses/15/testing/lectures/Lecture4.html)
+
+[Lecture 5](http://homepages.cwi.nl/~jve/courses/15/testing/lectures/Lecture5.html)
