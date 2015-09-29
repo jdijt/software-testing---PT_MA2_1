@@ -7,28 +7,17 @@ import Assignment1 as A1
 
 getAvgHintsA1Sudokus :: Int -> IO ()
 getAvgHintsA1Sudokus n = do
-    is <- generateA1Sudokus n
-    print ((fromIntegral $ sumHints is) / (fromIntegral n))
-    where
-    sumHints :: [A1.Node] -> Int
-    sumHints []     = 0
-    sumHints (x:xs) = (length $ A1.filledPositions $ fst x) + sumHints xs
-    
-    generateA1Sudokus :: Int -> IO[A1.Node]
-    generateA1Sudokus = genRandomInstances (A1.genRandomSudoku >>= A1.genProblem)
+    is <- genRandomInstances (A1.genRandomSudoku >>= A1.genProblem) n
+    print ((fromIntegral $ sumHints A1.filledPositions is) / (fromIntegral n))
 
 getAvgHintsL5Sudokus :: Int -> IO ()
 getAvgHintsL5Sudokus n = do
-    is <- generateL5Sudokus n
-    print ((fromIntegral $ sumHints is) / (fromIntegral n))
-    where
-    sumHints :: [L5.Node] -> Int
-    sumHints []     = 0
-    sumHints (x:xs) = (length $ L5.filledPositions $ fst x) + sumHints xs
+    is <- genRandomInstances (L5.genRandomSudoku >>= L5.genProblem) n
+    print ((fromIntegral $ sumHints L5.filledPositions is) / (fromIntegral n))
 
-    generateL5Sudokus :: Int -> IO [L5.Node]
-    generateL5Sudokus = genRandomInstances (L5.genRandomSudoku >>= L5.genProblem)
 
+sumHints :: (a -> [b]) -> [(a,c)] -> Int
+sumHints f = foldl (\x y -> x + ((length.f.fst) y)) 0 
 
 genRandomInstances :: (IO a) -> Int -> IO [a]
 genRandomInstances _ 0 = return []
