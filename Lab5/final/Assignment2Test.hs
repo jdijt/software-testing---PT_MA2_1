@@ -1,24 +1,24 @@
 module Assignment2Test where
 
-import qualified Assignment2 as A2 hiding (main)
+import qualified Assignment2 as A2 
 import qualified Lecture5 as L5 hiding (main)
 
  
 testrtAssignment2 :: IO [()]
-testrtAssignment2 = runSolver exampleGrids
-         where runSolver [x] = A2.solveAndShow x 
-               runSolver (x:xs) = do
-                 A2.solveAndShow x;
-                 runSolver xs
+testrtAssignment2 = runSolver A2.solveAndShow exampleGrids
 
 testrtLecture5 :: IO [()]
-testrtLecture5 = runSolver exampleGrids
-         where runSolver [x] = L5.solveAndShow x 
-               runSolver (x:xs) = do
-                 L5.solveAndShow x;
-                 runSolver xs
+testrtLecture5 = runSolver L5.solveAndShow exampleGrids
+
+runSolver :: ([[Int]] -> IO [()]) -> [[[Int]]] -> IO [()]
+runSolver _ [] = error "No grids given."
+runSolver f [x] = f x 
+runSolver f (x:xs) = do
+    _ <- f x;
+    runSolver f xs
 
 
+exampleGrids :: [[[Int]]]
 exampleGrids = [[[0,0,0,0,2,0,0,0,0],[0,0,5,0,4,0,3,1,0],[0,0,0,6,0,7,8,0,0],[2,3,0,0,0,0,0,0,0],
                  [0,0,0,4,0,9,0,3,0],[4,6,0,5,0,0,0,0,0],[6,0,2,0,0,0,0,0,0],[9,0,0,0,0,0,6,0,1],
                  [0,0,7,0,0,0,0,0,9]],[[0,9,0,0,0,8,0,0,0],[7,0,8,0,2,0,0,0,0],[0,0,0,4,0,0,0,0,2],
