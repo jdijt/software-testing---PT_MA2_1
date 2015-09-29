@@ -24,8 +24,11 @@ genMinimalizedNode = do
   let j = map (\q -> minimalize q (filledPositions (fst q))) i
   return (elements j)
 
+hasSolution :: Node -> Node -> Bool
+hasSolution x y =  sud2grid (fst (head (solveNs [x]))) == sud2grid (fst y)
+
 testMinimalize :: IO ()
-testMinimalize = testR 1 100 minimalize (\_ _ o -> all (not.uniqueSol.eraseN o) (filledPositions (fst o)) && uniqueSol o)
+testMinimalize = testR 1 100 minimalize (\i _ o -> all (not.uniqueSol.eraseN o) (filledPositions (fst o)) && uniqueSol o && hasSolution o i)
 
 
 
