@@ -1,6 +1,5 @@
 module Assignment7 where
 
--- Use lecture 5 by default, add A1 to for generating with the A1 code.
 import Lecture5 as L5
 import Assignment1 as A1
 
