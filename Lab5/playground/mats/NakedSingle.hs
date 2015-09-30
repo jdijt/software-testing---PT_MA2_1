@@ -4,6 +4,7 @@ where
 
 import Domain
 import Utils
+import Control.Arrow
 
 isNakedSingle :: Spot -> Bool
 isNakedSingle (Unknown xs) = length xs == 1
@@ -14,4 +15,6 @@ lastValue (Unknown [x]) = x
 lastValue _ = error "Not last value"
 
 nakedSingle :: SudokuProblem -> [SudokuAction]
-nakedSingle (SP ps) = map (\(z,x,y) -> SetValue z x y )  [ (z,x,y) | x <- [0..8], y <- [0..8], let spot = (ps !! y) !! x, not (spotSolved spot) && isNakedSingle spot, let z = lastValue spot]
+nakedSingle (sp) = map ((\(c,n) -> SetValue n c) . second lastValue) singles where
+  singles :: [((Row,Column),Spot)]
+  singles = filter (\(_,spot) -> not (spotSolved spot) && isNakedSingle spot) (allSpotsCor sp)
