@@ -1,6 +1,8 @@
 module Assignment6 where
 
 import Lecture5 hiding (main, minimalize, genProblem)
+import Control.Monad
+--import Control.Monad.LoopWhile
 
 getThird :: (a,a,[a]) -> [a]
 getThird (_,_,[]) = []
@@ -24,12 +26,13 @@ genProblem level n = do
                       return (minimalize level [] n ys)
                       where xs = filledPositions (fst n)
 
-main :: Int -> IO ()
+--main :: Int -> IO Int
 main level = do 
               [r] <- rsolveNs [emptyN]
-              showNode r
+--              showNode r
               (i,s)  <- genProblem level r
-              showNode s;
-              print (maximum [x | (x,y,z,t) <- i]);
-              print (sum $ map (\(x, _, _, _) -> x) i)
-              -- TODO print "Level is: " ++ 
+--              showNode s;
+--              print (maximum [x | (x,y,z,t) <- i]);
+--              print (sum $ map (\(x, _, _, _) -> x) i)
+              return (sum $ map (\(x, _, _, _) -> x) i)
+              -- TODO print "Level is: " ++
