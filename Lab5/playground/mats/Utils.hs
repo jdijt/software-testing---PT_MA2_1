@@ -5,6 +5,12 @@ where
 import Data.List
 import Domain
 
+emptyProblem :: SudokuProblem
+emptyProblem (_,_) = Unknown [1..9]
+
+update :: Eq a => (a -> b) -> (a,b) -> a -> b
+update f (y,z) x = if x == y then z else f x
+
 replaceAtIndex :: Int -> a -> [a] -> [a]
 replaceAtIndex n item ls = a ++ (item:b) where (a, _:b) = splitAt n ls
 
@@ -25,10 +31,15 @@ spotHasValue _ _ = False
 allSpots :: SudokuProblem -> [Spot]
 allSpots prob = map snd (allSpotsCor prob)
 
-allSpotsCor :: SudokuProblem -> [((Row,Column), Spot)]
+allSpotsCor :: SudokuProblem -> [(Coordinate, Spot)]
 allSpotsCor prob = [((row,col),prob (row,col)) | row <- [1..9], col <- [1..9]]
 
-relatedSpots :: (Row,Column) -> [(Row,Column)]
+spotHasPossibility :: Int -> (Coordinate, Spot) -> Bool
+spotHasPossibility n (_,Unknown m) = n `elem` m
+spotHasPossibility _ _ = False
+
+
+relatedSpots :: (Row,Column) -> [Coordinate]
 relatedSpots x = filter (/= x) $ nub $ concat $ filter (elem x) allConstraints
 
 allConstraints :: Constraint

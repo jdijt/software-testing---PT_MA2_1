@@ -8,12 +8,6 @@ import Puzzles
 import Domain
 import Utils
 
-emptyProblem :: SudokuProblem
-emptyProblem (_,_) = Unknown [1..9]
-
-update :: Eq a => (a -> b) -> (a,b) -> a -> b
-update f (y,z) x = if x == y then z else f x
-
 removePossibilitySpot :: Int -> Spot -> Spot
 removePossibilitySpot n (Unknown k) = Unknown (delete n k)
 removePossibilitySpot _ sp = sp
@@ -23,6 +17,7 @@ removePossibility n prob c = if spotSolved (prob c) then prob else update prob (
 
 applyAction :: SudokuAction -> SudokuProblem -> (SudokuProblem,[SudokuAction])
 applyAction (SetValue n c) prob = if spotHasValue n (prob c) then (prob,[]) else (update prob (c,Known n), [ScrapValue n c])
+applyAction (ScrapValues ns cs) prob = (foldl (\b n -> foldl (removePossibility n) b cs) prob ns, [])
 applyAction (ScrapValue n c) prob = (foldl (removePossibility n) prob related, [])  where
   related = relatedSpots c
 
@@ -33,10 +28,12 @@ applyActions (p,x:xs,l) = applyActions (np, na ++ xs, l) where
 
 
 handle :: (SudokuProblem, [SudokuAction], Difficulty) -> (SudokuProblem, [SudokuAction], Difficulty)
-handle (p,[],l) = if null next then (p,[],l) else handle (p, snd (head next),l + fst (head next) * length (snd (head next)) ) where
+handle (p,[],diff) = if null next then (p,[],diff) else handle (p, snd (head next),diff + fst (head next) * length (snd (head next)) ) where
   next = filter (\(_,a) -> not (null a)) $ map (\(l,provider) -> (l, provider p)) strategies
 handle (p,xs,l) = handle (applyActions (p,xs, l))
 
+
+(temp,_,_) = applyActions (emptyProblem,puzzle3,0)
 
 doPuzzle :: [SudokuAction] -> IO ()
 doPuzzle acts = do

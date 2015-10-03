@@ -11,10 +11,11 @@ instance Show Spot where
 
 type Row = Int
 type Column = Int
+type Coordinate = (Row,Column)
 type Difficulty = Int
-type SudokuProblem = (Row,Column) -> Spot
+type SudokuProblem = Coordinate -> Spot
 
-data SudokuAction = SetValue Int (Row,Column) | ScrapValue Int (Row,Column) deriving (Show)
+data SudokuAction = SetValue Int Coordinate | ScrapValue Int Coordinate | ScrapValues [Int] [Coordinate] deriving (Show)
 
 type Constraint = [[(Row,Column)]]
 
