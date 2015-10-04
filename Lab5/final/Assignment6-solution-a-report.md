@@ -36,17 +36,17 @@ The next assumption we make is that removing 2 fields with 2 possible values eac
 We can now say that the higher the number the harder the puzzle.
 
 ## Generating problems
-We have modified the existing `minimalize` function to only remove numbers if there are less than or equal to n values available. Where n is a parameter of the generation process.
+We have modified the existing `minimalize` function to only remove a field if there are less than or equal to `n` possible values. Where `n` is a parameter of the generation process.
 
-The minimalize function takes a list of coordinates. For each coordinate we remove the value and then check how many values are available by checking the constraint for the given coordinate:
+The `minimalize` function takes a list of coordinates. For each coordinate we remove the value and then check how many values are available by checking the constraint for the given coordinate:
 `numberPossibleVal = length (getThird (findConstraint r c (snd n')))`
 
-If `numberPossibleVal` is lower or equal to n, we continue with the current state, otherwise we take the previous state with the field still filled in.
+If `numberPossibleVal` is less than or equal to `n`, we continue with the current state, otherwise we take the previous state with the field still filled in.
 
 In order to find out more about the difficulty of the generated puzzle we used the metric described above:
-> When removing a field, store the number of available values in a list. Then take the sum of this list.
+> When removing a field, store the number of available values in a list. Then take the sum of the resulting list.
 
-The results for the runs are shown in the table below:
+The results for the different runs are shown in the table below:
 
 | n | Max | Min | Average |
 |---|-----|-----|---------|
@@ -119,8 +119,6 @@ Max: 121, Min: 91, Average: 106
 `\> replicateM 50 (main 9)`
 `130,120,115,113,113,112,112,112,111,111,110,110,110,109,109,109,109,108,108,107,107,107,107,107,107,106,106,106,106,106,105,105,104,104,103,103,103,102,101,99,99,98,98,98,98,98,96,95,93,91]`  
 Max: 130, Min: 91, Average:105
-
-
 
 
 ## Testing the difficulty
