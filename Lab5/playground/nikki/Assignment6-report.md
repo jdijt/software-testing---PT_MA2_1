@@ -20,7 +20,7 @@ We hook our algorithm on the `minimalize` function and check when a field is rem
 For example: given the following partial puzzle:
 
 | 1 | 2 | 3 ||  
-| 4 | 5 | 6 || 
+| 4 | 5 | 6 ||  
 | 7 | 8 | 9 ||
 
 When removing the value 5 on coordinate (2,2) there is only 1 value possible: 5
@@ -60,19 +60,21 @@ The results for the runs are shown in the table below:
 | 9 | 130 | 91  | 105     |
 
 When analyzing the result of the generation process we noticed the following:
+
 - After reaching n = 5 the difficulty hardly increases
 - The test results fluctuate a lot, this is because we start with a random puzzle  
 
 Based on this we state the following:
-- Generating a puzzle with n = 1 would generate an easy puzzle: The puzzle can be completely solved without having to make a single guess
+
+- Generating a puzzle with n = 1 would generate an easy puzzle: The puzzle can be completely solved without having to make a single guess.
 - Generating a puzzle with n = 9 would generate the hardest possible problem for the given solution
 - Generating a puzzle with n > 5 generates problems that are very similar in difficulty as n = 9
 
 We now conclude that there is gliding range where n = 1 represents easy and n = 5 represents hard.   
 However because the difficulty fluctuates chances are that you generate a puzzle that is easier then the requested difficulty. This is also visible in the testresults below.
 
---- Raw TestResults
-The generation is run 50 times with replicateM for each n in [1..9], the results are sorted in reversed order.
+### Raw TestResults
+The generation is run 50 times with replicateM for each n in [1..9]. The results are sorted in reversed order.
 
 `
 \> replicateM 50 (main 1) 
@@ -130,4 +132,4 @@ Max: 130, Min: 91, Average:105
 
 
 ## Testing the difficulty
--- Some reference to Mats's solution?
+-- We didn't manage to solve this in the current solution. Solution B did solve this problem.
