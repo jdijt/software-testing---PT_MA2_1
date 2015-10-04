@@ -33,8 +33,6 @@ handle (p,[],diff) = if null next then (p,[],diff) else handle (p, snd (head nex
 handle (p,xs,l) = handle (applyActions (p,xs, l))
 
 
-(temp,_,_) = applyActions (emptyProblem,puzzle3,0)
-
 doPuzzle :: [SudokuAction] -> IO ()
 doPuzzle acts = do
   let (prob,_,probLevel) = handle (emptyProblem, acts, 0)
