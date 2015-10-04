@@ -23,11 +23,12 @@ For example: given the following partial puzzle:
 | 4 | 5 | 6 ||  
 | 7 | 8 | 9 ||
 
-When removing the value 5 on coordinate (2,2) there is only 1 value possible: 5
-When removing the value 6 on coordinate (2,3) there are 2 values possible: 5 and 6
+1. When removing the value 5 on coordinate (2,2) there is only 1 value possible: 5
+2. When removing the value 6 on coordinate (2,3) there now are 2 values possible: 5 and 6
 
-Assuming the user starts with the last field that is removed^1 the field (2,3) (2 options) is harder to solve than the field (2,2) (1 option)
-^1 This is a really strong assumption.
+Assuming the user starts with the last field that is removed<sup>1</sup> the field (2,3) (2 options) is harder to solve than the field (2,2) (1 option)
+
+<sup>1</sup> This is a really strong assumption.
 
 We classify the difficulty by taking the sum of values that are available per removed field at the time of removal. The above example would result in a difficulty of 3.
 The next assumption we make is that removing 2 fields with 2 possible values each (total 4) is just as difficult as 1 field with 4 possible values. In both cases the user has a total of 4 options to pick from.
@@ -43,7 +44,7 @@ The minimalize function takes a list of coordinates. For each coordinate we remo
 If `numberPossibleVal` is lower or equal to n, we continue with the current state, otherwise we take the previous state with the field still filled in.
 
 In order to find out more about the difficulty of the generated puzzle we used the metric described above:
-- When removing a field, store the number of available values in a list. Then take the sum of this list.
+> When removing a field, store the number of available values in a list. Then take the sum of this list.
 
 The results for the runs are shown in the table below:
 
