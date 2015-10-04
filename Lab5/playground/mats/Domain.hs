@@ -1,12 +1,9 @@
 module Domain
 where
 
-import Data.Char
-
 data Spot = Unknown [Int] | Known Int
 instance Show Spot where
-  show (Unknown xs) = [chr (96 + length xs)]
---show (Unknown _) = " "
+  show (Unknown _) = " "
   show (Known i) = show i
 
 type Row = Int
