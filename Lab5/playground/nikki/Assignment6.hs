@@ -24,12 +24,12 @@ genProblem level n = do
                       return (minimalize level [] n ys)
                       where xs = filledPositions (fst n)
 
---main :: Int -> IO Int
+main :: Int -> IO Int
 main level = do 
               [r] <- rsolveNs [emptyN]
               showNode r
               (i,s)  <- genProblem level r
-              showNode s;
+              showNode s
               let difficulty = sum i
-              print ("The minimal probly for n = " ++ (show level) ++ " has a difficulty of " ++ (show difficulty) ++ " on a scale where 30 is really easy and 130 is insane.")
+              print ("The minimal problem for n = " ++ (show level) ++ " has a difficulty of " ++ (show difficulty) ++ " on a scale where 30 is really easy and 130 is insane.")
               return (difficulty)
