@@ -14,7 +14,7 @@ The total amount of time spend by two persons on this Lab exercise is 12 hours.
 ### Extending the Sudoku problem with additional constraints.
 Extending the new version is significantly easier compared to the original implementation.
 
-In the original implementation both `prune`, `consistent` and `freeAtPos` had hardcoded cases to separate the subgrid, row and column constraints. Adding another constraint involved editing multiple blocks of Haskell code.
+In the original implementation both `prune`, `consistent` and `freeAtPos` had hardcoded cases to separate the sub grid, row and column constraints. Adding another constraint involved editing multiple blocks of Haskell code.
 
 In our new implementation `prune`, `consistent`  and `freeAtPos` use the proposed definition for constraints. These functions now work in a generic manner on any list of constraints.
 Adding constraints can now be done by extending the 'allConstrnt' list.
@@ -30,7 +30,7 @@ The result for `testrtAssignment2` was as follows:
 (2.72 secs, 562156016 bytes)
 ```
 
-The result for `testrtLecture5` was as follows: 
+The result for `testrtLecture5` was as follows:
 ```
 (1.00 secs, 577505384 bytes)
 ```

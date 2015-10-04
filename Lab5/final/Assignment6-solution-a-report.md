@@ -4,15 +4,15 @@ Total time spent on this assignment by 2 persons is 18 hours.
 
 ## The exercise
 
-> Can you find a way of classifying the difficulty of a Sudoku problem? 
+> Can you find a way of classifying the difficulty of a Sudoku problem?
 
-> Can you modify the Sudoku problem generator so that it can generate problems that are minimal, but easy to solve by hand? Problems that are minimal but hard to solve by hand? 
+> Can you modify the Sudoku problem generator so that it can generate problems that are minimal, but easy to solve by hand? Problems that are minimal but hard to solve by hand?
 
 > How can you test whether the problems your program generates satisfy these properties? Consult (Pelánek 2014).
 
-Note: The research was done within limited time, it contains rough assumptions and the test data fluctuates a lot with each run. 
+Note: The research was done within limited time, it contains rough assumptions and the test data fluctuates a lot with each run.
 
-## Classifying difficulty 
+## Classifying difficulty
 
 The algorithm we use to determine the difficulty is based on the number of available values a user can place in a single field.
 
@@ -79,7 +79,7 @@ The generation is run 50 times with replicateM for each n in [1..9]. The results
 
 `> replicateM 50 (main 1)`
 `[43,42,41,41,41,41,40,40,40,40,40,40,40,40,40,39,39,39,39,39,39,39,39,38,38,38,38,38,38,38,37,37,37,37,37,37,37,37,37,36,36,36,36,36,35,35,34,34,34,33]`  
-Max: 43, Min: 33, Average: 38 
+Max: 43, Min: 33, Average: 38
 
 
 `> replicateM 50 (main 2)`

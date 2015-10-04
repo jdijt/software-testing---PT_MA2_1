@@ -4,7 +4,7 @@ The total amount of time spent by two persons on this Lab exercise is 8 hours.
 
 ## Generator
 
-The sources of the generator are in `Assignment4.hs`. 
+The sources of the generator are in `Assignment4.hs`.
 
 Execute the method `mainEmptyBlocks 3` to generate solutions with 3 empty blocks. 
 There is a chance to generate solutions with 4 empty blocks if you change the maximumEmptyBlocks parameter to 4: `mainEmptyBlocks 4`.
@@ -12,8 +12,8 @@ There is a chance to generate solutions with 4 empty blocks if you change the ma
 With two modifications it is possible to generate problems with empty nrcBlocks:
 
 - Change the import to `Assignment1.hs`
-- In the possibleBlocks function, change `blocks` to `blocksNRC` 
- 
+- In the possibleBlocks function, change `blocks` to `blocksNRC`
+
 ### Tests
 
 To test the implementation of the generator with empty blocks we use the tests from assignment 3 with a few modifications to make it run with the generator.

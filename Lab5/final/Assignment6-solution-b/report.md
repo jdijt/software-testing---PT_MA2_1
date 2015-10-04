@@ -1,10 +1,10 @@
 # Classifying difficulty
 
-For this solution we take a different approach for determining the difficulty of a Sudoku. Instead of rating a certain Sudoku problem, we will rate the a action that the user will apply on a Sudoku to advance to a 'more solved Sudoku'. A more solved Sudoku is a Sudoku where more spots are solved or unsolved spots have fewer remaining options. This idea is based on Palének 2015.
+For this solution we take a different approach for determining the difficulty of a Sudoku. Instead of rating a certain Sudoku problem, we will rate the action that the user applies on a Sudoku to advance to a more solved Sudoku. A more solved Sudoku is a Sudoku where more spots are solved or unsolved spots have fewer remaining options. This idea is based on Palének 2015.
 
 ### Actions
 
-These actions are all based on logical reasoning and consist of 3 flavors:
+All available actions will transition the Sudoku into a more solved state. The actions are:
 
 * Set a coordinate to a certain value.
 * Remove a value from the related spots of a coordinate
@@ -12,7 +12,7 @@ These actions are all based on logical reasoning and consist of 3 flavors:
 
 ### Strategies
 
-This suggested implementation uses 3 strategies that are used to imply actions on the subject Sudoku problem. These strategies are:
+The suggested implementation uses 3 strategies that imply actions on the subject Sudoku problem. All strategies are based on logical reasoning and will never bring the Sudoku problem in an invalid state. These strategies are:
 
 - **Naked Single**: All related spots (based on the constraints) contain all values {1..9} except for `n`with `n` in {1..9}. The solution for this coordinate must be `n`.
 
@@ -22,7 +22,7 @@ This suggested implementation uses 3 strategies that are used to imply actions o
 
 These strategies are provided by Palének 2015 and [SudokuWiki](http://www.Sudokuwiki.org/).
 
-### Putting it Together.
+### Putting it Together
 
 To determine the difficulty of a solution we take a Sudoku problem and we apply different strategies on it. We then take the easiest strategy (assuming a human would do the same) then apply all provided actions from this strategy to the Sudoku problem. At this moment we also increase the the difficulty level with a constant<sup>1</sup> bound to the strategy multiplied with the number of hints the strategy provided<sup>2</sup>.
 
@@ -30,7 +30,7 @@ We repeat this cycle until no more actions are provided. If the Sudoku is solved
 
 ### Running the Code
 
-The program can be executed by loading the `Problem.hs` module and running one of the following commandos.
+The program can be executed by loading the `Problem.hs` module and running one of the following statements.
 
 ```
 doPuzzle puzzle1
@@ -41,7 +41,7 @@ doPuzzle puzzle3
 ### Software Components
 
 * `Problem.hs` The main file in the module that contains the logic to repeatedly apply actions until the Sudoku is solved or a dead end is reached.
-* `Domain.hs` This file contains all types that were used in the code and implementations to show the data structures.
+* `Domain.hs` This file contains all types that were used in the different modules and some implementations to show the data structures.
 * `Puzzles.hs` This file contains 3 sample puzzles. More can be added.
 * `Strategies.hs` This file contains all strategies with the related difficulty constants.
 * `Constraints.hs` This file contains all constraints in the Sudoku<sup>4</sup> (boxes, rows and columns).

@@ -1,9 +1,9 @@
 module Assignment2Test where
 
-import qualified Assignment2 as A2 
+import qualified Assignment2 as A2
 import qualified Lecture5 as L5 hiding (main)
 
- 
+
 testrtAssignment2 :: IO [()]
 testrtAssignment2 = runSolver A2.solveAndShow exampleGrids
 
@@ -12,7 +12,7 @@ testrtLecture5 = runSolver L5.solveAndShow exampleGrids
 
 runSolver :: ([[Int]] -> IO [()]) -> [[[Int]]] -> IO [()]
 runSolver _ [] = error "No grids given."
-runSolver f [x] = f x 
+runSolver f [x] = f x
 runSolver f (x:xs) = do
     _ <- f x;
     runSolver f xs
@@ -24,18 +24,16 @@ genGridList = genGrid 10 []
 
 genGrid :: Integer -> [A2.Grid] -> IO [A2.Grid]
 genGrid k grid = if k == 0 then return grid
-                    else do 
+                    else do
                       node <- main
                       let g = A2.sud2grid (fst node)
                       genGrid (k-1) (g:grid)
 
 main :: IO A2.Node
 main = do [r] <- A2.rsolveNs [A2.emptyN]
-          -- showNode r
-          s  <- A2.genProblem r
-          return s            
+          A2.genProblem r
 
--- Sudoku grids 
+-- Sudoku grids
 exampleGrids :: [[[Int]]]
 exampleGrids = [
         [[0,0,0,0,2,0,0,0,0],
@@ -128,4 +126,3 @@ exampleGrids = [
          [0,0,0,0,3,7,5,0,9],
          [2,0,0,0,0,4,0,0,0],
          [0,0,0,2,0,0,0,1,0]]]
-

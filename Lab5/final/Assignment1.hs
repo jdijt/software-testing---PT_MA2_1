@@ -21,10 +21,10 @@ prune (r,c,v) ((x,y,zs):rest)
 
 freeAtPos :: Sudoku -> (Row,Column) -> [Value]
 freeAtPos s (r,c) =
- (freeInRow s r)
-  `intersect` (freeInColumn s c)
-  `intersect` (freeInSubgrid s (r,c))
-  `intersect` (freeInSubgridNRC s (r,c))
+  freeInRow s r
+  `intersect` freeInColumn s c
+  `intersect` freeInSubgrid s (r,c)
+  `intersect` freeInSubgridNRC s (r,c)
 
 consistent :: Sudoku -> Bool
 consistent s = and $
@@ -108,13 +108,13 @@ showRow [a1,a2,a3,a4,a5,a6,a7,a8,a9] =
 
 showGrid :: Grid -> IO()
 showGrid [as,bs,cs,ds,es,fs,gs,hs,is] =
- do putStrLn ("+-------+-------+-------+")
+ do putStrLn "+-------+-------+-------+"
     showRow as; showRow bs; showRow cs
-    putStrLn ("+-------+-------+-------+")
+    putStrLn "+-------+-------+-------+"
     showRow ds; showRow es; showRow fs
-    putStrLn ("+-------+-------+-------+")
+    putStrLn "+-------+-------+-------+"
     showRow gs; showRow hs; showRow is
-    putStrLn ("+-------+-------+-------+")
+    putStrLn "+-------+-------+-------+"
 
 type Sudoku = (Row,Column) -> Value
 
@@ -222,13 +222,13 @@ search :: (node -> [node])
 search children goal [] = []
 search children goal (x:xs)
   | goal x    = x : search children goal xs
-  | otherwise = search children goal ((children x) ++ xs)
+  | otherwise = search children goal (children x ++ xs)
 
 solveNs :: [Node] -> [Node]
 solveNs = search succNode solved
 
 succNode :: Node -> [Node]
-succNode (s,[]) = []
+succNode (_,[]) = []
 succNode (s,p:ps) = extendNode (s,ps) p
 
 solveAndShow :: Grid -> IO[()]

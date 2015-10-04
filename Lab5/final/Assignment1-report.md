@@ -12,11 +12,11 @@ As formalized in the lecture of week 5 the existing constraints for a Sudoku 9x9
 
 * Every row should contain each number in {1,…,9}
 * Every column should contain each number in {1,…,9}
-* Every subgrid [i,j] with i,j ranging over 1..3, 4..6 and 7..9 should contain each number in {1,...,9}.
+* Every sub grid [i,j] with i,j ranging over 1..3, 4..6 and 7..9 should contain each number in {1,...,9}.
 
 In addition to these constraints, an additional constraint should be added to support the NRC Sudoku:
 
-* Every subgrid [i,j] with i,j ranging over 2..4 and 6..8 should contain each number in {1,...,9}.
+* Every sub grid [i,j] with i,j ranging over 2..4 and 6..8 should contain each number in {1,...,9}.
 
 ### Sudoku Problem
 
@@ -24,10 +24,10 @@ As formalized in the lecture of week 5 the existing constraints for a Sudoku 9x9
 
 - The values in every row should be in {1,…,9}, and should all be different.
 - The values in every column should be in {1,…,9}, and should all be different.
-- The values in every subgrid [i,j] with i,j ranging over 1..3, 4..6 and 7..9 should be in {1,...,9}, and should all be different.
+- The values in every sub grid [i,j] with i,j ranging over 1..3, 4..6 and 7..9 should be in {1,...,9}, and should all be different.
 
 In addition to these constraints, an additional constraint should be added to support the NRC Sudoku:
 
-- The values in every subgrid [i,j] with i,j ranging over 2..4 and 6..8 should be in {1,...,9}, and should all be different.
+- The values in every sub grid [i,j] with i,j ranging over 2..4 and 6..8 should be in {1,...,9}, and should all be different.
 
 > We assume that the empty positions do not represent any value other than 0 which is used in the provided Sudoku implementation.
