@@ -24,9 +24,9 @@ These strategies are provided by Palének 2015 and [SudokuWiki](http://www.Sudok
 
 ### Putting it Together.
 
-To determine the difficulty of a solution we take a Sudoku problem and we apply different strategies on it. We then take the easiest strategy (assuming a human would do the same) then apply all provided actions from this strategy to the Sudoku problem. At this moment we also increase the the difficulty level with a constant bound to the strategy multiplied with the number of hints the strategy provided<sup>1</sup>.
+To determine the difficulty of a solution we take a Sudoku problem and we apply different strategies on it. We then take the easiest strategy (assuming a human would do the same) then apply all provided actions from this strategy to the Sudoku problem. At this moment we also increase the the difficulty level with a constant<sup>1</sup> bound to the strategy multiplied with the number of hints the strategy provided<sup>2</sup>.
 
-We repeat this cycle until no more actions are provided. If the Sudoku is solved, we also get the difficulty level and we can compare this to other Sudoku problems. If the Sudoku problem isn't solved, the problem is not solvable with logical reasoning<sup>2</sup> and we supply the unsolved solution with the difficulty of the steps taken.
+We repeat this cycle until no more actions are provided. If the Sudoku is solved, we also get the difficulty level and we can compare this to other Sudoku problems. If the Sudoku problem isn't solved, the problem is not solvable with logical reasoning<sup>3</sup> and we supply the unsolved solution with the difficulty of the steps taken.
 
 ### Running the Code
 
@@ -44,11 +44,13 @@ doPuzzle puzzle3
 * `Domain.hs` This file contains all types that were used in the code and implementations to show the data structures.
 * `Puzzles.hs` This file contains 3 sample puzzles. More can be added.
 * `Strategies.hs` This file contains all strategies with the related difficulty constants.
-* `Constraints.hs` This file contains all constraints in the Sudoku<sup>3</sup> (boxes, rows and columns).
+* `Constraints.hs` This file contains all constraints in the Sudoku<sup>4</sup> (boxes, rows and columns).
 * `Utils.hs` This file contains helper functions that are used in the different modules like the different strategies.
 
 
 ## *Notes*
-<sup>1</sup> In this implementation we use all actions from the lowest rated strategy that provides one or more actions. A human however would maybe use one of these actions and than return back to a easier strategy.  
-<sup>2</sup> The code uses only a few strategies when more are available, these should be implemented to complete the solver.
-<sup>3</sup> This structure allows it to easily introduce new constrains as for example the NRC-Sudoku constraints as implemented in the other exercises. 
+
+1. The current constants are fictional and should be set based on experimental results.
+1. In this implementation we use all actions from the lowest rated strategy that provides one or more actions. A human however would maybe use one of these actions and than return back to a easier strategy.  
+1. The code uses only a few strategies when more are available, these should be implemented to complete the solver.
+1. This structure allows it to easily introduce new constrains as for example the NRC-Sudoku constraints as implemented in the other exercises.
