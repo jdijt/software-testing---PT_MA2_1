@@ -1,6 +1,6 @@
 # Assignment 6
 
-Total time spent on this assignment by 2 persons is 16 hours.
+Total time spent on this assignment by 2 persons is 18 hours.
 
 ## The exercise
 
@@ -10,7 +10,7 @@ Total time spent on this assignment by 2 persons is 16 hours.
 
 > How can you test whether the problems your program generates satisfy these properties? Consult (Pelánek 2014).
 
-Note: * The research was done within limited time, it contains rough assumptions and the test data fluctuates a lot with each run.* 
+Note: The research was done within limited time, it contains rough assumptions and the test data fluctuates a lot with each run. 
 
 ## Classifying difficulty 
 
@@ -46,6 +46,7 @@ In order to find out more about the difficulty of the generated puzzle we used t
 - When removing a field, store the number of available values in a list. Then take the sum of this list.
 
 The results for the runs are shown in the table below:
+
 | n | Max | Min | Average |
 |---|-----|-----|---------|
 | 1 | 43  | 33  | 38      |
@@ -59,11 +60,11 @@ The results for the runs are shown in the table below:
 | 9 | 130 | 91  | 105     |
 
 When analyzing the result of the generation process we noticed the following:
-- After reaching n = 5 the difficulty hardly increases (see test results)
-- the score can fluctuates a lot, this is because we start with a random puzzle 
+- After reaching n = 5 the difficulty hardly increases
+- The test results fluctuate a lot, this is because we start with a random puzzle  
 
 Based on this we state the following:
-- Generating a puzzle with n = 1 would generate an easy puzzle: The puzzle can be completely solved without having to make a single guess.
+- Generating a puzzle with n = 1 would generate an easy puzzle: The puzzle can be completely solved without having to make a single guess
 - Generating a puzzle with n = 9 would generate the hardest possible problem for the given solution
 - Generating a puzzle with n > 5 generates problems that are very similar in difficulty as n = 9
 
@@ -71,7 +72,7 @@ We now conclude that there is gliding range where n = 1 represents easy and n = 
 However because the difficulty fluctuates chances are that you generate a puzzle that is easier then the requested difficulty. This is also visible in the testresults below.
 
 --- Raw TestResults
-The generation is run 50 times with replicateM for each n in [1..9]. The results are sorted in reversed order.
+The generation is run 50 times with replicateM for each n in [1..9], the results are sorted in reversed order.
 
 `
 \> replicateM 50 (main 1) 
