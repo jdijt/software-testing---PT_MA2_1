@@ -2,6 +2,7 @@ module Lecture6
 
 where
 
+import qualified Assignment1 as A1
 import Data.List
 import System.Random
 
@@ -63,7 +64,7 @@ expM ::  Integer -> Integer -> Integer -> Integer
 expM x y = rem (x^y)
 
 exM :: Integer -> Integer -> Integer -> Integer
-exM = expM -- to be replaced by a fast version
+exM = A1.exM -- to be replaced by a fast version
 
 prime_test_F :: Integer -> IO Bool
 prime_test_F n = do
