@@ -64,7 +64,7 @@ expM ::  Integer -> Integer -> Integer -> Integer
 expM x y = rem (x^y)
 
 exM :: Integer -> Integer -> Integer -> Integer
-exM = A1.exM -- to be replaced by a fast version
+exM = A1.exM
 
 prime_test_F :: Integer -> IO Bool
 prime_test_F n = do
