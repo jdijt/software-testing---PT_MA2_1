@@ -1,4 +1,4 @@
-module Assignment1 where
+module Assignment1(exM) where
 
 import Numeric
 import Data.Char
