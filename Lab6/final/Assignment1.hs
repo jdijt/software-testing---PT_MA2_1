@@ -13,10 +13,10 @@ powersOfTwoM b m = (b `rem` m) : nextPower (powersOfTwoM b m)
 
 -- Returns little-endian binary representation of the given integer.
 intToBinary :: Integer -> String
-intToBinary n = reverse $ (showIntAtBase 2 intToDigit n) ""
+intToBinary n = reverse (showIntAtBase 2 intToDigit n "")
 
 
 exM :: Integer -> Integer -> Integer -> Integer
-exM b e m = (product powers) `rem` m
+exM b e m = product powers `rem` m
     where
     powers = zipWith (\x y -> if x == '0' then 1 else y) (intToBinary e) (powersOfTwoM b m)
