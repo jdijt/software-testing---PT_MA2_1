@@ -4,7 +4,7 @@
 
 For this exercise we have tested the for primality on Carmichael numbers using the Miller-Rabin primality check.
 
-We found that the chance that Miller-Rabin passes on a Carmichael number was much lower than when we were using the Fermat's primality check, but it is still not full proof.
+We found that the chance that Miller-Rabin passes on a Carmichael number was much lower than when we were using the Fermat's primality check, but it is still not fool proof.
 
 For a certain `k` we tested the Miller-Rabin primality check with the first 100 Carmichael numbers. We repeated this 100 times and computed the average number of Carmichael numbers that pass the test. The results are stated in the table below:
 
