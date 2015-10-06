@@ -3,20 +3,18 @@ module Assignment2 where
 import Assignment1
 import Lecture6 hiding (exM)
 import System.TimeIt
-import Control.Monad
 import System.Random
 
-speedTest :: IO [(Integer, Integer, Integer)] -> IO ()
-speedTest list = do
-	         l <- list
-	         putStrLn $ show l
-	         putStrLn "Own Implementation exM: "
-	         main exM l
+speedTest :: IO ()
+speedTest = do
+	         input <- genrRandomInput 100
+	         putStrLn $ show input
+	         putStrLn "Implementation Assignment1 exM: "
+	         main exM input
 	         putStrLn "Original Implementation expM: "
-	         main expM l
+	         main expM input
 
--- |Source: http://0xax.blogspot.nl/2013/08/
---          get-function-execution-time-in-haskell.html
+-- |Source: http://0xax.blogspot.nl/2013/08/get-function-execution-time-in-haskell.html
 main :: (Integer -> Integer -> Integer -> Integer) -> [(Integer, Integer, Integer)] -> IO()
 main f list = do
     putStrLn "Start"
@@ -26,10 +24,8 @@ main f list = do
 solveExponents :: (Integer -> Integer -> Integer -> Integer) -> [(Integer, Integer, Integer)] -> [Integer]
 solveExponents f xs = map (uncurryTriple f) xs 
                
-
-uncurryTriple :: (Integer -> Integer -> Integer -> Integer) -> (Integer, Integer, Integer) -> Integer
+uncurryTriple :: (a -> a -> a -> a) -> (a, a, a) -> a
 uncurryTriple f (x, y, z) = f x y z
-
 
 genrRandomInput :: Integer -> IO [(Integer, Integer, Integer)]
 genrRandomInput n | n == 0 = return []
@@ -43,4 +39,3 @@ genrRandomInput n | n == 0 = return []
 -- |Source: Lecture 2
 getRandomInt :: Integer -> IO Integer
 getRandomInt n = getStdRandom (randomR (1,n))
-
