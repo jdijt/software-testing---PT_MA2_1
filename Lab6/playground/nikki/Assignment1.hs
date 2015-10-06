@@ -9,7 +9,7 @@ exM x n m | odd(n) = (x `mod` m) * exM x (n - 1) m `mod` m
           | n == 2 = x^2 `mod` m
           | otherwise = exM (x^2) (n `div` 2) m
 
--- |Version 2
+-- |Version 2, more efficient
 exM' :: Integer -> Integer -> Integer -> Integer
 exM' x n m = product (modList x (splitBinary (toBinary n) 0) m 0 1) `mod` m
 
