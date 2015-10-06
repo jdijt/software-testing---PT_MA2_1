@@ -6,7 +6,7 @@ import Data.List
 import System.Random
 
 factors_naive :: Integer -> [Integer]
-factors_naive n = factors' n 2 where 
+factors_naive n = factors' n 2 where
   factors' 1 _ = []
   factors' n m
     | n `mod` m == 0 = m : factors' (n `div` m) m
