@@ -5,7 +5,7 @@ Group: PT\_MA2\_1
 
 ### Week 1
 Exercises: [http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab1.html](http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab1.html)
- 
+
 The sources for the solutions are located at: [Lab1/final](Lab1/final)
 
 ### Week 2
@@ -32,13 +32,21 @@ Exercises: [http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab5.html](http:
 
 The sources for the solutions are located at: [Lab5/final](Lab5/final)
 
+### Week 5
+
+Exercises: [http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab6.html](http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab6.html)  
+
+The sources for the solutions are located at: [Lab6/final](Lab6/final)
+
 ## Links to Lectures
 [Lecture 1](http://homepages.cwi.nl/~jve/courses/15/testing/lectures/Lecture1.html)
 
 [Lecture 2](http://homepages.cwi.nl/~jve/courses/15/testing/lectures/Lecture2.html)
 
 [Lecture 3](http://homepages.cwi.nl/~jve/courses/15/testing/lectures/Lecture3.html)
-      
+
 [Lecture 4](http://homepages.cwi.nl/~jve/courses/15/testing/lectures/Lecture4.html)
 
 [Lecture 5](http://homepages.cwi.nl/~jve/courses/15/testing/lectures/Lecture5.html)
+
+[Lecture 6](http://homepages.cwi.nl/~jve/courses/15/testing/lectures/Lecture6.html)
