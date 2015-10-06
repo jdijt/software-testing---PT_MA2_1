@@ -23,5 +23,5 @@ generateMersennes 0 _ = return ()
 generateMersennes n (p:ps)= do
   let x = 2^p-1
   res <- primeMR 1 x
-  when res (putStrLn ("Found mersene of the form: 2^" ++ show p ++ "-1"))
+  when res (putStrLn ("Found Mersenne prime of the form: 2^" ++ show p ++ "-1"))
   generateMersennes (if res then n - 1 else n) ps
