@@ -32,7 +32,7 @@ Exercises: [http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab5.html](http:
 
 The sources for the solutions are located at: [Lab5/final](Lab5/final)
 
-### Week 5
+### Week 6
 
 Exercises: [http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab6.html](http://homepages.cwi.nl/~jve/courses/15/testing/lab/Lab6.html)  
 
