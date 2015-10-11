@@ -1,5 +1,7 @@
 module Assignment1(exM) where
 
+-- This module is imported by Lecture6 where the exM function defined by jan is overriden with the exM function from this file.
+
 import Numeric
 import Data.Char
 
