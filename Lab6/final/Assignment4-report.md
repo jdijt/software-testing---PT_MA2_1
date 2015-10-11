@@ -2,7 +2,7 @@
 
 ## Least Composite Number Failing Fermat's Test
 
-With the code of `Assignment4.hs` we found out that the least composite number to fail Fermat's primality test as implemented with `prime_tests_F` is `4`, which actually is the first composite number.
+With the code of [`Assignment4.hs`](Assignment4.hs) we found out that the least composite number to fail Fermat's primality test as implemented with `prime_tests_F` is `4`, which actually is the first composite number.
 
 `prime_tests_F` uses a random `a` as base in the formula `a^(n-1) mod n`. We concluded that this test must always fail when `n > 1` and `a = 1`. Then `1^x` will always result in `1` and thus `1 mod n` will result in `1`.
 

@@ -1,7 +1,7 @@
 # Report Assignment 7
 
 ## Source code
-The source code for this assignment is located in the file `Assignment7.hs`.
+The source code for this assignment is located in the file [`Assignment7.hs`](Assignment7.hs).
 
 ## Generating large primes.
 Several 1024 bit primes have been generated (`prime1`, `prime2`, `prime3` and `prime4` in the source file) using `getRandomPrime 1024`.
