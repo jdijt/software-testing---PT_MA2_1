@@ -13,7 +13,7 @@ The following code demonstrates creating a public / private keypair from prime1 
 It also demonstrates how a message encoded by the public key can be decoded using the private key and vice versa.
 
 ```
-^Assignment7> :l Assignment7
+$ ghci Assignment7.hs
 *Assignment7> let private_key = rsa_private prime1 prime4
 *Assignment7> let public_key = rsa_public prime1 prime4
 *Assignment7> let message = rsa_encode public_key 1337
