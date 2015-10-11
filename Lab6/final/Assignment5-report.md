@@ -7,15 +7,17 @@ The wikipedia article on the Fermat Primality Test ([Link][1] accessed 07-10-201
 
 With some further analysis, using the Carmichael number 294409, this behaviour can also be seen in practice.
 The Carmichael numbers must have at least 3 positive prime factors. For 294409 these are 37, 73 and 109.
+
 ```
 *Assignment5 Data.List> factors 294409
 [37,73,109]
 ```
 
 Running the Fermat primality test for all possible values of `a` and filtering for values that cause the number to fail the test results in the following list.
-Notice that all numbers in the list are multiples of the prime factors of 294409. In total there are 14473 `a`. The chances of one of these `a` in the fermat test is small.
+Notice that all numbers in the list are multiples of the prime factors of 294409. In total there are 14473 `a`. The chances of one of these `a` in the Fermat test is small.
 
-This behaviour matches with the statement from the wikipedia article, that it performs the same as a random search for factors.
+This behavior matches with the statement from the wikipedia article, that it performs the same as a random search for factors.
+
 ```
 *Assignment5 Data.List> filter (\a -> exM a (294409-1) 294409 /= 1) [1..294409]
 [37,73,74,109,111,146,148,185,218,219,222,259,292,296,327,333,365,370,407,436,438,
@@ -27,10 +29,9 @@ This behaviour matches with the statement from the wikipedia article, that it pe
 14473
 ```
 
-
 In addition to the above we also ran some tests to measure the chance of detecting a Carmichael number. See the file [`Assignment5.hs`](Assignment5.hs) for the source.
 
-We have done several runs of the function `countDetectedNumbers`. This function runs the first 100 numbers from the list `carmichael` trough the fermat test for 1 to n iterations.
+We have done several runs of the function `countDetectedNumbers`. This function runs the first 100 numbers from the list `carmichael` trough the Fermat test for 1 to n iterations.
 
 this gives the following result:( `(iterations,non-primes detected)`).
 ```

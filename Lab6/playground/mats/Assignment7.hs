@@ -6,7 +6,7 @@ import System.Random
 import Lecture6
 
 fromBinary :: [Int] -> Integer
-fromBinary bits = sum $ zipWith toDec (reverse $ map toInteger bits) [0 .. (toInteger (length bits))]
+fromBinary bits = sum $ zipWith toDec (reverse $ map toInteger bits) [0..]
   where
     toDec :: Integer -> Integer -> Integer
     toDec a b = a * (2 ^ b)

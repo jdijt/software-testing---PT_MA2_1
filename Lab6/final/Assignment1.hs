@@ -11,7 +11,7 @@ powersOfTwoM b m = (b `rem` m) : nextPower (powersOfTwoM b m)
     nextPower (a:as) = ((a * a) `rem` m) : nextPower as
 
 
--- Returns little-endian binary representation of the given integer.
+-- Returns binary representation of the given integer with the least significant bit on the left side of the string.
 intToBinary :: Integer -> String
 intToBinary n = reverse (showIntAtBase 2 intToDigit n "")
 
