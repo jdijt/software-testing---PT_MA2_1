@@ -4,7 +4,7 @@ import Lecture6
 import System.Random
 
 bitSizeToRange :: Integer -> (Integer,Integer)
-bitSizeToRange n = (2^(n-1) + 1, 2^n) -- (1000,1111) for bitsize 4. 
+bitSizeToRange n = (2^(n-1), 2^n - 1) -- (8,15) = 1000b to 1111b for bitsize 4
 
 
 -- Generates n bits of which n-1 bits are random as an Integer (first bit is always 1).
@@ -17,8 +17,9 @@ generateRandomBits = randomRIO.bitSizeToRange
 -- See: https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test#Accuracy_of_the_test
 generateRandomPrime :: Integer -> IO Integer
 generateRandomPrime n = do
-    candidate <- generateRandomBits n
-    prime <- primeMR 5 candidate
+    -- Use one bit less for size, then multiply by two and add 1. Gives all uneven numbers for n bits.
+    candidate <- generateRandomBits (n-1)
+    prime <- primeMR 5 ((2 * candidate) + 1)
     if prime then return candidate else generateRandomPrime n
 
 
