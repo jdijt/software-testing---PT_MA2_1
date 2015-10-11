@@ -7,4 +7,3 @@ We first create a list with 100 random inputs for both functions. We then execut
 
 ## Conclusion
 Even if the `expM` function is executed after the `exM` function the `exM` still is significantly faster.
-
