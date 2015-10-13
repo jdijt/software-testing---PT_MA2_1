@@ -42,7 +42,7 @@ genRandomTransposition s = do
 		transPoseAtIndex (x:xs) n = x:transPoseAtIndex xs (n-1);
 
 
-addRandomChar :: [Char] -> String -> IO String
+addRandomChar :: String -> String -> IO String
 addRandomChar cs s = do
 		x <- getRandomInt (length cs - 1)
 		idx <- getRandomInt (length s - 1)
@@ -54,7 +54,7 @@ addRandomChar cs s = do
 		insertCharAtIndex (x:xs) c n = x:insertCharAtIndex xs c (n-1)
 
 addRandomNonAlphaNumChar :: String -> IO String
-addRandomNonAlphaNumChar = addRandomChar "!@#$%&^ " 
+addRandomNonAlphaNumChar = addRandomChar "!@#$%&^ "
 
 
 

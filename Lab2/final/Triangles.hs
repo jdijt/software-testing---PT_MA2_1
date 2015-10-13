@@ -15,6 +15,4 @@ triangle a b c | x + y <= z = NoTriangle
                | x^2 + y^2 == z^2 = Rectangular
                | otherwise = Other
                where
-                 z = maximum [a,b,c]
-                 x = minimum [a,b,c]
-                 y = minimum (delete x [a,b,c])
+                 [x,y,z] = sort [a,b,c]
